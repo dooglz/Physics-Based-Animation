@@ -18,9 +18,21 @@
     <ClCompile Include="Main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="iksample.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="helpermath.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HelperMath.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="iksample.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="utilities.h">
       <Filter>Source Files</Filter>
     </ClInclude>
   </ItemGroup>
