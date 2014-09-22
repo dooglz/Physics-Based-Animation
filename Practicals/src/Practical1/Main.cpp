@@ -14,9 +14,17 @@ b.kenwright@napier.ac.uk
 #include "GL/glut.h"
 #include "utilities.h"
 #include "iksample.h"
+#include "renderer.h"
+
+#define FPS_SAMPLE_SIZE 10
 
 CIkSystem Isystem;
+CRenderer Renderer;
 void render(void);
+
+static uint16_t previoustime;
+static uint16_t times[FPS_SAMPLE_SIZE];
+static uint8_t framecount;
 
 // Program Entry Point
 void main(int argc, char **argv)
@@ -37,7 +45,27 @@ void main(int argc, char **argv)
 	glutMainLoop();
 }
 
+
+//Returns Delta
+static uint16_t CalculateFps()
+{
+	const uint16_t time = glutGet(GLUT_ELAPSED_TIME);
+	const uint16_t delta = time - previoustime;
+	previoustime = time;
+	times[framecount] = delta;
+	framecount = (((framecount + 1) + FPS_SAMPLE_SIZE) % FPS_SAMPLE_SIZE);
+	if (framecount == 0)
+	{
+		printf("FPS: %i\n", delta);
+	}
+	return delta;
+}
+
 void render(void)
 {
+	const uint16_t delta = CalculateFps();
+	Renderer.PrepForRender();
 	Isystem.Render();
+	Renderer.FinishRender();
 }
+
