@@ -58,8 +58,8 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glut/glut32.lib;glu32.lib;OpenGL32.lib;sdl/SDL2.lib;sdl/SDL2main.lib;sdl/SDL2test.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <SubSystem>Windows</SubSystem>
+      <AdditionalDependencies>glut/glut32.lib;glu32.lib;OpenGL32.lib;sdl/SDL2.lib;sdl/SDL2main.lib;sdl/SDL2test.lib;glew/glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
