@@ -1,5 +1,5 @@
 #pragma once
-#include "helpermath.h" // Vector3, Matrix4, and Quaternion
+class Vector3;
 
 class CRenderer
 {
@@ -9,19 +9,18 @@ public:
 
 	// Takes three paramaters, i.e., the start and end position in 3D
 	// of the arrow position in the world, and the size of the arrow
-
-	void DrawArrow(const Vector3& p0, const Vector3& p1, double D);
+	virtual void DrawArrow(const Vector3& p0, const Vector3& p1, double D) = 0;
 
 	// For simple displaying of lines - takes two 3D positions
 	// start and end of the line in the 3D world
-	void DrawLine(const Vector3& p0, const Vector3& p1);
+	virtual void DrawLine(const Vector3& p0, const Vector3& p1) = 0;
 
 	// Draw 3D spherical mesh in the environment
-	// paramaters should be self explanitory (i.e., position, radius and colour)
-	void DrawSphere(const Vector3& p0, float radius, float r, float g, float b);
+	virtual void DrawSphere(const Vector3& p0, float radius, float r, float g, float b) = 0;
 
-	Vector3 GetMousePosition2Dto3D();
+	virtual Vector3 GetMousePosition2Dto3D() = 0;
 
-	void PrepForRender();
-	void FinishRender();
+	virtual void PrepForRender() = 0;
+	virtual void FinishRender() = 0;
+	virtual void createWindow() = 0;
 };

@@ -1,10 +1,10 @@
 
 #include "windows.h"
-#include "GL/glut.h"
+#include "glut/glut.h"
 #include "utilities.h"
 
 #include "helpermath.h" // Vector3, Matrix4, and Quaternion
-#include "renderer.h"
+#include "glut_renderer.h"
 #include <math.h>
 
 #define RADPERDEG 0.0174533
@@ -13,7 +13,7 @@
 // Takes three paramaters, i.e., the start and end position in 3D
 // of the arrow position in the world, and the size of the arrow
 
-void CRenderer::DrawArrow(const Vector3& p0, const Vector3& p1, double D)
+void CGLut_Renderer::DrawArrow(const Vector3& p0, const Vector3& p1, double D)
 {
 	double x = p1.x - p0.x;
 	double y = p1.y - p0.y;
@@ -70,7 +70,7 @@ void CRenderer::DrawArrow(const Vector3& p0, const Vector3& p1, double D)
 
 // For simple displaying of lines - takes two 3D positions
 // start and end of the line in the 3D world
-void CRenderer::DrawLine(const Vector3& p0, const Vector3& p1)
+void CGLut_Renderer::DrawLine(const Vector3& p0, const Vector3& p1)
 {
 	glPushMatrix();
 	glBegin(GL_LINES);
@@ -85,7 +85,7 @@ void CRenderer::DrawLine(const Vector3& p0, const Vector3& p1)
 
 // Draw 3D spherical mesh in the environment
 // paramaters should be self explanitory (i.e., position, radius and colour)
-void CRenderer::DrawSphere(const Vector3& p0, float radius, float r, float g, float b)
+void CGLut_Renderer::DrawSphere(const Vector3& p0, float radius, float r, float g, float b)
 {
 	glPushMatrix();
 	glColor3f(r, g, b);
@@ -96,7 +96,7 @@ void CRenderer::DrawSphere(const Vector3& p0, float radius, float r, float g, fl
 
 // -------------------------------------------------------------------------
 
-void CRenderer::PrepForRender(){
+void CGLut_Renderer::PrepForRender(){
 	// Camera
 	glMatrixMode(GL_PROJECTION); // Use the Projection Matrix
 	glLoadIdentity(); // Reset Matrix
@@ -134,7 +134,7 @@ void CRenderer::PrepForRender(){
 	glPushMatrix();
 }
 
-Vector3 CRenderer::GetMousePosition2Dto3D()
+Vector3 CGLut_Renderer::GetMousePosition2Dto3D()
 {
 	// First get the mouse position (i.e., relative to our draw window)
 	HDC hdc = ::wglGetCurrentDC();
@@ -174,7 +174,7 @@ Vector3 CRenderer::GetMousePosition2Dto3D()
 	return v0 + (v1 - v0)*t;
 }
 
-void CRenderer::FinishRender(){
+void CGLut_Renderer::FinishRender(){
 	glPopMatrix();
 	glutSwapBuffers();
 }

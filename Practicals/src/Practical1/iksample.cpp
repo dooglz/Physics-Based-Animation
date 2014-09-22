@@ -13,9 +13,10 @@ b.kenwright@napier.ac.uk
 #include "utilities.h"
 #include "helpermath.h" // Vector3, Matrix4, and Quaternion
 #include "iksample.h"
-#include "renderer.h"
+#include "glut_renderer.h"
 
-extern CRenderer Renderer;
+
+extern CGLut_Renderer Renderer;
 
 CLink::CLink(Vector3& axis, float angle)
 {

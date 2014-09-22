@@ -2,7 +2,7 @@
 #define WINDOW_WIDTH 1280
 #define WINDOW_HEIGHT 720
 
-
+/*
 #ifndef int8_t
 	typedef signed char	int8_t;
 #endif
@@ -24,3 +24,4 @@
 #ifndef uint32_t
 	typedef unsigned long int	uint32_t;
 #endif
+	*/

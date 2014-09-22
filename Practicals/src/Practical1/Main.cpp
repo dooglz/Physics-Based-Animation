@@ -11,15 +11,16 @@ b.kenwright@napier.ac.uk
 */
 
 #include "windows.h"
-#include "GL/glut.h"
+#include "glut/glut.h"
+#include "sdl/SDL.h"
 #include "utilities.h"
 #include "iksample.h"
-#include "renderer.h"
+#include "glut_renderer.h"
 
 #define FPS_SAMPLE_SIZE 10
 
 CIkSystem Isystem;
-CRenderer Renderer;
+CGLut_Renderer Renderer;
 void render(void);
 
 static uint16_t previoustime;
@@ -27,7 +28,7 @@ static uint16_t times[FPS_SAMPLE_SIZE];
 static uint8_t framecount;
 
 // Program Entry Point
-void main(int argc, char **argv)
+int main(int argc, char *argv[])
 {
 	Isystem.Setup();
 
@@ -38,11 +39,21 @@ void main(int argc, char **argv)
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
 	glutCreateWindow("Simulation");
 
+	SDL_Init(SDL_INIT_VIDEO);
+	//Use OpenGL 3.1 core
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	//Create an ogl window
+	SDL_Window* _window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
+
 	// register callbacks
 	glutDisplayFunc(render);
 	glutIdleFunc(render);
 	// enter GLUT event processing cycle
 	glutMainLoop();
+	return 0;
 }
 
 
