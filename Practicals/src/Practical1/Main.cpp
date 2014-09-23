@@ -9,7 +9,7 @@ www.napier.ac.uk/games/
 
 b.kenwright@napier.ac.uk
 */
-#include "glew/glew.h"
+
 #include "windows.h"
 #include "glut/glut.h"
 
@@ -17,11 +17,14 @@ b.kenwright@napier.ac.uk
 #include "utilities.h"
 #include "iksample.h"
 #include "glut_renderer.h"
-
+#include "ogl_renderer.h"
+#include "shape_Renderer.h"
 #define FPS_SAMPLE_SIZE 10
+
 
 CIkSystem Isystem;
 CGLut_Renderer Renderer;
+COGL_Renderer ORenderer;
 void render(void);
 
 static uint16_t previoustime;
@@ -38,8 +41,8 @@ void CheckGL(){
 
 void CheckSDL(){
 	const char* err = SDL_GetError();
-	if (strlen(err) != 0){ 
-		printf("SDL error: %s\n", err); 
+	if (strlen(err) != 0){
+		printf("SDL error: %s\n", err);
 		SDL_ClearError();
 		//DBG_HALT;
 	}
@@ -53,6 +56,10 @@ SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data, void* userd
 	return defaultHandler(data, userdata);
 }
 
+
+
+
+
 void SDLVersionInfo()
 {
 	SDL_version compiled;
@@ -65,66 +72,38 @@ void SDLVersionInfo()
 	printf("linking against SDL version %d.%d.%d.\n",
 		linked.major, linked.minor, linked.patch);
 }
-void GLInfo()
-{
-	printf("---------------- OpenGL Info -----------------------------------\n");
-	printf("    Version: %s\n", glGetString(GL_VERSION));
-	printf("     Vendor: %s\n", glGetString(GL_VENDOR));
-	printf("   Renderer: %s\n", glGetString(GL_RENDERER));
-	printf("    Shading: %s\n", glGetString(GL_SHADING_LANGUAGE_VERSION));
-	printf("----------------------------------------------------------------\n");
-}
 
 void init(){
-
+	SDLVersionInfo();
+	SDL_Init(SDL_INIT_VIDEO);
+	SDL_SetAssertionHandler(CustomAssertionHandler, NULL);
+	ORenderer.InitDisplay();
 }
+void initGlut()
+{
+	// init GLUT and create window
 
+	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
+	glutInitWindowPosition(100, 100);
+	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	glutCreateWindow("Simulation");
+	// register callbacks
+	glutDisplayFunc(render);
+	glutIdleFunc(render);
+	// enter GLUT event processing cycle
+	glutMainLoop();
+}
 
 // Program Entry Point
 int main(int argc, char *argv[])
 {
 	init();
 	Isystem.Setup();
-
-	// init GLUT and create window
 	glutInit(&argc, argv);
-	glutInitDisplayMode(GLUT_DEPTH | GLUT_DOUBLE | GLUT_RGBA);
-	glutInitWindowPosition(100, 100);
-	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-	glutCreateWindow("Simulation");
 
-	SDLVersionInfo();
-	SDL_Init(SDL_INIT_VIDEO);
-	SDL_SetAssertionHandler(CustomAssertionHandler, NULL);
+	CShape_Renderer::Init();
 
-	//Use OpenGL 3.1 core
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 4);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-	//Create an ogl window
-	SDL_Window* _window = SDL_CreateWindow("SDL", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
-
-	//Create context
-	SDL_GLContext _gContext = SDL_GL_CreateContext(_window);
-	SDL_assert(_gContext != NULL);
-	GLInfo();
-
-	//Initialize GLEW, do we even need it?
-	glewExperimental = GL_TRUE;
-	SDL_assert(glewInit() == GLEW_OK);
-	//Glewinit always throws an error, due to that experimental flag, just ignore it.
-	glGetError();
-
-	//Use Vsync
-	SDL_assert(SDL_GL_SetSwapInterval(1) >= 0);
-	
-
-	// register callbacks
-	glutDisplayFunc(render);
-	glutIdleFunc(render);
-	// enter GLUT event processing cycle
-	glutMainLoop();
+	initGlut();
 	return 0;
 }
 
@@ -146,9 +125,15 @@ static uint16_t CalculateFps()
 
 void render(void)
 {
+	ORenderer.PrepForRender();
+	ORenderer.Clear();
+
+
 	const uint16_t delta = CalculateFps();
 	Renderer.PrepForRender();
 	Isystem.Render();
 	Renderer.FinishRender();
+
+	ORenderer.FinishRender();
 }
 
