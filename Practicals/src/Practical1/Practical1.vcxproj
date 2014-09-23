@@ -40,7 +40,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <OutDir>../../bin/$(ProjectName)/$(Configuration)\</OutDir>
-    <IntDir>../../build/</IntDir>
+    <IntDir>../../build/$(ProjectName)/$(Configuration)/</IntDir>
     <IncludePath>$(VC_IncludePath);$(WindowsSDK_IncludePath);../../include/;</IncludePath>
     <LibraryPath>$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);../../lib/win32/x86/;</LibraryPath>
   </PropertyGroup>
@@ -60,6 +60,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>glut/glut32.lib;glu32.lib;OpenGL32.lib;sdl/SDL2.lib;sdl/SDL2main.lib;sdl/SDL2test.lib;glew/glew32d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>Console</SubSystem>
+      <AdditionalLibraryDirectories>
+      </AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
