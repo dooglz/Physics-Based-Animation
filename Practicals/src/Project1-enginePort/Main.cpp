@@ -4,7 +4,7 @@ Sam Serrels
 sam@samserrels.com
 */
 #include <stdio.h>
-#include "engine/GameEngine.h"
+#include "sharp-blue/GameEngine.h"
 #include "ik_demo.h"
 
 int main(int argc, char** argv)

@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>../../lib/win32/x86/;</AdditionalLibraryDirectories>
-      <AdditionalDependencies>sdl/SDL2.lib;sdl/SDL2main.lib;glew/glew32d.lib;opengl32.lib;engine/Engine.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sdl/SDL2.lib;sdl/SDL2main.lib;glew/glew32d.lib;opengl32.lib;Sharp-Blue/SharpBlue.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
