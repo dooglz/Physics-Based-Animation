@@ -32,19 +32,19 @@ void CIkSystem::Setup()
 void CIkSystem::Reach(int i, const vector3& target)
 {
 	// Get the location of the current end-effector
-	vector3 end = Transform(links[links.size() - 1]->m_base, vector3(links[links.size() - 1]->linkLength, 0, 0));
-	matrix4
-	vector3 dir = target - GetTranslation(links[i]->m_base);
+	vector3 end = M4::Transform(links[links.size() - 1]->m_base, vector3(links[links.size() - 1]->linkLength, 0, 0));
+	vector3 dir = target - M4::GetTranslation(links[i]->m_base);
 	
-	vector3 vB = GetTranslation(links[i]->m_base);
+	vector3 vB = M4::GetTranslation(links[i]->m_base);
 	vector3 v0 = (end - vB);
 	vector3 v1 = Normalize(target - vB);
 	
-	vector3 axis = Cross(end - vB, v1);
+	vector3 axis = glm::cross(end - vB, v1);
 	//DBG_ASSERT( axis.LengthSq()>0 );
 	axis = Normalize(axis);
 
-	float ax = Dot(v0, v1) / (end - vB).length;
+	vector3 axv = vector3(end - vB);
+	float ax = Dot(v0, v1) / axv.length();
 	ax = fmin(1.0f, fmax(ax, -1.0f));
 	ax = (float)acos(ax);
 
@@ -52,9 +52,9 @@ void CIkSystem::Reach(int i, const vector3& target)
 	// axis-angle - we use quaternions to adjust the current axis
 	// angle (i.e., quaternions are more efficient - easier to find the
 	// shortest path)
-	quaternion qCur = FromAxisAngle(links[i]->m_axis, links[i]->m_angle);
+	Quaternion qCur = QU::FromAxisAngle(links[i]->m_axis, links[i]->m_angle);
 
-	Quaternion qDif = FromAxisAngle(axis, -ax);
+	Quaternion qDif = QU::FromAxisAngle(axis, -ax);
 
 	Quaternion qNew = qCur * qDif;
 
@@ -66,7 +66,7 @@ void CIkSystem::Reach(int i, const vector3& target)
 	// For 3D ball joint - we use an axis-angle combination
 	// could just store a quaternion
 	vector3 axis2;
-	float angle2 = ToAxisAngle(qNew, axis2);
+	float angle2 = QU::ToAxisAngle(qNew, axis2);
 	links[i]->m_axis = axis2;
 	links[i]->m_angle = angle2;
 }
@@ -118,7 +118,7 @@ void CIkSystem::UpdateIK()
 	{
 	//	Renderer.DrawSphere(GetTranslation(links[i]->m_base), 0.1f, 0.5f, 0.5f, 0.9f);
 		vector3 base = M4::GetTranslation(links[i]->m_base);
-		vector3 end = M4::Transform(links[i]->m_base, vector3(linkLength, 0, 0));
+		vector3 end = M4::Transform(links[i]->m_base, vector3(links[i]->linkLength, 0, 0));
 
 	//	Renderer.DrawArrow(base, end, 0.2f);
 	}
