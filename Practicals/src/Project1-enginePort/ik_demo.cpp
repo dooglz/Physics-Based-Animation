@@ -1,25 +1,26 @@
-#include "sharp-blue/GMaths.h"
 #include "ik_Demo.h"
+#include "ik_system.h"
+#include <string>
+
+#include "sharp-blue/GMaths.h"
 #include "sharp-blue/Mesh.h"
 #include "sharp-blue/torus.h"
 #include "sharp-blue/Input.h"
-#include <string>
 #include "sharp-blue/Actor.h"
 #include "sharp-blue/GameEngine.h"	
-
 #include "sharp-blue/Renderer.h"
 #include "sharp-blue/MeshLoader.h"
 #include "sharp-blue/Event_Manager.h"
 #include "sharp-blue/Font.h"
 
 matrix4 ViewProjection;
-matrix4 projMatrix;
 matrix4 ModelProjection1;
 matrix4 ModelProjection2;
-stMesh* bmesh;
-Engine::Actor torusActor;
-stMesh torus;
+
+stMesh* cubeMesh;
 vector3 cameraPos;
+
+CIkSystem Isystem;
 
 float horizontalAngle;
 float verticalAngle;
@@ -65,27 +66,16 @@ void registerInputs()
 
 void CIK_Demo::init()
 {
-
-	//load a Torus mesh from the torus generator	
-	torus.vertexData = CreateTorus(1, 5, 10, 10);
-
-	torus.loadedMain = true;
-	torus.numVerts = torus.vertexData.size();
-	torus.strip = true;
-	Engine::GameEngine::Renderer->assignShader(&torus, "");
-	Engine::GameEngine::Meshloader->loadOnGPU(&torus);
-
-
 	//load a model from a .obj file
 	std::string name = "models/cube.obj";
 	name = FILE_PATH + name;
-	bmesh = Engine::GameEngine::Meshloader->loadOBJFile(name);
-	Engine::GameEngine::Renderer->assignShader(bmesh, "");
-	Engine::GameEngine::Meshloader->loadOnGPU(bmesh);
+	cubeMesh = Engine::GameEngine::Meshloader->loadOBJFile(name);
+	Engine::GameEngine::Renderer->assignShader(cubeMesh, "");
+	Engine::GameEngine::Meshloader->loadOnGPU(cubeMesh);
 
-	//Setup view matricies
-	// Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit <-> 100 units
-	projMatrix = M4::perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
+	//Setup view matrices
+	//Projection matrix : 60° Field of View, 16:9 ratio, display range : 0.1 unit <-> 100 units
+	Engine::GameEngine::Renderer->projMatrix = M4::perspective(60.0f, (16.0f / 9.0f), 1.0f, 2000.0f);
 
 	registerInputs();
 
@@ -93,16 +83,17 @@ void CIK_Demo::init()
 	cameraPos = vector3(-30, 0, 0);
 	verticalAngle = 0.0f;
 
-	torusActor.scale = vector3(2.0f, 2.0f, 2.0f);
-	torusActor.rotation = vector3(0.0f, 0.0f, 0.0f);
-	torusActor.position = vector3(0.0f, 0.0f, 0.0f);
+	Isystem.Setup();
 }
+
 float a;
 float x, y, z;
 void CIK_Demo::update(float delta)
 {
 	a += delta;
-	torusActor.rotation = vector3(0, a*0.1f, 0);
+
+	Isystem.Update(delta);
+
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
 	}
@@ -149,8 +140,7 @@ void CIK_Demo::update(float delta)
 		cameraPos += (delta / 10.0f)* right;
 	}
 
-	matrix4 viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
-	ViewProjection = (projMatrix * viewMatrix);
+	Engine::GameEngine::Renderer->viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
 
 	matrix4 rot = M4::rotation(a*0.025f, vector3(0, 1, 0));
 	matrix4 rot2 = M4::rotation(a*-0.01f, vector3(0, 1, 0));
@@ -160,14 +150,10 @@ void CIK_Demo::update(float delta)
 	ModelProjection2 = ViewProjection * M4::translation(vector3(0, 0, 0))* scl * rot;
 }
 
-bool flp;
+
 void CIK_Demo::render()
 {
-	flp = !flp;
-	Engine::GameEngine::Renderer->renderMesh(bmesh, ModelProjection2);
-	//Engine::Engine::Renderer->renderMesh(&torus, ModelProjection1);
-	Engine::GameEngine::Renderer->renderMesh(&torus, ViewProjection * torusActor.getModelProjection());
-	Engine::GameEngine::Font->renderString(flp, "Hello World", 150, 150);
+	Isystem.Render();
 }
 
 void CIK_Demo::shutdown()

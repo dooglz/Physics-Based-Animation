@@ -24,12 +24,18 @@
     <ClCompile Include="ik_system.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="primative_actor.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ik_demo.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ik_system.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="primative_actor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

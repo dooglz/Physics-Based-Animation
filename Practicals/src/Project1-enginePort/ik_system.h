@@ -1,7 +1,9 @@
 #pragma once
 #include "sharp-blue/Mesh.h"
 #include "sharp-blue/GMaths.h"
-
+namespace Engine{
+	class Actor;
+}
 class CIkLink
 {
 public:
@@ -11,12 +13,12 @@ public:
 	vector3	m_axis;		// local axis
 	float m_angle;	// local angle
 
-	float linkLength = 2.0f;
+	float linkLength;
 
 	// base of link position and orientation
 	matrix4	m_base;
 
-	stMesh* mesh;
+	Engine::Actor* actor;
 };
 
 class CIkSystem
@@ -33,6 +35,10 @@ public:
 	void UpdateHiearchy();
 	void UpdateIK();
 
+	void Update(float delta);
+
 	// Graphics/Render update code
-	void Render(void);
+	void Render();
+	static void DrawSphere(const vector3& p0, float radius, float r, float g, float b);
+
 };

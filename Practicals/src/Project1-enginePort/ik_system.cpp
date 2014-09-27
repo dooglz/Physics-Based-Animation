@@ -11,6 +11,9 @@ b.kenwright@napier.ac.uk
 */
 
 #include "ik_system.h"
+#include "sharp-blue/Renderer.h"
+#include "sharp-blue/GameEngine.h"	
+#include "primative_actor.h"
 
 CIkLink::CIkLink(vector3& axis, float angle)
 {
@@ -24,7 +27,10 @@ void CIkSystem::Setup()
 {
 	for (int i = 0; i<numLinks; ++i)
 	{
-		links.push_back(new CIkLink(vector3(0, 0, 1), (float)i*0.2f));
+		CIkLink* L = new CIkLink(vector3(0, 0, 1), (float)i*0.2f);
+		L->actor = new CPrimative(SPHERE);
+		L->linkLength = 3.0f;
+		links.push_back(L);
 	}
 }
 
@@ -92,9 +98,30 @@ void CIkSystem::UpdateHiearchy()
 void CIkSystem::UpdateIK()
 {
 
+	
+}// End UpdateIK(..)
+
+
+// Graphics/Render update code
+void CIkSystem::Render()
+{
+	for (int i = 0; i < (int)links.size(); ++i)
+	{
+		links[i]->actor->Render();
+	}
+}
+
+void CIkSystem::DrawSphere(const vector3& p0, float radius, float r, float g, float b)
+{
+	matrix4 ModelProjection = M4::identity();
+	//Engine::GameEngine::Renderer->renderMesh(cubeMesh, ModelProjection);
+}
+
+void CIkSystem::Update(float delta)
+{
 	// Current `end' effector position
 	//vector3 target = Renderer.GetMousePosition2Dto3D();
-	vector3 target = vector3{ 0, 0, 0 };
+	vector3 target = vector3{ 0.5f, 0.5f, 0 };
 	//Renderer.DrawSphere(target, 0.16f, 0.1f, 0.5f, 0.4f);
 
 	// Either work from the end towards the base or from the
@@ -116,19 +143,12 @@ void CIkSystem::UpdateIK()
 
 	for (int i = 0; i<(int)links.size(); ++i)
 	{
-	//	Renderer.DrawSphere(GetTranslation(links[i]->m_base), 0.1f, 0.5f, 0.5f, 0.9f);
+		//	Renderer.DrawSphere(GetTranslation(links[i]->m_base), 0.1f, 0.5f, 0.5f, 0.9f);
 		vector3 base = M4::GetTranslation(links[i]->m_base);
 		vector3 end = M4::Transform(links[i]->m_base, vector3(links[i]->linkLength, 0, 0));
+		links[i]->actor->position = base;
 
-	//	Renderer.DrawArrow(base, end, 0.2f);
+		//	Renderer.DrawArrow(base, end, 0.2f);
 	}
 
-}// End UpdateIK(..)
-
-
-// Graphics/Render update code
-void CIkSystem::Render(void)
-{
-	// Update 
-	UpdateIK();
 }
