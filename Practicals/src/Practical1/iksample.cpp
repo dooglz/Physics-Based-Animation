@@ -100,8 +100,8 @@ void CIkSystem::UpdateIK()
 {
 	
 	// Current `end' effector position
-	Vector3 target = Renderer.GetMousePosition2Dto3D();
-
+	//Vector3 target = Renderer.GetMousePosition2Dto3D();
+	Vector3 target = Vector3{ 5.0f, 6.0f, 0 };
 	Renderer.DrawSphere(target, 0.16f, 0.1f, 0.5f, 0.4f);
 
 	// Either work from the end towards the base or from the
@@ -118,7 +118,7 @@ void CIkSystem::UpdateIK()
 		// the new position of the limb - so we don't have
 		// to keep updating the hierarchy - performance
 		// improvement 
-		Reach(i, target);
+	//	Reach(i, target);
 	}
 
 	for (int i = 0; i<(int)links.size(); ++i)

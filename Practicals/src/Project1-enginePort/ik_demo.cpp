@@ -13,12 +13,12 @@
 #include "sharp-blue/Event_Manager.h"
 #include "sharp-blue/Font.h"
 
-matrix4 ViewProjection;
-matrix4 ModelProjection1;
-matrix4 ModelProjection2;
+Matrix4 ViewProjection;
+Matrix4 ModelProjection1;
+Matrix4 ModelProjection2;
 
 stMesh* cubeMesh;
-vector3 cameraPos;
+Vector3 cameraPos;
 
 CIkSystem Isystem;
 
@@ -79,8 +79,8 @@ void CIK_Demo::init()
 
 	registerInputs();
 
-	horizontalAngle = 1.5f;
-	cameraPos = vector3(-30, 0, 0);
+	horizontalAngle = 0.0f;
+	cameraPos = Vector3(0, 0, -30.0f);
 	verticalAngle = 0.0f;
 
 	Isystem.Setup();
@@ -111,21 +111,21 @@ void CIK_Demo::update(float delta)
 	}
 
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	vector3 direction = vector3(
+	Vector3 direction = Vector3(
 		cos(verticalAngle) * sin(horizontalAngle),
 		sin(verticalAngle),
 		cos(verticalAngle) * cos(horizontalAngle)
 		);
 
 	// Right vector
-	vector3 right = vector3(
+	Vector3 right = Vector3(
 		sin(horizontalAngle - 3.14f / 2.0f),
 		0,
 		cos(horizontalAngle - 3.14f / 2.0f)
 		);
 
 	// Up vector
-	vector3 up = M3::cross(right, direction);
+	Vector3 up = M3::cross(right, direction);
 
 	if (Engine::Input::getMapData("W") > 128){
 		cameraPos += (delta / 10.0f)*direction;
@@ -142,12 +142,12 @@ void CIK_Demo::update(float delta)
 
 	Engine::GameEngine::Renderer->viewMatrix = M4::lookat(cameraPos, cameraPos + direction, up);
 
-	matrix4 rot = M4::rotation(a*0.025f, vector3(0, 1, 0));
-	matrix4 rot2 = M4::rotation(a*-0.01f, vector3(0, 1, 0));
-	matrix4 scl = M4::scale(vector3(2.0f, 2.0f, 2.0f));
+	Matrix4 rot = M4::rotation(a*0.025f, Vector3(0, 1, 0));
+	Matrix4 rot2 = M4::rotation(a*-0.01f, Vector3(0, 1, 0));
+	Matrix4 scl = M4::scale(Vector3(2.0f, 2.0f, 2.0f));
 	//glm rotation uses degrees
-	ModelProjection1 = ViewProjection * M4::translation(vector3(0, 0, 0))* scl * rot2;
-	ModelProjection2 = ViewProjection * M4::translation(vector3(0, 0, 0))* scl * rot;
+	ModelProjection1 = ViewProjection * M4::translation(Vector3(0, 0, 0))* scl * rot2;
+	ModelProjection2 = ViewProjection * M4::translation(Vector3(0, 0, 0))* scl * rot;
 }
 
 
