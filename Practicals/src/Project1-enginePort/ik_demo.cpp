@@ -79,8 +79,8 @@ void CIK_Demo::init()
 
 	registerInputs();
 
-	horizontalAngle = 0.0f;
-	cameraPos = Vector3(0, 0, -30.0f);
+	horizontalAngle = 3.0f;
+	cameraPos = Vector3(0, 0, 30.0f);
 	verticalAngle = 0.0f;
 
 	Isystem.Setup();

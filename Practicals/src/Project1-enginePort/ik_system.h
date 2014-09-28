@@ -13,7 +13,8 @@ public:
 
 	// Note- we could store this as a quaternion
 	Vector3	m_axis;		// local axis
-	float m_angle;	// local angle
+	// local angle, in Radians
+	float m_angle;	
 
 	float linkLength;
 
@@ -28,7 +29,7 @@ class CIkSystem
 public:
 	std::vector<CIkLink*> links;
 	// Simulation constants
-	int	numLinks = 7;
+	int	numLinks = 9;
 	
 	// Build or set of links (i.e., length and angle)
 	void Setup();

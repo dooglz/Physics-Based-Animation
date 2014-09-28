@@ -27,9 +27,11 @@ void CIkSystem::Setup()
 {
 	for (int i = 0; i<numLinks; ++i)
 	{
-		CIkLink* L = new CIkLink(Vector3(0, 0, 1), (float)i*10.0f);
+		float rot = 0;
+		if (i > 0) { rot = (float)i*0.1f; }
+		CIkLink* L = new CIkLink(Vector3(0, 0, 1), rot);
 		L->actor = new CPrimative(SPHERE);
-		L->linkLength = 2.0f;
+		L->linkLength = 4.0f;
 		links.push_back(L);
 	}
 }
@@ -85,10 +87,13 @@ void CIkSystem::UpdateHiearchy()
 	//links[0]->m_base = SetTranslation( Vector3(0,0,0) ); 
 	for (int i = 0; i<(int)links.size(); ++i)
 	{
-		Matrix4 R1 = AngleAxisToMatrix(links[i]->m_axis, links[i]->m_angle * (M_PI / 180.0f));
+		Matrix4 R1 = AngleAxisToMatrix(links[i]->m_axis, links[i]->m_angle);
 		Matrix4 T1 = M4::translation(Vector3(links[i]->linkLength, 0, 0));
-		links[i]->m_base = R1 * T1;
-		if (i > 0) links[i]->m_base = links[i]->m_base * links[i - 1]->m_base;
+		links[i]->m_base = T1*R1;
+		if (i > 0){ 
+			links[i]->m_base = links[i - 1]->m_base * links[i]->m_base;
+		}
+	//	printf("I'm Link %i,My rotation is: %f, my base is at: (%f,%f)\n", i, links[i]->m_angle, links[i]->m_base[3].x, links[i]->m_base[3].y);
 	}
 }
 
@@ -100,12 +105,14 @@ void CIkSystem::Render()
 		links[i]->actor->Render();
 	}
 }
-
+float abb = 0.0f;
 void CIkSystem::Update(float delta)
 {
+	abb += delta*0.01f;
 	// Current `end' effector position
 	//Vector3 target = Renderer.GetMousePosition2Dto3D();
-	Vector3 target = Vector3{ 5.0f, 6.0f, 0 };
+	Vector3 target = Vector3{ 5.0f*sin(abb), 5.0f*cos(abb), 0 };
+	printf("%f,%f \n", target.x, target.y);
 	//Renderer.DrawSphere(target, 0.16f, 0.1f, 0.5f, 0.4f);
 
 	// Either work from the end towards the base or from the
@@ -130,8 +137,16 @@ void CIkSystem::Update(float delta)
 		//	Renderer.DrawSphere(GetTranslation(links[i]->m_base), 0.1f, 0.5f, 0.5f, 0.9f);
 		Vector3 base = M4::GetTranslation(links[i]->m_base);
 		Vector3 end = M4::Transform(links[i]->m_base, Vector3(links[i]->linkLength, 0, 0));
+
 		links[i]->actor->position = base;
-		//links[i]->actor->rotation = AngleAxisToEuler(links[i]->m_axis, links[i]->m_angle);
+
+		//Vector3 rot = AngleAxisToEuler(links[i]->m_axis, links[i]->m_angle);
+
+		Matrix3 m3 = Matrix3(links[i]->m_base);
+		Quaternion q = glm::quat_cast(m3);
+		Vector3 rot = QuatToEuler(q);
+		links[i]->actor->rotation = (rot);
+		//return;
 		//	Renderer.DrawArrow(base, end, 0.2f);
 	}
 

@@ -16,7 +16,7 @@ CPrimative::CPrimative(stPrimitive_type type){
 		break;
 	}
 	
-	scale = Vector3(1, 1, 1);
+	scale = Vector3(2.0f, 1, 1);
 	rotation = Vector3(0, 0, 0);
 	//printf("new asteroid: %i -  %f,%f,%f - %f,%f\n", shape, a, b, c, _direction.x, _direction.y);
 }
