@@ -22,6 +22,7 @@ public:
 	Matrix4	m_base;
 
 	Engine::Actor* actor;
+	Engine::Actor* actor2;
 };
 
 class CIkSystem
@@ -29,7 +30,7 @@ class CIkSystem
 public:
 	std::vector<CIkLink*> links;
 	// Simulation constants
-	int	numLinks = 9;
+	int	numLinks = 3;
 	
 	// Build or set of links (i.e., length and angle)
 	void Setup();
