@@ -67,17 +67,18 @@ void CIkSystem::Reach(int i, const Vector3& target)
 	bool b = abs(axis.x) == 0 && abs(axis.y) == 0 && abs(axis.z) == 0;
 	//ASSERT( !b );
 	if (b){
-		axis = Vector3(0, 0, 1);
+		axis = Vector3(0, 0, 0);
 	}
-	axis = Normalize(axis);
-
+	else{
+		axis = Normalize(axis);
+	}
 	//Vector3 axv = Vector3(end - vB);
 	
 	//float l = v0.length();
 	float dot = Dot(v0, v1);
 	float ax = dot;
 	ax = fmin(1.0f, fmax(ax, -1.0f));
-	ax = (float)acos(ax);// *M_PI / 180.0f;
+	ax = (float)acos(ax);
 
 	glm::quat q;
 
@@ -137,7 +138,7 @@ void CIkSystem::Update(float delta)
 	abb += delta*0.005f;
 	// Current `end' effector position
 	//Vector3 target = Renderer.GetMousePosition2Dto3D();
-	Vector3 target = Vector3{ 15.0f*sin(abb), 15.0f*cos(abb), 0 };
+	Vector3 target = Vector3{ 15.0f*sin(abb), 15.0f*cos(abb), 5.0f*cos(abb) };
 	//Vector3 target = Vector3{ 10.0f, 0.1f, 0 };
 	targetPoint.position = target;
 	targetPoint.rotation = Vector3{ abb, 0, 0 };
