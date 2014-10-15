@@ -82,7 +82,6 @@
 \LoadClass[twocolumn,letterpaper]{article}
 
 % required packages.
-
 \RequirePackage{amsmath}
 \RequirePackage{lineno}
 \RequirePackage[scaled=.92]{helvet}
@@ -98,7 +97,7 @@
 \setlength{\topmargin}{-0.700in}
 \setlength{\oddsidemargin}{-0.250in}
 \setlength{\evensidemargin}{-0.250in}
-\setlength{\columnsep}{2pc}
+\setlength{\columnsep}{1pc}
 \setlength{\headheight}{0.200in}
 \setlength{\headsep}{0.250in}
 \setlength{\footskip}{0.500in}
@@ -289,7 +288,7 @@
 % Paragraph and subparagraph environment tweaks.
 
 \renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
-                {2.05ex}%
+                {1.05ex}%
                 {-1em}%
                 {\reset@font\normalsize\sffamily\bfseries\@ACMsectionfont}}
 \renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%

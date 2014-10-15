@@ -5,6 +5,7 @@
 % % Citations/references are in report.bib 
 
 \documentclass[conference]{acmsiggraph}
+\usepackage{lipsum}
 
 \TOGonlineid{45678}
 \TOGvolume{0}
@@ -39,30 +40,30 @@ Realistic Real time physics simulation is highly sought after in interactive app
 \end{abstract}
 
 \keywordlist
-\copyrightspace
+%\copyrightspace
 
 \section{Introduction}
 
-The introduction sells your physics-based simulation effect.  It tells the reader about the problems and motivation.  It tells the reader about why it is important.  Your introduction should be five clear well defined paragraphs.
+\paragraph{Physics Engines}
+Large and complex video games tend to use 3rd party physics solutions, this vastly cuts down on the project development man-hours, and the maintenance thereafter. Third party physics solutions have the benefit of being battle tested out in the wild beforehand, so internal reliability is usually a given. A further benefit is that being developed solely for the purpose of being a "a good physics engine" by people who are usually experts in the field, large optimisations are already implemented. The problems arise in the implementation, the coupling of a physics engine and the existing codebase. While they are usually well coded, they are not tailor made to each game. 
 
-\begin{itemize}
-\item What problem are you solving?
-\item What is the motivation? (What's so interesting and important?)
-\item Why is it hard? (e.g., why do naive approaches fail?)
-\item Why hasn't it been solved before or what are you doing differently? How does yours differ?
-\item What's your approach?  How will you solve the problem?  Are their any specific limitations?
-\item (Optional) How the rest of the report is structured.\\
-e.g., The rest of this report is structured as follows: first we discuss the related work in section 2, and then describes the implementation in Section 3.  Section 4 describes how we intent to evaluated our system.  Section 5 gives the conclusions.
-\end{itemize}
+\paragraph{Optimising for Physics Engines}
+Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
 
-\paragraph{Starting examples:}
-This report attempts to addresses the problem of the applicability of …. in ….. by considering …...  It surveys a number of answers to this question.  Our method offers a simplistic, robust, and reliable scheme.
+\paragraph{Shipping on consoles}
+Video games consoles have vastly varying hardware capabilities and architecture, writing robust code that is performant on all of them is a rarely possible. Code has to be re-designed for each system. The simple truth: more code = more problems, means that throwing a large complex physics engine that you have no knowledge of the inter-working of into the mix, is a recipe for bad performance and bad code. However some physics systems do have separate versions for different architectures, assuming the interface is unchanged, games can swap in different libraries at compile-time. A further extension on to this would be to abstract all the physics so many different libraries can be plugged in.
 
-This report attempts to introduce the reader to …… 
-(Catch the readers attention, Anecdotes, Proverbs, Facts, Real-World Examples...)
+\paragraph{Project Aims}
+This project will attempt to create a physics solution that will run on various systems, along with a game engine with an appropriate interface to swap in other existing physics solutions. This will allow for fair comparisons and benchmarking of the physics solution created by this project.
 
-The problem this report address is …..
+\paragraph{Project Application}
+The systems created in the project will be used to simulate a demo scene, picked to be processing intensive. The scene will be a large set of bouncy balls, bouncing down a sloped street. This will result in plenty of collisions, a large amount of data needing transferred every frame, and something interesting to watch. The inspiration for this came from a Tv advert \cite{advert} where a similar thing was filmed in reality, with real bouncy balls and a real street.
 
+\paragraph{Why is it hard}
+\lipsum[32]
+
+\paragraph{Why hasn't it been done before}
+\lipsum[32]
 
 \section{Related Work}
 
