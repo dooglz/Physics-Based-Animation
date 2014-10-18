@@ -30,7 +30,7 @@ class CIkSystem
 public:
 	std::vector<CIkLink*> links;
 	// Simulation constants
-	int	numLinks = 3;
+	int	numLinks = 4;
 	
 	// Build or set of links (i.e., length and angle)
 	void Setup();

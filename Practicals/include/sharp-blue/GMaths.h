@@ -83,6 +83,7 @@ void MatrixToAngleAxis(const Matrix4 m, Vector3 &axis, float &angle);
 Vector3 QuatToEuler(const Quaternion q);
 Vector3 AngleAxisToEuler(const Vector3 axis, const float angle);
 Vector3 MatrixToEuler(const Matrix4 m);
+Vector3 GetTransaltion(const Matrix4 m);
 
 Quaternion EulerToQuat(const Vector3 euler);
 Quaternion AngleAxisToQuat(const Vector3 axis, const float angle);
@@ -92,6 +93,8 @@ Matrix4 EulerToMatrix(const Vector3 euler);
 Matrix4 QuatToMatrix(const Quaternion q);
 Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
 
+bool isZero(const Vector3 v3);
+Vector3 cross(const Vector3 a, const Vector3 ab);
 
 namespace M4{
 	//

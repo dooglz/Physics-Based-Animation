@@ -26,13 +26,11 @@ CIkLink::CIkLink(Vector3& axis, float angle)
 	m_angle = angle;
 }
 
-
 // Build or set of links (i.e., length and angle)
 void CIkSystem::Setup()
 {
 	for (int i = 0; i<numLinks; ++i)
 	{
-		//if (i > 0) { rot = (float)i*0.1f; }
 		CIkLink* L = new CIkLink(Vector3(0, 0, 1), (float)i*0.0f);
 		L->m_base = Matrix4(1.0f);
 
@@ -63,22 +61,18 @@ void CIkSystem::Reach(int i, const Vector3& target)
 	Vector3 v0 = Normalize(end - vB);
 	Vector3 v1 = Normalize(target - vB);
 	
-	Vector3 axis = glm::cross(end - vB, v1);
-	bool b = abs(axis.x) == 0 && abs(axis.y) == 0 && abs(axis.z) == 0;
-	//ASSERT( !b );
-	if (b){
+	Vector3 axis = cross(end - vB, v1);
+
+	if (isZero(axis)){
 		axis = Vector3(0, 0, 0);
 	}
 	else{
 		axis = Normalize(axis);
 	}
-	//Vector3 axv = Vector3(end - vB);
-	
-	//float l = v0.length();
+
 	float dot = Dot(v0, v1);
-	float ax = dot;
-	ax = fmin(1.0f, fmax(ax, -1.0f));
-	ax = (float)acos(ax);
+	dot = fmin(1.0f, fmax(dot, -1.0f));
+	dot = (float)acos(dot);
 
 	glm::quat q;
 
@@ -88,8 +82,7 @@ void CIkSystem::Reach(int i, const Vector3& target)
 	// shortest path)
 
 	Quaternion qCur = AngleAxisToQuat(links[i]->m_axis, links[i]->m_angle);
-	Quaternion qDif = AngleAxisToQuat(axis, ax);
-
+	Quaternion qDif = AngleAxisToQuat(axis, dot);
 	Quaternion qNew = qCur * qDif;
 
 	// Use slerp to avoid `snapping' to the target - if 
@@ -109,7 +102,6 @@ void CIkSystem::Reach(int i, const Vector3& target)
 
 void CIkSystem::UpdateHiearchy()
 {
-	//links[0]->m_base = SetTranslation( Vector3(0,0,0) ); 
 	for (int i = 0; i<(int)links.size(); ++i)
 	{
 		Matrix4 R1 = AngleAxisToMatrix(links[i]->m_axis, links[i]->m_angle);
@@ -118,7 +110,6 @@ void CIkSystem::UpdateHiearchy()
 		if (i > 0){ 
 			links[i]->m_base = links[i - 1]->m_base * links[i]->m_base;
 		}
-	//	printf("I'm Link %i,My rotation is: %f, my base is at: (%f,%f)\n", i, links[i]->m_angle, links[i]->m_base[3].x, links[i]->m_base[3].y);
 	}
 }
 
@@ -138,13 +129,10 @@ void CIkSystem::Update(float delta)
 	abb += delta*0.005f;
 	// Current `end' effector position
 	//Vector3 target = Renderer.GetMousePosition2Dto3D();
-	Vector3 target = Vector3{ 15.0f*sin(abb), 15.0f*cos(abb), 5.0f*cos(abb) };
+	Vector3 target = Vector3{ 15.0f*sin(abb), 15.0f*cos(abb), 0};
 	//Vector3 target = Vector3{ 10.0f, 0.1f, 0 };
 	targetPoint.position = target;
 	targetPoint.rotation = Vector3{ abb, 0, 0 };
-
-	printf("%f,%f \n", target.x, target.y);
-	//Renderer.DrawSphere(target, 0.16f, 0.1f, 0.5f, 0.4f);
 
 	// Either work from the end towards the base or from the
 	// base towards the leaf
@@ -179,9 +167,8 @@ void CIkSystem::Update(float delta)
 		Matrix3 m3 = Matrix3(links[i]->m_base);
 		Quaternion q = glm::quat_cast(m3);
 		Vector3 rot = QuatToEuler(q);
-		//links[i]->actor->rotation = (rot);
+	//	links[i]->actor->rotation = MatrixToEuler(links[i]->m_base);
 		//return;
-		//	Renderer.DrawArrow(base, end, 0.2f);
 	}
 
 }
