@@ -1,8 +1,10 @@
 #include "engine.h"
 #include "physics.h"
+#include "SDL_platform.h"
 
 namespace Engine{
 	bool Engine::_running;
+	Platform* Engine::_platform;
 
 	Engine::Engine()
 	{
@@ -11,13 +13,14 @@ namespace Engine{
 
 	void Engine::Init()
 	{
+		_platform = new SDL::SDL_Platform();
 		Physics::Init();
 		_running = true;
 	}
 
 	void Engine::createwindow()
 	{
-
+		_platform->createwindow();
 	}
 
 	void Engine::Update(double delta)

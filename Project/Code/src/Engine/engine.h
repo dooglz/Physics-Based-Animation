@@ -1,9 +1,12 @@
 #pragma once
 namespace Engine{
+
+	class Platform;
 	class Engine
 	{
 	protected:
 		static bool _running;
+		static Platform* _platform;
 	public:
 		Engine();
 		static void Init();

@@ -24,12 +24,24 @@
     <ClInclude Include="Physics.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Utilities.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_Platform.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Physics.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

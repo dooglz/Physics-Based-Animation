@@ -41,16 +41,30 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <IntDir>$(SolutionDir)\..\temp\$(ProjectName)\$(Platform)\$(Configuration)\</IntDir>
     <OutDir>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\</OutDir>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>$(SolutionDir)\..\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
+    <Lib>
+      <AdditionalDependencies>SDL2.lib;glew32.lib;opengl32.lib;</AdditionalDependencies>
+    </Lib>
+    <Lib>
+      <AdditionalLibraryDirectories>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\..\lib\$(Platform)\</AdditionalLibraryDirectories>
+    </Lib>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <PostBuildEvent>
+      <Command>lib /out:test2.lib ../../lib/Win32/debug/Engine.lib ../../lib/Win32/glew32s.lib</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -69,11 +83,15 @@
   <ItemGroup>
     <ClInclude Include="engine.h" />
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Platform.h" />
+    <ClInclude Include="SDL_Platform.h" />
     <ClInclude Include="Time.h" />
+    <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="SDL_Platform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

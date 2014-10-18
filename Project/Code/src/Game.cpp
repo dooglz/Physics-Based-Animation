@@ -9,6 +9,7 @@ Game::Game(){
 }
 
 void Game::Init(){
+	Engine::Engine::Init();
 	Engine::Engine::createwindow();
 
 }
