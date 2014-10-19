@@ -16,7 +16,7 @@ void Game::Init(){
 
 void Game::Update(double delta)
 {
-
+	printf("TICK: %f\n", delta*100);
 }
 
 void Game::Shutdown()

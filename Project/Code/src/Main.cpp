@@ -15,18 +15,19 @@ int main(int argc, char** argv)
 
 	//Variables for timestep and delta calculations
 	double t = 0.0;
-	const double physicsTimeStep = 0.01;
-	double currentTime = Engine::Time::now();
+	const double physicsTimeStep = 0.00001;
+	unsigned long currentTime = Engine::Time::getTime();
 	double accumulator = 0.0;
 
 	//Begin loop
 	while (Engine::Engine::Run() && GAME->Run())
 	{
-		double newTime = Engine::Time::now();
+		unsigned long newTime = Engine::Time::getTime();
 		double delta = newTime - currentTime;
 		currentTime = newTime;
-
+		
 		//Physics
+		/*
 		accumulator += delta;
 		while (accumulator >= physicsTimeStep)
 		{
@@ -35,6 +36,8 @@ int main(int argc, char** argv)
 			accumulator -= physicsTimeStep;
 			t += physicsTimeStep;
 		}
+		*/
+
 		//Engine Logic update
 		Engine::Engine::Update(delta);
 		//Game Logic Update

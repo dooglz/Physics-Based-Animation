@@ -1,7 +1,9 @@
 #pragma once
 namespace Engine{
-	namespace Time{
-			static double now(){ return 0; }
-	}
+	class Time
+	{
+	public:
+		static unsigned long getTime();
+	};
 }
 
