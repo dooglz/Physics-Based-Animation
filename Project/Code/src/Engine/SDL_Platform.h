@@ -11,19 +11,21 @@ namespace Engine{
 
 		protected:
 			static bool _running;
-			SDL_Window* _window;
-			SDL_GLContext _gContext;
+			static SDL_Window* _window;
+			static SDL_GLContext _gContext;
 			unsigned char _glverMaj;
 			unsigned char _glverMin;
-			unsigned int _displayHeight;
-			unsigned int _displayWidth;
+			
 		public:
 			SDL_Platform();
 			void Init();
 			void createwindow();
 			void Shutdown();
 
+			static void CheckGL();
+			static void CheckSDL();
 
+			static SDL_Window* GetWindow(){ return _window; };
 		};
 	}
 }

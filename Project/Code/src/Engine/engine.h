@@ -2,11 +2,14 @@
 namespace Engine{
 
 	class Platform;
+	class Scene;
 	class Engine
 	{
 	protected:
 		static bool _running;
 		static Platform* _platform;
+		static Scene* _scene;
+
 	public:
 		Engine();
 		static void Init();

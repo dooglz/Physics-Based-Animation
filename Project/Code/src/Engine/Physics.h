@@ -7,7 +7,7 @@ namespace Engine{
 
 	public:
 		static void Init();
-		static void Tick(double t, double timeStep);
+		static void Tick(unsigned long t, unsigned long  timeStep);
 		static void Shutdown();
 	};
 }

@@ -51,4 +51,5 @@ namespace Engine{
 	void Entity::setVisibility(const bool b){ _visible = b; }
 	Mesh* Entity::getMesh(){ return _mesh; }
 	void Entity::setMesh(Mesh* msh){ _mesh = msh; }
+	void Entity::Update(double delta){};
 }

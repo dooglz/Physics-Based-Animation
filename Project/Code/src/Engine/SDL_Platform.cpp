@@ -4,7 +4,7 @@
 
 #include "SDL_platform.h"
 #include "Utilities.h"
-
+#include "OGL_Renderer.h"
 
 #include <glew/glew.h>
 #include <sdl/SDL.h>
@@ -39,32 +39,39 @@ void GlewInfo()
 	printf("----------------------------------------------------------------\n");
 }
 
-void CheckGL(){
-	GLenum err;
-	while ((err = glGetError()) != GL_NO_ERROR) {
-		printf("An OGL error has occured: %i\n", err);
-	}
-}
-
-
-void CheckSDL(){
-	const char* err = SDL_GetError();
-	if (strlen(err) != 0){
-		printf("SDL error: %s\n", err);
-		SDL_ClearError();
-	}
-}
-
 SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data, void* userdata)
 {
-	CheckGL();
-	CheckSDL();
+	Engine::SDL::SDL_Platform::CheckGL();
+	Engine::SDL::SDL_Platform::CheckSDL();
 	SDL_AssertionHandler defaultHandler = SDL_GetDefaultAssertionHandler();
 	return defaultHandler(data, userdata);
 }
 
 namespace Engine{
+	unsigned short Platform::_screenWidth;
+	unsigned short Platform::_screenHeight;
+
 	namespace SDL{
+
+		SDL_Window*   SDL_Platform::_window;
+		SDL_GLContext SDL_Platform::_gContext;
+
+
+		void SDL_Platform::CheckGL(){
+			GLenum err;
+			while ((err = glGetError()) != GL_NO_ERROR) {
+				printf("An OGL error has occured: %i\n", err);
+			}
+		}
+
+
+		void SDL_Platform::CheckSDL(){
+			const char* err = SDL_GetError();
+			if (strlen(err) != 0){
+				printf("SDL error: %s\n", err);
+				SDL_ClearError();
+			}
+		}
 
 		SDL_Platform::SDL_Platform()
 		{
@@ -78,7 +85,8 @@ namespace Engine{
 		}
 		void SDL_Platform::Init()
 		{
-			
+			Renderer = new COGL_Renderer();
+			printf("\n");
 		}
 		void SDL_Platform::createwindow()
 		{
@@ -114,15 +122,18 @@ namespace Engine{
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, _glverMaj);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, _glverMin);
 			SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-			_displayHeight = DEFAULT_HEIGHT;
-			_displayWidth = DEFAULT_WIDTH;
-			printf("Display Resolution: %i x %i\n",_displayWidth, _displayHeight);
+			_screenHeight = DEFAULT_HEIGHT;
+			_screenWidth = DEFAULT_WIDTH;
+			printf("Display Resolution: %i x %i\n", _screenWidth, _screenHeight);
 			//Vsync
 			ASSERT(SDL_GL_SetSwapInterval(1) >= 0);
 		}
+
 		void SDL_Platform::Shutdown()
 		{
-			
+			SDL_GL_DeleteContext(_gContext);
+			SDL_DestroyWindow(_window);
+			SDL_Quit();
 		}
 	}
 }

@@ -7,9 +7,9 @@ namespace Engine{
 
 	}
 
-	void Physics::Tick(double t, double timeStep)
+	void Physics::Tick(unsigned long t, unsigned long  timeStep)
 	{
-		printf("Physics TICK: %d\t%d\n", t,timeStep);
+		//printf("Physics TICK: %u\t%u\n", t,timeStep);
 	}
 
 	void Physics::Shutdown()

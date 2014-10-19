@@ -27,11 +27,14 @@ namespace Engine{
 		Vector3 getPosition();
 		Vector3 getRotation();
 		Matrix4 getTranform();
+
 		//TODO void setTransform(const Matrix4 m4);
 		void setScale(const Vector3 v3);
 		void setPosition(const Vector3 v3);
 		void setRotation(const Vector3 v3);
 		bool isVisible();
 		void setVisibility(const bool b);
+
+		void Update(double delta);
 	};
 }

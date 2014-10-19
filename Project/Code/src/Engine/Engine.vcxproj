@@ -85,8 +85,11 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Mesh.h" />
+    <ClInclude Include="OGL_Renderer.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Platform.h" />
+    <ClInclude Include="Renderer.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="SDL_Platform.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Utilities.h" />
@@ -95,7 +98,10 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="OGL_Renderer.cpp" />
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SDL_Platform.cpp" />
     <ClCompile Include="Time.cpp" />
   </ItemGroup>
