@@ -5,6 +5,30 @@
 % % Citations/references are in report.bib 
 
 \documentclass[conference]{acmsiggraph}
+
+\usepackage{graphicx}
+
+\graphicspath{{./images/}}
+
+\newcommand{\figuremacroW}[4]{
+	\begin{figure}[h] %[htbp]
+		\centering
+		\includegraphics[width=#4\columnwidth]{#1}
+		\caption[#2]{\textbf{#2} - #3}
+		\label{fig:#1}
+	\end{figure}
+}
+
+\newcommand{\figuremacroF}[4]{
+	\begin{figure*}[h] % [htbp]
+		\centering
+		\includegraphics[width=#4\textwidth]{#1}
+		\caption[#2]{\textbf{#2} - #3}
+		\label{fig:#1}
+	\end{figure*}
+}
+
+
 \usepackage{lipsum}
 
 \TOGonlineid{45678}
@@ -44,6 +68,8 @@ Realistic Real time physics simulation is highly sought after in interactive app
 
 \section{Introduction}
 
+Realistic Real time physics simulation is highly sought after in interactive applications, especially games. Achieving high-accuracy while maintaining performance in often resource restricted environments(I.E a games console) requires the highest level of optimisations and often results in a trade-off with simulation speed against Accuracy. This project attempts to record and analyse the performance of various optimisations on a simulated scene. This will be taken further by applying the project to various different processing architectures. The scene that will be simulated is a large set of Bouncy balls, travelling down a hill.
+
 \paragraph{Physics Engines}
 Large and complex video games tend to use 3rd party physics solutions, this vastly cuts down on the project development man-hours, and the maintenance thereafter. Third party physics solutions have the benefit of being battle tested out in the wild beforehand, so internal reliability is usually a given. A further benefit is that being developed solely for the purpose of being a "a good physics engine" by people who are usually experts in the field, large optimisations are already implemented. The problems arise in the implementation, the coupling of a physics engine and the existing codebase. While they are usually well coded, they are not tailor made to each game. 
 
@@ -51,23 +77,79 @@ Large and complex video games tend to use 3rd party physics solutions, this vast
 Trying to regain performance from an external physics engine can be a hard task, diving into the source code requires expert knowledge of the inner-workings of the whole system. A common path is to shape the design of the game code to conform better to the demands of the physics engine and hope that the internal optimisations  will be sufficient. Often enough, they are not.
 
 \paragraph{Shipping on consoles}
-Video games consoles have vastly varying hardware capabilities and architecture, writing robust code that is performant on all of them is a rarely possible. Code has to be re-designed for each system. The simple truth: more code = more problems, means that throwing a large complex physics engine that you have no knowledge of the inter-working of into the mix, is a recipe for bad performance and bad code. However some physics systems do have separate versions for different architectures, assuming the interface is unchanged, games can swap in different libraries at compile-time. A further extension on to this would be to abstract all the physics so many different libraries can be plugged in.
+Video games consoles have vastly varying hardware capabilities and architecture, writing robust code that is performant on all of them is a rarely possible. Code has to be re-designed for each system. The simple truth: more code means more problems, so throwing a large complex physics engine that you have no knowledge of the inter-working of into the mix, is a recipe for bad performance and bad code. However some physics systems do have separate versions for different architectures, assuming the interface is unchanged, games can swap in different libraries at compile-time. A further extension on to this would be to abstract all the physics so many different libraries can be plugged in.
 
 \paragraph{Project Aims}
-This project will attempt to create a physics solution that will run on various systems, along with a game engine with an appropriate interface to swap in other existing physics solutions. This will allow for fair comparisons and benchmarking of the physics solution created by this project.
+This project will attempt to create a physics solution that will run on various systems, along with a game engine with an appropriate interface to swap in other existing physics solutions. This will allow for fair comparisons and benchmarking of the physics solution created by this project.\\
+The target platforms will be the Sony Playstation 3, Sony Playstation Vita and a conventional x86 multi-core PC architecture.
+Utilising the general purpose processing functionality of the graphics cards within the PC system for physics is also a possibility.
 
 \paragraph{Project Application}
 The systems created in the project will be used to simulate a demo scene, picked to be processing intensive. The scene will be a large set of bouncy balls, bouncing down a sloped street. This will result in plenty of collisions, a large amount of data needing transferred every frame, and something interesting to watch. The inspiration for this came from a Tv advert \cite{advert} where a similar thing was filmed in reality, with real bouncy balls and a real street.
 
-\paragraph{Why is it hard}
-\lipsum[32]
-
-\paragraph{Why hasn't it been done before}
-\lipsum[32]
+\paragraph{Lack of Statistics}
+Developers who make physics engines written and optimised for a single specific game don't usually publish much information on the performance. The results are always relative the specific game and have little meaning when applied to any other project. General Physics optimisations and platform specific optimisation methods are published, but are rarely included with performance statistics. This project aims to have a breakdown of all the optimisations taken with numerical performance statistics.
 
 \section{Related Work}
 
-Refer to literature on the particular physics-based animation effect you want to synthesize (e.g., published articles, books, conference proceedings, web articles) provide a comprehensive review - and use the correct citation format, e.g., \cite{Sako00}.
+\figuremacroF
+{bullet}
+{Bullet Physics PS3 Pipeline}
+{Requires Intermediate Data Swapping Between PPU and SPU \protect\cite{spuphys}}
+{0.96}
+\figuremacroF
+{insomniac}
+{Insomniac Physics Pipeline}
+{No Intermediate Data Swapping Between PPU and SPU once the physics job has started \protect\cite{spuphys}}
+{0.96}
+
+\paragraph{Physics on the PS3}
+Some of the major physics libraries have been ported in some fashion to the Playstation 3.
+\begin{description}
+  \item[Havok] \hfill \\
+   The Havok physics engine is the most widely used 3rd part library for custom game engines and larger engines such as Unreal Engine 3. The library is a proprietary  technology and information regarding the specific PS3 implementation is not publicly available.
+  \item[Physx] \hfill \\
+  The Nvidia Physx sdk was ported to the PS3, but it's use in released games is mostly undocumented. The Ps3's "RSX" GPU does not include the CUDA architecture that modern Gpus use to further accelerate Physics.
+  \item[Bullet] \hfill \\
+  A fork of the open source physics engine "Bullet", was developed and released. Although not a popular PS3 engine, shipping with only a handful of games, it served mainly as a reference for other engines. As of 2012 this is no longer in active development.
+\end{description}
+
+\paragraph{Custom engines}
+Unfortunately there is no good statistics on the ratio of games shipped with custom physics engines versus 3rd party physics. 
+Documentation and relevant publications on the subject are also rare, the most documented physics implementations are the Bullet engine and the custom engine made by Insomniac games.
+
+\paragraph{Insomniac's approach}
+
+Insomniac games developed a custom solution for utilising the Playstations's SPUs as efficiently as possible, called SPU Shaders. Although not actually linked to shading or rendering, they follow a similar design to graphics shaders, by being modular self contained modules with one specific purpose.\\
+Formally defined as:
+\begin{quote}
+\begin{itemize}
+  \item Fragments of code used in a larger system
+  \item Code is injected at location pre-determined by
+system.
+  \item Custom made for any particular system.
+  \item Allows modifications of system data.
+  \item Can feedback to other systems outside the scope of the current system.
+\end{itemize}
+\cite{spushaders}
+\end{quote}
+
+This system is used extensively for all SPU work in the game, but is also key the implantation of the physics engine. This allows for a modular physics system, tailor made to the SPU's limitations and strengths. The primary benefit is that it also becomes a standalone set of tasks, leaving the main processing thread to deal with other tasks.
+(See Fig:\ref{fig:insomniac})
+
+\paragraph{Bullets's approach}
+The Bullet PS3 implementation took more of a \textit{port} approach rather than a \textit{complete redesign}. This makes sense as Bullet is a Library rather than a single game solution, effort was made to keep the core codebase as untouched as possible to allow for greater stability across all the platforms. The main work was done in the area of scheduling and threading. The system was designed so that the SPU jobs could easily be reimplemented on another platform like the Xbox360 as CPU threads. The SPU code had it's major specific changes in the region of data management and loading, the physics processing code remains largely unchanged apart from some minor optimisations.
+\begin{quote}
+``The Generic convex collision algorithm performs a bit less then specific algorithms.\\
+This generic approach requires Intermediate Data Swapping Between PPU and SPU and requires synchronization between SPUs''
+\cite{spuphys}
+\end{quote}
+(See Fig:\ref{fig:bullet})
+
+\paragraph{Physics on the Vita}
+
+
+Refer to literature on the particular physics-based animation effect you want to synthesize (e.g., published articles, books, conference proceedings, web articles) provide a comprehensive review - and use the correct citation format
 
 Related work should finish with a summary paragraph - emphasising the crucial similarities or differences between existing methods presented in the literature.  For example: (1) you might want to modify the technique to run on the GPU; (2) or you combine different techniques from different authors; (3) or you are simplifying the algorithm to make it run faster.
 
