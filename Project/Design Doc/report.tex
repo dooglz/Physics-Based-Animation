@@ -106,9 +106,9 @@ Developers who make physics engines written and optimised for a single specific 
 Some of the major physics libraries have been ported in some fashion to the Playstation 3.
 \begin{description}
   \item[Havok] \hfill \\
-   The Havok physics engine is the most widely used 3rd part library for custom game engines and larger engines such as Unreal Engine 3. The library is a proprietary  technology and information regarding the specific PS3 implementation is not publicly available.
+   The Havok physics engine is the most widely used 3rd party library for custom game engines and larger engines such as Unreal Engine 3. The library is a proprietary  technology and information regarding the specific PS3 implementation is not publicly available.
   \item[Physx] \hfill \\
-  The Nvidia Physx sdk was ported to the PS3, but it's use in released games is mostly undocumented. The Ps3's "RSX" GPU does not include the CUDA architecture that modern Gpus use to further accelerate Physics.
+  The Nvidia Physx sdk was ported to the PS3, but it's use in released games is mostly undocumented. The PS3's "RSX" GPU does not include the CUDA architecture that modern Gpus use to further accelerate Physics.
   \item[Bullet] \hfill \\
   A fork of the open source physics engine "Bullet", was developed and released. Although not a popular PS3 engine, shipping with only a handful of games, it served mainly as a reference for other engines. As of 2012 this is no longer in active development.
 \end{description}
@@ -158,10 +158,6 @@ investigate ways of improving the games development process.''\cite{comparison}
 
 \paragraph{This project}
 This project will take a similar approach to that of Bullet, by creating a generic physics engine that will run on multiple systems with as little as modification as possible, while still aiming for the best performance. The end result should be a program that uses good software design methodologies, meaning code that is easy to understand and modify. Platform specific modification can then be implemented and the change in performance against the change in code complexity can be measured.
-
-\section{Overview}
-Brief overview of the core principles and mechanism behind your effect.  This should be reflected in your final implementation, so consider what you will actually be implementing. What components make up the effect and how are they connected.
-
 
 \section{Simulation}
 
