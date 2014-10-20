@@ -7,9 +7,7 @@
 \documentclass[conference]{acmsiggraph}
 
 \usepackage{graphicx}
-
 \graphicspath{{./images/}}
-
 \newcommand{\figuremacroW}[4]{
 	\begin{figure}[h] %[htbp]
 		\centering
@@ -60,7 +58,8 @@ Physics-Based Animation (SET09119)}
 \maketitle
 
 \begin{abstract}
-Realistic Real time physics simulation is highly sought after in interactive applications, especially games. Achieving high-accuracy while maintaining performance in often resource restricted environments(I.E a games console) requires the highest level of optimisations and often results in a trade-off with simulation speed against Accuracy. This project attempts to record and analyse the performance of various optimisations on a simulated scene. This will be taken further by applying the project to various different processing architectures. The scene that will be simulated is a large set of Bouncy balls, travelling down a hill.
+This project aims to develop a physics engine and simulate a scene consisting of thousands of bouncing balls, running on various systems, such as the Sony Playstion 3.
+the performance of each system will be measured as the systems are optimised and will be compared in the final report.
 \end{abstract}
 
 \keywordlist
@@ -147,11 +146,18 @@ This generic approach requires Intermediate Data Swapping Between PPU and SPU an
 (See Fig:\ref{fig:bullet})
 
 \paragraph{Physics on the Vita}
+the Processing architecture of the Playstation Vita is similar to that of a common desktop processor with 4 cores, the difference being that the instruction set is ARM rather than X86. The gpu is designed for graphics, and graphics only, so all physics processing on the vita will take place on the GPU. At the current time the only documented Physics library for the Vita is Havok, with no public published articles regarding performance or implementation details. 
 
+\paragraph{Physics on the PC}
+There are multitudes of different physics implementations on the traditional architecture of the PC, where the extra resources of the hardware mean that more focus can be placed on usability and implementation of the physics. It is more common to see physics engines compared against each other based on the complexity of the code rather than the runtime performance (this is also partly to do with the large hardware and capability differences between computer systems). Many reports have been published analysing the software design methodologies and ease of implementation of physics engines. 
+\begin{quote}
+``Using Software Quality Metrics which give an empirical indication of (among other
+things) the reusability, usability, and flexibility of a piece of software—we can begin to
+investigate ways of improving the games development process.''\cite{comparison}
+\end{quote}
 
-Refer to literature on the particular physics-based animation effect you want to synthesize (e.g., published articles, books, conference proceedings, web articles) provide a comprehensive review - and use the correct citation format
-
-Related work should finish with a summary paragraph - emphasising the crucial similarities or differences between existing methods presented in the literature.  For example: (1) you might want to modify the technique to run on the GPU; (2) or you combine different techniques from different authors; (3) or you are simplifying the algorithm to make it run faster.
+\paragraph{This project}
+This project will take a similar approach to that of Bullet, by creating a generic physics engine that will run on multiple systems with as little as modification as possible, while still aiming for the best performance. The end result should be a program that uses good software design methodologies, meaning code that is easy to understand and modify. Platform specific modification can then be implemented and the change in performance against the change in code complexity can be measured.
 
 \section{Overview}
 Brief overview of the core principles and mechanism behind your effect.  This should be reflected in your final implementation, so consider what you will actually be implementing. What components make up the effect and how are they connected.
@@ -159,49 +165,44 @@ Brief overview of the core principles and mechanism behind your effect.  This sh
 
 \section{Simulation}
 
-How does your simulation work and what are the reasons it is important.  This is a decisive section to put together as it will help you in the rest of your physics-based animation development.
+\paragraph{Scope of Physic capabilities}
+The physics engine created for this project will be limited in scope and capabilities rather than a full general solver. The primary function will be Collision detection and realistic movement of single rigid-bodies. Constraints, animation, Inverse Kinematics, and advanced mass calculations are not planned to be implemented although the system should be designed to accommodate these systems in the future.
 
-\begin{itemize}
-\item{Physics-Based Animation Description}
-Provide a more detailed description of how the simulation functions.
-\item{Formal Elements}
-Description of your simulation using the formal elements.  You should include the following sections.
-\item{Interactive}
-Describe the interactive pattern you are aiming for .
-\item{Objectives}
-What are the objectives of the simulation?  You may have one overall objective and some sub-objectives.
-\item{Procedures}
-What are the actions performed in the simulation.  Are there any specific technical workings?
-\item{Rules}
-What test cases have you defined to demonstrate the effectiveness of your technique?  Define a list of simple tests - both showing the good and the bad parts of your approach.
-\item{Resources}
-What are the resources within the solution?  Is it procedural?  Does it require artist intervention?  Is the solution scalable?  e.g., large and small scenes?
-\item{Boundaries}
-What are the boundaries of the technique?  This will probably be based on experiments - the technique might only fit specific situations (e.g., outside/inside/small high detail situations or crowds of low-level detail).
-\item{Outcome}
-What is the outcome?  Explain any possible issues?  Complexity? Computational power? Remember, relate this back to your investigations, related work, and experience - what have other people said?  Do you agree with them?
-\end{itemize}
+\paragraph{Simulation Scene}
+The project will be simulating a large set of bouncing balls travelling down a hill. The ball will be solid object with mass, and will collide with each other and the surrounding geometry. the geometry will consist of flat shaded primitive shapes, to roughly emulate the real life scenery of the street in the advert.
 
-\section{Description}
+\paragraph{Simulation Objectives}
+The aim of the simulation is to measure the performance of the physics simulation, I.e the maximum amount of balls that can be simulated. Rendering the scene is also an objective, as a physics simulation that cannot be rendered, either by design or by taking up too many resources is of no use for a real-time application.
 
-\begin{itemize}
-\item {Screen Mock-Ups \& Preliminary Screenshots}
-Provide any screen mock-up of how your animation will look or preliminary screenshots.  You can use whatever method you see fit to create the mock-up.  Your mock-up doesn't have to be exactly how your simulation will look, and you can use in place graphics.  Explain principles and concepts to the reader - so you can explain your idea.
-\item {Dynamic}
-In this section you should describe any user interactive controls for customizing or changing the simulation - to effect the outcomes of the effect (e.g., adding external forces, numbers of objects, gravity)
-\item {Control Mechanism}
-Describe the control principles.  What controller mechanism have you gone for (i.e., random or from scripts)?  
-\item {Rules}
-Reflect upon the rules defined in the formal elements, and how these may affect the controls of the simulation.  Also consider any relationships between physical objects which might have an influence on the controls.
-\item {Modes and Other Features}
-Does your effect support multiple modes?  Are there any other features (e.g. novel control mechanisms) which need to be taken into account?
-\item {Test Scenes}
-Does your simulation have different scenes (2D, 3D, different complexity, real-time, off-line)?  If so, then design a variety of simple test cases to show the situations and demonstrate the viability of your technique.
-\item {Flowchart}
-Create an overview flowchart - and explain the interaction of the different components.  For example, do you update the forces, then move forwards, then draw....
-\end{itemize}
+\paragraph{Simulation Variables}
+The balls will be created somewhat randomly, to the simulation should look different every time it is run. Variables could include changing the size and bounciness e of the balls, changing the design of the environment (street slope, length, frequency of objects... ) and other physics variables, like time-step and gravity.
+
+\paragraph{Rendering}
+Rendering the output of the simulation should result in a visually interesting scene, hopefully as similar to the reference video as possible. The focus of this project is optimising the simulation, but an impressive looking output that also achieves a good level of performance (60+fps) would be a large bonus to the project.
+
+\paragraph{Data output}
+The simulations should be logging and metering all the data to file as well as rendering the scene, this will be used in the evaluation report.
+
+\section{Application Description}
+
+\figuremacroW
+{balls2}
+{Expected visualisation of the output}
+{Background geometry will not be this detailed \protect\cite{advert}}
+{0.96}
+
+The scene will start with an initial amount off balls at the top of the hill. They will be dropped from a height or fired via some force to give them initial velocity. Over time more ball will be created at the top of the hill to keep the simulation going. Balls may be removed once they reach the bottom of the hill or after a set time, this will depend on the overall performance limitations.
+
+\paragraph{User Interaction}
+The user will be able to use the input controls to move the camera around in the scene, to get close up views of whatever they choose. There will also be controls to alter the variables in the scene and execute gameplay functions. Input methods will take the form of a controller / mouse and keyboard where applicable.
+
+\paragraph{Gameplay functions}
+Functions that the user can use could include: adding forces to the scene, adding groups of balls at a certain location, removing balls, firing balls, and resetting the simulation.
 
 \section{Technical Specification}
+
+\paragraph{Parallelism}
+the key to success in implementing this project will be to heavily rely on multi-core/multi-thread/multi-processor software architecture. For the Playstation 3 this is an absolute necessity, as the SPUs are the only obvious way to implement physics. A parallel approach will benefit all systems, and designing for the small memory limits of the SPU will also benefit other platforms as smaller code and datasets can make use of the extensive caching available on Desktop Processors.
 
 \begin{quote}
 ``Old Processing model: Big semi truck. Stuff everything in. Then stuff some
@@ -212,25 +213,37 @@ Each one only fits so much. Bucket brigade. Damn they're fast!''
  \cite{spuspeed}
 \end{quote}
 
+\paragraph{Optimisation}
+Optimisation can be split into 2 large categories, algorithmic optimisations and data optimisations. Algorithmic optimisations is the process of monitoring all the operations done within a physics tick to spot redundant operations, or to swap slow operations for faster methods. This can be done initially by using profiling, but it can result in going down to the compiled assembler code to see if the compiler is misbehaving. This is often the case when trying to squeeze every process cycle out of an SPU due to it's highly vectorised SIMD based instruction set.
+
+\paragraph{Data Optimisation}
+This is the task of minimizing the transference and duplication of data. Moving Data takes time and can hog buses and caches that need to be used by other systems.
+In a panellised systems this can become a headache as the extra case of \textit{when} items need to be accessed needs to be take into account, so that threads are not blocked by other threads.
+
+\paragraph{Achieving Optimisation}
+This project intends to measure the very best performance out of the different systems, getting to that level of performance will take a large amount of the development time. Real-world game projects have resource budgets and target to hits (i.e 60fps) and then they can ship the game. This project has no performances target, so the aim is to keep optimising until there is nothing left to optimise.
+
+\paragraph{Software Design}
+The project will be written as one solution with platform modules automatically swapped at compile time, rather than a separate project for each solution. this promotes shared code between the systems which reduces bugs and increases code quality. This method does have the downside of possibly having a large maze of "\#ifdefs" but with proper inheritance and code design, the impact should be minimal an confined only to the interface classes.
+
+\paragraph{Physics abstraction}
+
 In this section, you should put together some of the technical details of your simulation.  This will help when developing your physics-based simulation later.
 
-\begin{itemize}
-\item {Technical Analysis} This section analyses the technical requirements of your simulation.  The goal here is to describe the main software development tasks, the risks involved, and any external libraries you are using.
-\item {Major Software Development Tasks} What are the major pieces of development to make the software work?  Identify the main tasks from the simulation design, particularly items you feel will be difficult to implement.  List these here so you can approach these tasks individually.
-\item {Risks} What are the risks in your development?  Consider which pieces of functionality will be difficult to implement, and what are the options if you cannot achieve them.
-\item {External Libraries} Are you using any external libraries or resources to implement your simulation?  If you are using any libraries outside the ones developed in the practical sessions, these will need to be described here.
-\end{itemize}
-
-
-Equations should be numbered and in the correct format, e.g., Equation \ref{eq:myequation} below:
-
-\begin{equation} \label{eq:myequation}
- \sum_{j=1}^{z} j = \frac{z(z+1)}{2}
-\end{equation}
+\paragraph{External libraries}
+The current list of libraries that project will require is as follows:
+\begin{description}
+  \item[SDL - Simple DirectMedia Layer] \hfill \\
+  	Used for creating windows, polling input and general useful platform code for PC/mac/linux.
+  \item[GLEW -  The OpenGL Extension Wrangler Library] \hfill \\
+  	Used as the entry point into the OpenGl framework, used for detecting graphics capabilities.
+  \item[GLM -  OpenGL Mathematics] \hfill \\
+  	Maths Library used on Pc platforms.
+\end{description}
 
 
 \section{Conclusion}
-The report should finish with a summary to give a brief overview of what the reader should remember most.  What was most important?
+In conclusion, this project should generate some new information about the physics capabilities of the Playstation 3 and Plystation Vita, along with an interesting interactive display of the simulation.
 
 
 % \section*{Acknowledgements}
