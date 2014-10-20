@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClInclude Include="engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Event_Manager.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="OGL_Renderer.h" />
@@ -90,6 +91,7 @@
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SDL_EventManager.h" />
     <ClInclude Include="SDL_Platform.h" />
     <ClInclude Include="Time.h" />
     <ClInclude Include="Utilities.h" />

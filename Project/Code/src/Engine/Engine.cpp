@@ -18,10 +18,12 @@ namespace Engine{
 	{
 		_platform = new SDL::SDL_Platform();
 		_platform->Init();
+
 		Physics::Init();
+
 		_scene = new Scene();
+
 		_running = true;
-		printf("%p\n", Renderer);
 	}
 
 	void Engine::createwindow()

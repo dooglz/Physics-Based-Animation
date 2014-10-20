@@ -86,7 +86,6 @@ namespace Engine{
 		void SDL_Platform::Init()
 		{
 			Renderer = new COGL_Renderer();
-			printf("\n");
 		}
 		void SDL_Platform::createwindow()
 		{
