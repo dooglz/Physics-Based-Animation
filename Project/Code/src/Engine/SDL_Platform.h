@@ -5,7 +5,7 @@
 
 namespace Engine{
 	namespace SDL{
-		class SDL_Platform : public Platform
+		class SDL_Platform : public CPlatform
 		{
 		private:
 

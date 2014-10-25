@@ -1,7 +1,7 @@
 #pragma once
 // BaseClass for platform specific code
 namespace Engine{
-	class Platform
+	class CPlatform
 	{
 	private:
 
@@ -16,11 +16,13 @@ namespace Engine{
 		static float _screenRatio;
 
 	public:
-		Platform(){};
+		CPlatform(){};
 		virtual void Init() = 0;
 		virtual void createwindow() = 0;
 		virtual void Shutdown() = 0;
 		static unsigned short GetSreenWidth(){ return _screenWidth; }
 		static unsigned short GetSreenHeight(){ return  _screenHeight; }
 	};
+
+	extern CPlatform* Platform;
 }

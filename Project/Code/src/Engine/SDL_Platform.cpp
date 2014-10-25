@@ -48,8 +48,8 @@ SDL_assert_state CustomAssertionHandler(const SDL_assert_data* data, void* userd
 }
 
 namespace Engine{
-	unsigned short Platform::_screenWidth;
-	unsigned short Platform::_screenHeight;
+	unsigned short CPlatform::_screenWidth;
+	unsigned short CPlatform::_screenHeight;
 
 	namespace SDL{
 

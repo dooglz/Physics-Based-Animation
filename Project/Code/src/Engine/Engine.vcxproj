@@ -83,9 +83,11 @@
   <ItemGroup>
     <ClInclude Include="engine.h" />
     <ClInclude Include="Entity.h" />
+    <ClInclude Include="Ent_Camera.h" />
     <ClInclude Include="Ent_Primative.h" />
     <ClInclude Include="Event_Manager.h" />
     <ClInclude Include="FileIO.h" />
+    <ClInclude Include="Input.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshLoader.h" />
@@ -109,6 +111,7 @@
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="Ent_Primative.cpp" />
     <ClCompile Include="FileIO.cpp" />
+    <ClCompile Include="Input.cpp" />
     <ClCompile Include="Maths.cpp" />
     <ClCompile Include="OGL_FragmentShader.cpp" />
     <ClCompile Include="OGL_Renderer.cpp" />
@@ -118,6 +121,7 @@
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SDL_EventManager.cpp" />
     <ClCompile Include="SDL_MeshLoader.cpp" />
     <ClCompile Include="SDL_Platform.cpp" />
     <ClCompile Include="Time.cpp" />

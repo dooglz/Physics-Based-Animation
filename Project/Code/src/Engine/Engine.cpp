@@ -5,13 +5,15 @@
 #include "Scene.h"
 
 #include "SDL_platform.h"
+#include "SDL_EventManager.h"
 #include "SDL_MeshLoader.h"
 
 
 namespace Engine{
 	bool Engine::_running;
-	Platform* Engine::_platform;
+	CPlatform* Platform = NULL;
 	CMeshloader* MeshLoader = NULL;
+	CEventManager* EventManager = NULL;
 
 	Engine::Engine()
 	{
@@ -20,8 +22,11 @@ namespace Engine{
 
 	void Engine::Init()
 	{
-		_platform = new SDL::SDL_Platform();
-		_platform->Init();
+		Platform = new SDL::SDL_Platform();
+		Platform->Init();
+
+		EventManager = new SDL::CSDL_EventManager();
+		EventManager->init();
 
 		Physics::Init();
 
@@ -34,11 +39,12 @@ namespace Engine{
 
 	void Engine::createwindow()
 	{
-		_platform->createwindow();
+		Platform->createwindow();
 	}
 
 	void Engine::Update(double delta)
 	{
+		EventManager->processEvents();
 		ActiveScene->Update(delta);
 	}
 
@@ -54,13 +60,18 @@ namespace Engine{
 		return _running;
 	}
 
+	void Engine::Stop()
+	{
+		_running = false;
+	}
+
 	void Engine::Shutdown()
 	{
 		ActiveScene->Shutdown();
 		delete ActiveScene;
 		delete MeshLoader;
-		_platform->Shutdown();
-		delete _platform;
+		Platform->Shutdown();
+		delete Platform;
 	}
 
 }

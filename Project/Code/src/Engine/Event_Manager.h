@@ -9,4 +9,6 @@ namespace Engine{
 		virtual void init(){};
 		virtual ~CEventManager(){};
 	};
+
+	extern CEventManager* EventManager;
 }

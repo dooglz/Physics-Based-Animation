@@ -7,8 +7,8 @@ namespace Engine{
 		protected:
 
 		public:
-			void processEvents(){];
-			void init(){};
+			void processEvents();
+			void init();
 		};
 	}
 }

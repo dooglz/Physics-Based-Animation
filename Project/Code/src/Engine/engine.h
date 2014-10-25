@@ -1,13 +1,10 @@
 #pragma once
 namespace Engine{
 
-	class Platform;
-	class Scene;
 	class Engine
 	{
 	protected:
 		static bool _running;
-		static Platform* _platform;
 
 	public:
 		Engine();
@@ -16,6 +13,7 @@ namespace Engine{
 
 		static void Update(double delta);
 		static void Render();
+		static void Stop();
 
 		static bool Run();
 		static void Shutdown();
