@@ -1,13 +1,17 @@
 #include "engine.h"
 #include "physics.h"
 #include "Renderer.h"
-#include "SDL_platform.h"
+#include "MeshLoader.h"
 #include "Scene.h"
+
+#include "SDL_platform.h"
+#include "SDL_MeshLoader.h"
+
 
 namespace Engine{
 	bool Engine::_running;
 	Platform* Engine::_platform;
-	Scene* Engine::_scene;
+	CMeshloader* MeshLoader = NULL;
 
 	Engine::Engine()
 	{
@@ -21,7 +25,9 @@ namespace Engine{
 
 		Physics::Init();
 
-		_scene = new Scene();
+		MeshLoader = new SDL::CSDL_Meshloader();
+
+		ActiveScene = new Scene();
 
 		_running = true;
 	}
@@ -33,13 +39,13 @@ namespace Engine{
 
 	void Engine::Update(double delta)
 	{
-		_scene->Update(delta);
+		ActiveScene->Update(delta);
 	}
 
 	void Engine::Render()
 	{
 		Renderer->PrepFrame();
-		_scene->Render();
+		ActiveScene->Render();
 		Renderer->PostRender();
 	}
 
@@ -50,9 +56,11 @@ namespace Engine{
 
 	void Engine::Shutdown()
 	{
-		_scene->Shutdown();
-		delete _scene;
+		ActiveScene->Shutdown();
+		delete ActiveScene;
+		delete MeshLoader;
 		_platform->Shutdown();
 		delete _platform;
 	}
+
 }

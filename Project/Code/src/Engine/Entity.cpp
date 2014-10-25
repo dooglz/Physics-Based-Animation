@@ -3,7 +3,13 @@
 #include "Maths.h"
 
 namespace Engine{
-	Entity::Entity(){}
+	Entity::Entity(){
+		_scale = Vector3(1.0f);
+		_position = Vector3(0.0f);
+		_rotation = Vector3(0.0f);
+		CalculateTransform();
+	}
+
 	Entity::~Entity(){}
 
 	Vector3 Entity::getScale(){ return _scale; }
@@ -51,5 +57,8 @@ namespace Engine{
 	void Entity::setVisibility(const bool b){ _visible = b; }
 	Mesh* Entity::getMesh(){ return _mesh; }
 	void Entity::setMesh(Mesh* msh){ _mesh = msh; }
-	void Entity::Update(double delta){};
+	
+	void Entity::Update(double delta){
+		printf("eTICK: %f\n", delta * 100);
+	};
 }

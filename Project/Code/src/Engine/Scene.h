@@ -1,8 +1,9 @@
 #pragma once
+#include "Entity.h"
 #include <vector>
 
 namespace Engine{
-	class Entity;
+//	class Entity;
 	class Scene{
 
 	protected:
@@ -17,4 +18,8 @@ namespace Engine{
 		void Render();
 		void Shutdown(); 
 	};
+
+
+	//global public reference to the renderer
+	extern Scene* ActiveScene;
 }

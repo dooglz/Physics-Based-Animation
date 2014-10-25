@@ -11,7 +11,7 @@ namespace Engine{
 		
 		void COGL_Renderer::clearSurface()
 		{
-			f += 0.001;
+			f += 0.001f;
 			glClearColor(sin(f) , 0.5f, 0.5f, 1.f);
 			SDL_Platform::CheckGL();
 

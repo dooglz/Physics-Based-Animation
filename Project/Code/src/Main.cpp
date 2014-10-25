@@ -14,7 +14,7 @@ int main(int argc, char** argv)
 	GAME->Init();
 
 	//Current world time in physics land
-	unsigned long t = 0.0;
+	unsigned long t = 0;
 	//Physics timestep (0.01 seconds) in Microseconds
 	unsigned long  physicsTimeStep = 10000;
 	//Current time in Microseconds.
@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 	//60fps in Microseconds.
 	unsigned long tartgettime = 60 * 1000 * 1000;
 
-	unsigned long accumulator = 0.0;
+	unsigned long accumulator = 0;
 
 	//Begin loop
 	while (Engine::Engine::Run() && GAME->Run())

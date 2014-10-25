@@ -20,7 +20,7 @@
 #endif
 
 #if defined(_PC_)
-#include "sdl/sdl_assert.h"
+#include "sdl/SDL_assert.h"
 #endif
 
 // −− Platform specific halts

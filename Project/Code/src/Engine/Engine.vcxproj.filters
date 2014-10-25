@@ -57,6 +57,15 @@
     <ClInclude Include="SDL_EventManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Ent_Primative.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_MeshLoader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -84,6 +93,12 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Renderer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ent_Primative.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_MeshLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -34,7 +34,9 @@ namespace Engine{
 		void setRotation(const Vector3 v3);
 		bool isVisible();
 		void setVisibility(const bool b);
-
+		void SetName(const std::string name){
+			_name = name;
+		}
 		void Update(double delta);
 	};
 }

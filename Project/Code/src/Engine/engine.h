@@ -8,7 +8,6 @@ namespace Engine{
 	protected:
 		static bool _running;
 		static Platform* _platform;
-		static Scene* _scene;
 
 	public:
 		Engine();
