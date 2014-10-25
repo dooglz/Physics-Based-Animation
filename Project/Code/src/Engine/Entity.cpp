@@ -59,6 +59,6 @@ namespace Engine{
 	void Entity::setMesh(Mesh* msh){ _mesh = msh; }
 	
 	void Entity::Update(double delta){
-		printf("eTICK: %f\n", delta * 100);
+		//printf("eTICK: %f\n", delta * 100);
 	};
 }

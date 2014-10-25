@@ -57,3 +57,13 @@ struct stVertex
 	Matrix4 Translation(const Vector3 translationVector);
 	Matrix4 Scale(const Vector3 scaleVector);
 #endif
+
+inline int randomColor()
+{
+	int x = rand() & 0xff;
+	x |= (rand() & 0xff) << 8;
+	x |= (rand() & 0xff) << 16;
+	x |= (rand() & 0xff) << 24;
+
+	return x;
+}

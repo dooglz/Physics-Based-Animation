@@ -9,6 +9,9 @@
 #elif defined(_MSC_VER) ||  defined(_WIN32) || defined(_WIN64) || defined(__CYGWIN__) || defined(MINGW32)
 	#define _WINDOWS_
 	#define _PC_
+	//disable stupid _s crt reqs
+	#define _CRT_SECURE_NO_DEPRECATE
+	#pragma warning (disable : 4996)
 #elif defined( APPLE ) //This works, but it could be either an OSX or iOS device
 	#define _MAC_
 	#define _PC_

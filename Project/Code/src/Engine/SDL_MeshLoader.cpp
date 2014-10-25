@@ -1,7 +1,12 @@
 #pragma once
+
 #include "SDL_MeshLoader.h"
 #include "Mesh.h"
 #include "Maths.h"
+
+#include "SDL_Platform.h"
+#include "glew/glew.h"
+
 
 namespace Engine{
 	namespace SDL{
@@ -14,10 +19,8 @@ namespace Engine{
 		Mesh* CSDL_Meshloader::openOBJFile(const std::string &filename)
 		{
 			printf("Loading object: %s\n", (filename.c_str()));
-			return NULL;
-
 			const char * path = filename.c_str();
-			//SDL_RWops *file = SDL_RWFromFile("myimage.bmp", "rb");
+			
 			std::vector<Vector3> vertices;
 			std::vector<Vector2> uvs;
 			std::vector<Vector3> normals;
@@ -26,8 +29,8 @@ namespace Engine{
 			std::vector<Vector2> temp_uvs;
 			std::vector<Vector3> temp_normals;
 
-			FILE * file = fopen(path, "r");
 
+				FILE * file = fopen(path, "r");
 			if (file == NULL){
 				printf("Impossible to open the file! Are you in the right path ?\n");
 				return NULL;
@@ -125,7 +128,7 @@ namespace Engine{
 				a.x = vertices[i].x;
 				a.y = vertices[i].y;
 				a.z = vertices[i].z;
-				a.rgba = 2156411;//randomColor();
+				a.rgba = randomColor();
 				m->vertexData.push_back(a);
 			}
 			m->loadedMain = true;
@@ -136,7 +139,66 @@ namespace Engine{
 
 		void CSDL_Meshloader::loadOnGPU(Mesh* msh)
 		{
+			//Generate VAO
+			glGenVertexArrays(1, &msh->gVAO);
+			SDL_Platform::CheckGL();
 
+			//Bind VAO
+			glBindVertexArray(msh->gVAO);
+			SDL_Platform::CheckGL();
+
+			//Generate VBO
+			glGenBuffers(1, &(msh->gVBO));
+			SDL_Platform::CheckGL();
+
+			//Bind VBO
+			glBindBuffer(GL_ARRAY_BUFFER, (msh->gVBO));
+			SDL_Platform::CheckGL();
+
+			//put the data in it
+			glBufferData(GL_ARRAY_BUFFER, msh->vertexData.size() * sizeof(stVertex), &msh->vertexData[0], GL_STATIC_DRAW);
+			SDL_Platform::CheckGL();
+
+
+			/* stVertex layout:
+			[x,y,z,color]
+			[float,float,float,uint]
+			Color is really 4 chars [rgba]
+			So effectivly, this is what ogl will see:
+			[float,float,float,char,char,char,char]
+			*/
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(
+				0,		//index
+				3,		//size
+				GL_FLOAT,	//type
+				GL_FALSE,	//normalised
+				sizeof(stVertex),	//stride
+				NULL	//pointer/offset
+				);
+			SDL_Platform::CheckGL();
+
+			//color data
+			glEnableVertexAttribArray(1);
+			glVertexAttribPointer(
+				1,	//index
+				4,	//size
+				GL_UNSIGNED_BYTE,	//type
+				GL_TRUE,	//normalised
+				sizeof(stVertex),	//stride
+				(void*)(sizeof(float) * 3)	//pointer/offset
+				);
+			SDL_Platform::CheckGL();
+
+			//Unblind VAO
+			glEnableVertexAttribArray(NULL);
+			SDL_Platform::CheckGL();
+
+			//Unblind VBO
+			glBindVertexArray(NULL);
+			SDL_Platform::CheckGL();
+
+			msh->loadedLocal = true;
 		}
 
 		CSDL_Meshloader::~CSDL_Meshloader()

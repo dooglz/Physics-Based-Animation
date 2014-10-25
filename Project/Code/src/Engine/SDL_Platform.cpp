@@ -85,7 +85,7 @@ namespace Engine{
 		}
 		void SDL_Platform::Init()
 		{
-			Renderer = new COGL_Renderer();
+			Renderer = new OGL::COGL_Renderer();
 		}
 		void SDL_Platform::createwindow()
 		{
