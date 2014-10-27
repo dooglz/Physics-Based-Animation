@@ -13,7 +13,8 @@ struct stVertex
 	#include <cmath>
 	#include "glm/glm.hpp"
 	#include "glm/gtc/quaternion.hpp"
-
+	#include "glm/gtc/matrix_transform.hpp"
+	#include "glm/gtc/matrix_inverse.hpp"
 	//TODO implement generic methods to change values in vectors
 	#define Matrix4 glm::mat4
 	#define Matrix3 glm::mat3
@@ -22,8 +23,12 @@ struct stVertex
 	#define Vector2 glm::vec2
 	#define Quaternion glm::quat
 	#define Normalize glm::normalize
+	
 	#define Dot glm::dot
 	#define Cross glm::cross
+	#define Perspective glm::perspective
+	#define Inverse glm::inverse
+	#define Lookat glm::lookAt
 	#ifndef M_PI
 		#define M_PI 3.14159265358979323846
 	#endif
@@ -35,7 +40,7 @@ struct stVertex
 	#define setX(a) x=a;
 	#define setY(a) y=a;
 	#define setZ(a) z=a;
-
+#endif
 
 	void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle);
 	void QuatToAngleAxis(const Quaternion q, Vector3 &axis, float &angle);
@@ -56,7 +61,8 @@ struct stVertex
 
 	Matrix4 Translation(const Vector3 translationVector);
 	Matrix4 Scale(const Vector3 scaleVector);
-#endif
+
+	
 
 inline int randomColor()
 {

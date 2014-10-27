@@ -109,6 +109,7 @@
   <ItemGroup>
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
+    <ClCompile Include="Ent_Camera.cpp" />
     <ClCompile Include="Ent_Primative.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Input.cpp" />

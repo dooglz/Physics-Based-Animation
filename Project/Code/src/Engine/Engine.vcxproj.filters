@@ -13,6 +13,22 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\PC">
+      <UniqueIdentifier>{928b1adf-b2ee-4aca-8cc3-6ce3d100e830}</UniqueIdentifier>
+      <Extensions>SDL;OGL;</Extensions>
+    </Filter>
+    <Filter Include="Source Files\PC">
+      <UniqueIdentifier>{f60f1c72-34d1-4238-9371-2de4d549712b}</UniqueIdentifier>
+      <Extensions>SDL;OGL;</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Ents">
+      <UniqueIdentifier>{9e5c0344-fb1f-4c5e-93d5-a732a823021a}</UniqueIdentifier>
+      <Extensions>Ent_</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Ents">
+      <UniqueIdentifier>{4680039c-6b79-4ae1-9134-7f84faeaf54e}</UniqueIdentifier>
+      <Extensions>Ent_</Extensions>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.h">
@@ -30,9 +46,6 @@
     <ClInclude Include="Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_Platform.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -48,44 +61,47 @@
     <ClInclude Include="Renderer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OGL_Renderer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Event_Manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="SDL_EventManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ent_Primative.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MeshLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="SDL_MeshLoader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGL_Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGL_ShaderProgram.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGL_FragmentShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="OGL_VertexShader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="FileIO.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ent_Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_EventManager.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_MeshLoader.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="SDL_Platform.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL_FragmentShader.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL_Renderer.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL_Shader.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL_ShaderProgram.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="OGL_VertexShader.h">
+      <Filter>Header Files\PC</Filter>
+    </ClInclude>
+    <ClInclude Include="Ent_Camera.h">
+      <Filter>Header Files\Ents</Filter>
+    </ClInclude>
+    <ClInclude Include="Ent_Primative.h">
+      <Filter>Header Files\Ents</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -93,9 +109,6 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Physics.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Time.cpp">
@@ -110,38 +123,44 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="OGL_Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Renderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ent_Primative.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="SDL_MeshLoader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGL_Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGL_FragmentShader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGL_ShaderProgram.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="OGL_VertexShader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FileIO.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="SDL_EventManager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL_FragmentShader.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL_Renderer.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL_Shader.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL_ShaderProgram.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="OGL_VertexShader.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_EventManager.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_MeshLoader.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="SDL_Platform.cpp">
+      <Filter>Source Files\PC</Filter>
+    </ClCompile>
+    <ClCompile Include="Ent_Primative.cpp">
+      <Filter>Source Files\Ents</Filter>
+    </ClCompile>
+    <ClCompile Include="Ent_Camera.cpp">
+      <Filter>Source Files\Ents</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

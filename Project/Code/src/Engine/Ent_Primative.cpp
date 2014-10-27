@@ -14,7 +14,7 @@ namespace Engine{
 
 		if (_CubeMesh == nullptr)
 		{
-			_CubeMesh = MeshLoader->openOBJFile("models/cube.obj");
+			_CubeMesh = MeshLoader->openOBJFile("models/beacon.obj");
 			MeshLoader->loadOnGPU(_CubeMesh);
 			_CubeMesh->program = OGL::COGL_Renderer::GetDefaultShaderProgram();
 		}
