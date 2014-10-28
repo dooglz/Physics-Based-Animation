@@ -69,6 +69,24 @@ namespace Engine{
 						Input::setValue("kb_k_d", 255);
 						break;
 					}
+
+						//ijkl
+					case SDLK_i:{
+						Input::setValue("kb_k_i", 255);
+						break;
+					}
+					case SDLK_j:{
+						Input::setValue("kb_k_j", 255);
+						break;
+					}
+					case SDLK_k:{
+						Input::setValue("kb_k_k", 255);
+						break;
+					}
+					case SDLK_l:{
+						Input::setValue("kb_k_l", 255);
+						break;
+					}
 					}
 					break;
 				}
@@ -113,6 +131,23 @@ namespace Engine{
 					}
 					case SDLK_d:{
 						Input::setValue("kb_k_d", 0);
+						break;
+					}
+						//ijkl
+					case SDLK_i:{
+						Input::setValue("kb_k_i", 0);
+						break;
+					}
+					case SDLK_j:{
+						Input::setValue("kb_k_j", 0);
+						break;
+					}
+					case SDLK_k:{
+						Input::setValue("kb_k_k", 0);
+						break;
+					}
+					case SDLK_l:{
+						Input::setValue("kb_k_l", 0);
 						break;
 					}
 					}
@@ -193,6 +228,11 @@ namespace Engine{
 			Input::addAxis("kb_k_a");
 			Input::addAxis("kb_k_s");
 			Input::addAxis("kb_k_d");
+			//ijkl
+			Input::addAxis("kb_k_i");
+			Input::addAxis("kb_k_j");
+			Input::addAxis("kb_k_k");
+			Input::addAxis("kb_k_l");
 		}
 
 	}

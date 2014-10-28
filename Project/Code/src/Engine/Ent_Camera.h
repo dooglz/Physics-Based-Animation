@@ -8,6 +8,7 @@ namespace Engine{
 	protected:
 		bool _active;
 	public:
+		//void Update(double delta);
 		void Activate();
 		void Deactivate();
 		bool IsActive();

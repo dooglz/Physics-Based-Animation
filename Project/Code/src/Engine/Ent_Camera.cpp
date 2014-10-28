@@ -29,4 +29,5 @@ namespace Engine{
 	bool ECamera::IsActive(){
 		return _active;
 	}
+
 }

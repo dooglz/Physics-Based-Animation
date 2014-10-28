@@ -4,7 +4,7 @@ class Game{
 
 protected:
 	bool _running = true;
-
+	void registerInputs();
 public:
 	Game();
 	void Init();

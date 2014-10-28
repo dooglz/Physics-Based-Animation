@@ -37,6 +37,6 @@ namespace Engine{
 		void SetName(const std::string name){
 			_name = name;
 		}
-		void Update(double delta);
+		virtual void Update(double delta);
 	};
 }
