@@ -103,6 +103,12 @@
     <ClInclude Include="Ent_Primative.h">
       <Filter>Header Files\Ents</Filter>
     </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshRenderer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -161,6 +167,9 @@
     </ClCompile>
     <ClCompile Include="Ent_Camera.cpp">
       <Filter>Source Files\Ents</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_MeshRenderer.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

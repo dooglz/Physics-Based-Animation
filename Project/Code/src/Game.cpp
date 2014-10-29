@@ -4,6 +4,8 @@
 #include "Engine/Scene.h"
 #include "Ent_FpCamera.h"
 #include "Engine/Input.h"
+#include "Engine/MeshRenderer.h"
+
 #include <stdio.h>
 
 Engine::Entity* ent1;
@@ -31,16 +33,28 @@ Game::Game(){
 void Game::Init(){
 	Engine::Engine::Init();
 	Engine::Engine::createwindow();
-
-	ent1 = new Engine::EPrimative();
+	//Engine::CmMeshRenderer *
+	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
 	ent1->setPosition(Vector3(0, 1, 0));
+	Engine::CmMeshRenderer* cmp = new Engine::CmMeshRenderer(ent1);
+	ent1->AddComponent(cmp);
+	cmp->setMesh("models/cube.obj");
+
 	Engine::ActiveScene->AddEntity(ent1);
 
-	ent2 = new Engine::EPrimative();
+
+
+	ent2 = new Engine::Entity();
 	ent2->SetName("Cool cube2");
 	ent2->setPosition(Vector3(0, -0.05, 0));
 	ent2->setScale(Vector3(10, 0.1,10));
+
+	cmp = new Engine::CmMeshRenderer(ent2);
+	ent1->AddComponent(cmp);
+	cmp->setMesh("models/cube.obj");
+
+	ent1->AddComponent(cmp);
 	Engine::ActiveScene->AddEntity(ent2);
 
 	camera = new EFpCamera();

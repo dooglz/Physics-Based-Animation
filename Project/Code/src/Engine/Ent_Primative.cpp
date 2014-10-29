@@ -18,7 +18,7 @@ namespace Engine{
 			MeshLoader->loadOnGPU(_CubeMesh);
 			_CubeMesh->program = OGL::COGL_Renderer::GetDefaultShaderProgram();
 		}
-		_mesh = _CubeMesh;
+//		_mesh = _CubeMesh;
 	}
 
 	EPrimative::~EPrimative(){}

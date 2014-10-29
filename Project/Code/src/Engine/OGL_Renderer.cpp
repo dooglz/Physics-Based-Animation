@@ -43,7 +43,7 @@ namespace Engine{
 
 			//Send MVP
 			Matrix4 projMatrix = Perspective((float)(60.0f*(M_PI / 180.0f)), (16.0f / 9.0f), 1.0f, 2000.0f);
-			mvp = projMatrix * mvp ;
+			mvp = projMatrix * _viewMat * mvp ;
 			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
 			SDL::SDL_Platform::CheckGL();
 

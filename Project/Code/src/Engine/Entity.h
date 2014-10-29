@@ -1,10 +1,11 @@
 #pragma once
 #include <string>
+#include <vector>
 #include "Maths.h"
-
+#include "Component.h"
 namespace Engine{
 	class Mesh;
-
+//	class CComponent;
 	class Entity{
 
 	protected:
@@ -15,14 +16,15 @@ namespace Engine{
 		Vector3 _rotation;
 		Vector3 _scale;
 		Matrix4 _transform;
-		Mesh* _mesh;
 		void CalculateTransform();
+
+		std::vector<CComponent*> _components;
+
 
 	public:
 		Entity();
 		~Entity();
-		Mesh* getMesh();
-		void setMesh(Mesh* msh);
+
 		Vector3 getScale();
 		Vector3 getPosition();
 		Vector3 getRotation();
@@ -37,6 +39,13 @@ namespace Engine{
 		void SetName(const std::string name){
 			_name = name;
 		}
+
 		virtual void Update(double delta);
+		virtual void Render();
+
+		void AddComponent(CComponent* c);
+		void RemoveComponent(CComponent* c);
+		std::vector<CComponent*> GetComponents(std::string name);
+
 	};
 }

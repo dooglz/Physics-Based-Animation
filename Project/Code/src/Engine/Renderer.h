@@ -9,9 +9,10 @@ namespace Engine{
 	private:
 
 	protected:
-
+		Matrix4 _viewMat;
 	public:
 		CRenderer(){};
+		virtual void SetViewMatrix(Matrix4 vm);
 		virtual void renderMesh(Mesh* msh, Matrix4 mvp) = 0;
 		virtual void PrepFrame() = 0;
 		virtual void PostRender() = 0;

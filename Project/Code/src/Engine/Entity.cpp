@@ -1,6 +1,7 @@
 #include "Entity.h"
 #include <string>
 #include "Maths.h"
+#include "Component.h"
 
 namespace Engine{
 	Entity::Entity(){
@@ -33,7 +34,7 @@ namespace Engine{
 	}
 
 	Matrix4 Entity::getTranform()
-	{ 
+	{
 		if (!_changed){
 			return _transform;
 		}
@@ -55,10 +56,46 @@ namespace Engine{
 
 	bool Entity::isVisible(){ return _visible; }
 	void Entity::setVisibility(const bool b){ _visible = b; }
-	Mesh* Entity::getMesh(){ return _mesh; }
-	void Entity::setMesh(Mesh* msh){ _mesh = msh; }
-	
+
+
 	void Entity::Update(double delta){
 		//printf("eTICK: %f\n", delta * 100);
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			(*it)->Update(delta);
+		}
 	};
+
+	void Entity::Render(){
+		//printf("eTICK: %f\n", delta * 100);
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			(*it)->Render();
+		}
+	};
+
+	void Entity::AddComponent(CComponent* c)
+	{
+		_components.push_back(c);
+	}
+
+	void Entity::RemoveComponent(CComponent* c)
+	{
+		std::vector<CComponent*>::iterator position = std::find(_components.begin(), _components.end(), c);
+		if (position != _components.end()) {
+			_components.erase(position);
+		}
+	}
+
+	std::vector<CComponent*> Entity::GetComponents(std::string name)
+	{
+		std::vector<CComponent*> c;
+		if (_components.size() < 1){ return c; }
+		std::vector<CComponent*>::iterator it;
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			if ((*it)->GetToken() == name){
+				c.push_back((*it));
+			}
+		}
+		return c;
+	}
+
 }

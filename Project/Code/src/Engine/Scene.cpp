@@ -27,16 +27,20 @@ namespace Engine{
 		Matrix4 viewMat;
 		if (_activeCamera == NULL){
 			printf("No active Camera in Scene!\n");
-			viewMat = Matrix4(1.0f);
+			Renderer->SetViewMatrix(Matrix4(1.0f));
 		}else{
-			viewMat = Inverse(_activeCamera->getTranform());
+			Renderer->SetViewMatrix(Inverse(_activeCamera->getTranform()));
 			//viewMat = _activeCamera->getTranform();
 			//viewMat = Lookat(_activeCamera->getPosition(), Vector3(_activeCamera->getTranform()[2]), Vector3(_activeCamera->getTranform()[1]));
 		}
-		
+
 		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
-			if ((*it)->getMesh() == nullptr){ continue; }
-			Renderer->renderMesh((*it)->getMesh(), viewMat * (*it)->getTranform());
+			(*it)->Render();
+		}
+
+		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
+//			if ((*it)->getMesh() == nullptr){ continue; }
+	//		Renderer->renderMesh((*it)->getMesh(), viewMat * (*it)->getTranform());
 		}
 	}
 

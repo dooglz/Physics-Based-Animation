@@ -7,7 +7,7 @@
 *.sln.docstates
 
 # Build results
-
+temp/*
 x64/
 build/
 [Bb]in/
@@ -42,6 +42,7 @@ build/
 .builds
 *.pidb
 *.log
+*.tlog
 *.scc
 
 # Visual C++ cache files
@@ -160,3 +161,6 @@ $RECYCLE.BIN/
 
 #Anything in redist folders
 !**/redist/**/*
+
+temp/
+*.tlog
