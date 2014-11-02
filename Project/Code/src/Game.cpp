@@ -1,16 +1,17 @@
 #include "Game.h"
 #include "Engine/engine.h"
-#include "Engine/Ent_Primative.h"
 #include "Engine/Scene.h"
-#include "Ent_FpCamera.h"
 #include "Engine/Input.h"
-#include "Engine/MeshRenderer.h"
+#include "Engine/Cm_MeshRenderer.h"
+#include "Engine/Cm_Camera.h"
+
+#include "Cm_FpsMotor.h"
 
 #include <stdio.h>
 
 Engine::Entity* ent1;
 Engine::Entity* ent2;
-EFpCamera* camera;
+Engine::Entity* ent3;
 float a = 0.0f;
 
 void Game::registerInputs()
@@ -33,7 +34,6 @@ Game::Game(){
 void Game::Init(){
 	Engine::Engine::Init();
 	Engine::Engine::createwindow();
-	//Engine::CmMeshRenderer *
 
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
@@ -50,10 +50,13 @@ void Game::Init(){
 	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	Engine::ActiveScene->AddEntity(ent2);
 
-	camera = new EFpCamera();
+	ent3 = new Engine::Entity();
+	ent3->SetName("Camera");
+	ent3->AddComponent(new CmFpsMotor());
+	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
-	Engine::ActiveScene->AddEntity(camera);
-	camera->Activate();
+	ent3->getComponent<Engine::CmCamera>()->Activate();
+	Engine::ActiveScene->AddEntity(ent3);
 
 	registerInputs();
 }
@@ -61,7 +64,7 @@ void Game::Init(){
 void Game::Update(double delta)
 {
 	//printf("TICK: %f\n", delta*100);
-	a+=delta;
+	a+=(float)delta;
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
 	}
@@ -70,7 +73,9 @@ void Game::Update(double delta)
 
 void Game::Shutdown()
 {
-	delete camera;
+	//delete camera;
+	delete ent3;
+	delete ent2;
 	delete ent1;
 	Engine::Engine::Shutdown();
 }

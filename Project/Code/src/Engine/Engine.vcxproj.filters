@@ -21,11 +21,11 @@
       <UniqueIdentifier>{f60f1c72-34d1-4238-9371-2de4d549712b}</UniqueIdentifier>
       <Extensions>SDL;OGL;</Extensions>
     </Filter>
-    <Filter Include="Header Files\Ents">
+    <Filter Include="Header Files\Components">
       <UniqueIdentifier>{9e5c0344-fb1f-4c5e-93d5-a732a823021a}</UniqueIdentifier>
       <Extensions>Ent_</Extensions>
     </Filter>
-    <Filter Include="Source Files\Ents">
+    <Filter Include="Source Files\Components">
       <UniqueIdentifier>{4680039c-6b79-4ae1-9134-7f84faeaf54e}</UniqueIdentifier>
       <Extensions>Ent_</Extensions>
     </Filter>
@@ -97,17 +97,14 @@
     <ClInclude Include="OGL_VertexShader.h">
       <Filter>Header Files\PC</Filter>
     </ClInclude>
-    <ClInclude Include="Ent_Camera.h">
-      <Filter>Header Files\Ents</Filter>
-    </ClInclude>
-    <ClInclude Include="Ent_Primative.h">
-      <Filter>Header Files\Ents</Filter>
-    </ClInclude>
     <ClInclude Include="Component.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="MeshRenderer.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Cm_MeshRenderer.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Cm_Camera.h">
+      <Filter>Header Files\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -162,20 +159,17 @@
     <ClCompile Include="SDL_Platform.cpp">
       <Filter>Source Files\PC</Filter>
     </ClCompile>
-    <ClCompile Include="Ent_Primative.cpp">
-      <Filter>Source Files\Ents</Filter>
-    </ClCompile>
-    <ClCompile Include="Ent_Camera.cpp">
-      <Filter>Source Files\Ents</Filter>
-    </ClCompile>
-    <ClCompile Include="Cm_MeshRenderer.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Component.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="MeshLoader.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_MeshRenderer.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_Camera.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

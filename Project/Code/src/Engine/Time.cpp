@@ -15,7 +15,7 @@ namespace Engine{
 		#elif defined(_WINDOWS_)
 			//milliseconds * 10000
 		//	return ((unsigned long)(1000 * SDL_GetTicks()));
-			return  (1000000*SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency());
+			return  (long)(1000000*SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency());
 
 
 		#endif

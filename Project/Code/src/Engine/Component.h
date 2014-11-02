@@ -18,6 +18,7 @@ namespace Engine{
 		bool Active();
 		void setActive(bool b);
 		void SetParent(Entity* p);
+		Entity* GetParent();
 		std::string GetToken();
 	};
 

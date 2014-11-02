@@ -11,7 +11,11 @@ namespace Engine{
 		CalculateTransform();
 	}
 
-	Entity::~Entity(){}
+	Entity::~Entity(){
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			delete (*it);
+		}
+	}
 
 	Vector3 Entity::getScale(){ return _scale; }
 	Vector3 Entity::getPosition(){ return _position; }

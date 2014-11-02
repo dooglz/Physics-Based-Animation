@@ -7,4 +7,5 @@ namespace Engine{
 		void CComponent::setActive(bool b){ _active = b; }
 		void CComponent::SetParent(Entity* p){ Ent = p; };
 		std::string CComponent::GetToken(){ return _token; }
+		Entity* CComponent::GetParent(){ return Ent; }
 }

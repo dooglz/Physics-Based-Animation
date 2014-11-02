@@ -18,7 +18,7 @@
     <ClInclude Include="Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Ent_FpCamera.h">
+    <ClInclude Include="Cm_FpsMotor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -29,7 +29,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Ent_FpCamera.cpp">
+    <ClCompile Include="Cm_FpsMotor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

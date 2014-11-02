@@ -81,18 +81,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="engine.h" />
     <ClInclude Include="Entity.h" />
-    <ClInclude Include="Ent_Camera.h" />
-    <ClInclude Include="Ent_Primative.h" />
     <ClInclude Include="Event_Manager.h" />
     <ClInclude Include="FileIO.h" />
     <ClInclude Include="Input.h" />
     <ClInclude Include="Maths.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshLoader.h" />
-    <ClInclude Include="MeshRenderer.h" />
+    <ClInclude Include="Cm_MeshRenderer.h" />
     <ClInclude Include="OGL_FragmentShader.h" />
     <ClInclude Include="OGL_Renderer.h" />
     <ClInclude Include="OGL_Shader.h" />
@@ -109,12 +108,11 @@
     <ClInclude Include="Utilities.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cm_Camera.cpp" />
     <ClCompile Include="Cm_MeshRenderer.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
-    <ClCompile Include="Ent_Camera.cpp" />
-    <ClCompile Include="Ent_Primative.cpp" />
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Maths.cpp" />

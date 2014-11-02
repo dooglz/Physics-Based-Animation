@@ -1,7 +1,14 @@
-#include "Ent_FpCamera.h"
+#include "Cm_FpsMotor.h"
 #include "Engine/Input.h"
 #include "glm/gtc/matrix_access.hpp"
-void EFpCamera::registerInputs()
+#include "Engine/Entity.h"
+
+CmFpsMotor::CmFpsMotor() : Engine::CComponent("FpsMotor")
+{
+	registerInputs();
+}
+
+void CmFpsMotor::registerInputs()
 {
 	std::vector<std::string> a;
 
@@ -45,12 +52,7 @@ void EFpCamera::registerInputs()
 	a.clear();
 }
 
-EFpCamera::EFpCamera()
-{
-	registerInputs();
-}
-
-void EFpCamera::Update(double delta)
+void CmFpsMotor::Update(double delta)
 {
 	Vector3 rot = Vector3(0);
 	if (Engine::Input::getMapData("down") > 128){
@@ -65,7 +67,7 @@ void EFpCamera::Update(double delta)
 	if (Engine::Input::getMapData("right") > 128){
 		rot += Vector3(-1.0f, 0, 0);
 	}
-	setRotation(getRotation() + rot*20.0f*(float)delta);
+	Ent->setRotation(Ent->getRotation() + rot*20.0f*(float)delta);
 
 	//ijkl
 	rot = Vector3(0);
@@ -81,26 +83,26 @@ void EFpCamera::Update(double delta)
 	if (Engine::Input::getMapData("I") > 128){
 		rot += Vector3(0, 0, -1.0f);
 	}
-	setPosition(getPosition() + rot*20.0f*(float)delta);
+	Ent->setPosition(Ent->getPosition() + rot*20.0f*(float)delta);
 
 	//wasd
 	rot = Vector3(0);
 	if (Engine::Input::getMapData("D") > 128){
-		Vector3 right = Vector3(glm::column(getTranform(), 0));
+		Vector3 right = Vector3(glm::column(Ent->getTranform(), 0));
 		rot += right;
 	}
 	if (Engine::Input::getMapData("A") > 128){
-		Vector3 right = Vector3(glm::column(getTranform(), 0));
+		Vector3 right = Vector3(glm::column(Ent->getTranform(), 0));
 		rot += -1.0f*right;
 	}
 	if (Engine::Input::getMapData("S") > 128){
-		Vector3 forward = Vector3(glm::column(getTranform(), 2));
+		Vector3 forward = Vector3(glm::column(Ent->getTranform(), 2));
 		rot += forward;
 	}
 	if (Engine::Input::getMapData("W") > 128){
-		Vector3 forward = Vector3(glm::column(getTranform(), 2));
+		Vector3 forward = Vector3(glm::column(Ent->getTranform(), 2));
 		rot += -1.0f*forward;
 	}
-	setPosition(getPosition() + rot*20.0f*(float)delta);
+	Ent->setPosition(Ent->getPosition() + rot*20.0f*(float)delta);
 
 }

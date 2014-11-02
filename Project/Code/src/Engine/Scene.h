@@ -4,12 +4,12 @@
 
 namespace Engine{
 //	class Entity;
-	class ECamera;
+	class CmCamera;
 	class Scene{
 
 	protected:
 		std::vector<Entity*> _ents;
-		ECamera* _activeCamera;
+		CmCamera* _activeCamera;
 	public:
 		int Population();
 		void AddEntity(Entity* e);
@@ -18,8 +18,8 @@ namespace Engine{
 		void Update(double delta);
 		void Render();
 		void Shutdown(); 
-		ECamera* GetActiveCamera();
-		void SetActiveCamera(ECamera* c);
+		CmCamera* GetActiveCamera();
+		void SetActiveCamera(CmCamera* c);
 	};
 
 

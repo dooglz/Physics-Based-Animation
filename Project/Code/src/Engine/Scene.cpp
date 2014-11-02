@@ -1,7 +1,7 @@
 #include "Entity.h"
 #include "Scene.h"
 #include "Renderer.h"
-#include "Ent_Camera.h"
+#include "Cm_Camera.h"
 
 namespace Engine{
 	Scene* ActiveScene = NULL;
@@ -9,6 +9,7 @@ namespace Engine{
 	int Scene::Population(){ return _ents.size(); }
 
 	void Scene::AddEntity(Entity* e){
+		//TODO: check to see if already have entitiy
 		_ents.push_back(e);
 	}
 
@@ -29,7 +30,7 @@ namespace Engine{
 			printf("No active Camera in Scene!\n");
 			Renderer->SetViewMatrix(Matrix4(1.0f));
 		}else{
-			Renderer->SetViewMatrix(Inverse(_activeCamera->getTranform()));
+			Renderer->SetViewMatrix(Inverse(_activeCamera->GetParent()->getTranform()));
 			//viewMat = _activeCamera->getTranform();
 			//viewMat = Lookat(_activeCamera->getPosition(), Vector3(_activeCamera->getTranform()[2]), Vector3(_activeCamera->getTranform()[1]));
 		}
@@ -48,11 +49,11 @@ namespace Engine{
 
 	}
 
-	ECamera* Scene::GetActiveCamera()
+	CmCamera* Scene::GetActiveCamera()
 	{
 		return _activeCamera;
 	}
-	void Scene::SetActiveCamera(ECamera* c)
+	void Scene::SetActiveCamera(CmCamera* c)
 	{
 		if (_activeCamera != NULL){
 			_activeCamera->Deactivate();
