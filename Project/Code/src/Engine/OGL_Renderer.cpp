@@ -33,7 +33,7 @@ namespace Engine{
 
 		void COGL_Renderer::renderMesh(Mesh* msh, Matrix4 mvp)
 		{
-			ASSERT(msh->program != nullptr);
+			ASSERT(msh->program != NULL);
 			glUseProgram(msh->program->getID());
 			SDL::SDL_Platform::CheckGL();
 

@@ -9,7 +9,7 @@
 
 namespace Engine{
 
-	CmMeshRenderer::CmMeshRenderer(Entity* Parent) : CComponent(Parent, "MeshRenderer"){
+	CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer"){
 		
 	}
 
@@ -31,13 +31,15 @@ namespace Engine{
 	void CmMeshRenderer::setMesh(std::string meshname)
 	{
 		//TODO: Have an actual meshloader platform
-		_mesh = MeshLoader->openOBJFile(meshname);
+		_mesh = MeshLoader->getMesh(meshname);
 		MeshLoader->loadOnGPU(_mesh);
 		_mesh->program = OGL::COGL_Renderer::GetDefaultShaderProgram();
+
 	}
 
 	void CmMeshRenderer::Render()
 	{
+		ASSERT(_mesh != nullptr);
 		Renderer->renderMesh(_mesh, Ent->getTranform());
 	}
 

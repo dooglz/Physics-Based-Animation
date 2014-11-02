@@ -118,6 +118,7 @@
     <ClCompile Include="FileIO.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="OGL_FragmentShader.cpp" />
     <ClCompile Include="OGL_Renderer.cpp" />
     <ClCompile Include="OGL_Shader.cpp" />

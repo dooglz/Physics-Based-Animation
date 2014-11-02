@@ -34,27 +34,20 @@ void Game::Init(){
 	Engine::Engine::Init();
 	Engine::Engine::createwindow();
 	//Engine::CmMeshRenderer *
+
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
 	ent1->setPosition(Vector3(0, 1, 0));
-	Engine::CmMeshRenderer* cmp = new Engine::CmMeshRenderer(ent1);
-	ent1->AddComponent(cmp);
-	cmp->setMesh("models/cube.obj");
-
+	ent1->AddComponent(new Engine::CmMeshRenderer());
+	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	Engine::ActiveScene->AddEntity(ent1);
-
-
 
 	ent2 = new Engine::Entity();
 	ent2->SetName("Cool cube2");
 	ent2->setPosition(Vector3(0, -0.05, 0));
 	ent2->setScale(Vector3(10, 0.1,10));
-
-	cmp = new Engine::CmMeshRenderer(ent2);
-	ent1->AddComponent(cmp);
-	cmp->setMesh("models/cube.obj");
-
-	ent1->AddComponent(cmp);
+	ent2->AddComponent(new Engine::CmMeshRenderer());
+	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	Engine::ActiveScene->AddEntity(ent2);
 
 	camera = new EFpCamera();

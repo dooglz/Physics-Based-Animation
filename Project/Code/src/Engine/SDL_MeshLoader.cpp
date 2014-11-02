@@ -139,6 +139,9 @@ namespace Engine{
 
 		void CSDL_Meshloader::loadOnGPU(Mesh* msh)
 		{
+			//check to see if we are already loaded.
+			if (msh->loadedLocal){ return; }
+
 			//Generate VAO
 			glGenVertexArrays(1, &msh->gVAO);
 			SDL_Platform::CheckGL();

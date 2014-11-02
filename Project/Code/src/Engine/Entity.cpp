@@ -75,6 +75,7 @@ namespace Engine{
 	void Entity::AddComponent(CComponent* c)
 	{
 		_components.push_back(c);
+		c->SetParent(this);
 	}
 
 	void Entity::RemoveComponent(CComponent* c)
@@ -97,5 +98,7 @@ namespace Engine{
 		}
 		return c;
 	}
+
+
 
 }

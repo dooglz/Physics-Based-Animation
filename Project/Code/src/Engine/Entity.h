@@ -47,5 +47,20 @@ namespace Engine{
 		void RemoveComponent(CComponent* c);
 		std::vector<CComponent*> GetComponents(std::string name);
 
+		template <typename T> 
+		T* getComponent()
+		{
+			std::vector<CComponent*>::iterator it;
+			for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+				//printf("Checking %s against %s \n", typeid(**it).name(), typeid(T).name());
+				if (&typeid(**it) == &typeid(T)){
+					return static_cast<T*>(*it);
+				}
+			}
+			return NULL;
+		}
+
+
+
 	};
 }

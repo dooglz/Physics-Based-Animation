@@ -8,7 +8,7 @@ namespace Engine{
 	protected:
 		Mesh* _mesh;
 	public:
-		CmMeshRenderer(Entity* Parent);
+		CmMeshRenderer();
 		~CmMeshRenderer();
 		Mesh* getMesh();
 		void setMesh(Mesh* msh);
