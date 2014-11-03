@@ -1,3 +1,4 @@
+//#include "btBulletDynamicsCommon.h"
 #include <stdio.h>
 #include "Game.h"
 #include "Engine/engine.h"
@@ -38,8 +39,7 @@ int main(int argc, char** argv)
 		accumulator += delta;
 		while (accumulator >= physicsTimeStep)
 		{
-
-			Engine::Physics::Tick(t, physicsTimeStep);
+			Engine::PhysicsSolver->Tick(t, physicsTimeStep);
 			accumulator -= physicsTimeStep;
 			t += physicsTimeStep;
 		}

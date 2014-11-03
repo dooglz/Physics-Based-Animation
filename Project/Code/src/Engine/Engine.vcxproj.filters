@@ -106,6 +106,12 @@
     <ClInclude Include="Cm_Camera.h">
       <Filter>Header Files\Components</Filter>
     </ClInclude>
+    <ClInclude Include="Cm_Physics.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="BulletSolver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -170,6 +176,12 @@
     </ClCompile>
     <ClCompile Include="Cm_Camera.cpp">
       <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_Physics.cpp">
+      <Filter>Source Files\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="BulletSolver.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
