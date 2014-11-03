@@ -10,6 +10,7 @@ class btDiscreteDynamicsWorld;
 //#include "btBulletDynamicsCommon.h"
 //#include "BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h"
 namespace Engine{
+
 	class CBulletSolver : public CPhysicsSolver{
 
 	protected:
@@ -22,5 +23,6 @@ namespace Engine{
 		void Init();
 		void Tick(unsigned long t, unsigned long  timeStep);
 		void Shutdown();
+		void createPlaneShape(Vector3 normal, float distance);
 	};
 }

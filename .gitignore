@@ -164,3 +164,4 @@ $RECYCLE.BIN/
 
 temp/
 *.tlog
+Project/Code/lib/Win32/Debug Bullet/Engine.lib

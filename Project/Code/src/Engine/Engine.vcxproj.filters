@@ -112,6 +112,9 @@
     <ClInclude Include="BulletSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Cm_PlaneCollider.h">
+      <Filter>Header Files\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -182,6 +185,9 @@
     </ClCompile>
     <ClCompile Include="BulletSolver.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Cm_PlaneColider.cpp">
+      <Filter>Source Files\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

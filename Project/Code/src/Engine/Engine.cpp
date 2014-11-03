@@ -1,3 +1,4 @@
+
 #include "engine.h"
 #include "physics.h"
 #include "Renderer.h"
@@ -9,7 +10,7 @@
 #include "SDL_MeshLoader.h"
 
 #if defined BULLET
-#include "BulletSolver.h"
+//#include "BulletSolver.h"
 #elif defined CUSTOM
 #include "../Physics/Physics.h"
 #endif
@@ -33,9 +34,9 @@ namespace Engine{
 		EventManager = new SDL::CSDL_EventManager();
 		EventManager->init();
 		#if defined BULLET
-			PhysicsSolver = new CBulletSolver();
+			//PhysicsSolver = new CBulletSolver();
 		#endif
-		PhysicsSolver->Init();
+		//PhysicsSolver->Init();
 
 		MeshLoader = new SDL::CSDL_Meshloader();
 
