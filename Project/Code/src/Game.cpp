@@ -4,7 +4,7 @@
 #include "Engine/Input.h"
 #include "Engine/Cm_MeshRenderer.h"
 #include "Engine/Cm_Camera.h"
-
+#include "Engine/Renderer.h"
 #include "Cm_FpsMotor.h"
 
 #include <stdio.h>
@@ -52,6 +52,8 @@ void Game::Init(){
 
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
+	ent3->setPosition(Vector3(-2.8, 2.5, 2.3));
+	ent3->setRotation(Vector3(-0.99f, -0.43f,0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
@@ -68,7 +70,7 @@ void Game::Update(double delta)
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
 	}
-	
+	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3*sin(a),3.5f,3*cos(a)));
 }
 
 void Game::Shutdown()

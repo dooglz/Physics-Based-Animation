@@ -14,6 +14,7 @@ namespace Engine{
 		float f = 0.0f;
 
 		OGL::OGL_ShaderProgram* COGL_Renderer::_defaultProgram;
+		std::vector<Vector3> COGL_Renderer::linebuffer;
 
 		void COGL_Renderer::clearSurface()
 		{
@@ -97,10 +98,13 @@ namespace Engine{
 
 			SDL::SDL_Platform::CheckGL();
 			clearSurface();
+			
 		}
 
 		void COGL_Renderer::PostRender()
 		{
+			//Draw lines
+			ProcessLines();
 			SDL_GL_SwapWindow(SDL::SDL_Platform::GetWindow());
 		}
 
@@ -131,6 +135,77 @@ namespace Engine{
 			_defaultProgram->link();
 		}
 
+		void COGL_Renderer::DrawLine(Vector3 p1, Vector3 p2)
+		{
+			linebuffer.push_back(p1);
+			linebuffer.push_back(p2);
+		}
+		void COGL_Renderer::ProcessLines()
+		{
+			if (linebuffer.size() < 1){ return; }
+			//Generate VAO
+			unsigned int vao;
+			glGenVertexArrays(1, &vao);
+			SDL::SDL_Platform::CheckGL();
+
+			//Bind VAO
+			glBindVertexArray(vao);
+			SDL::SDL_Platform::CheckGL();
+
+			//Generate VBO
+			unsigned int vbo;
+			glGenBuffers(1, &vbo);
+			SDL::SDL_Platform::CheckGL();
+
+			//Bind VBO
+			glBindBuffer(GL_ARRAY_BUFFER, vbo);
+			SDL::SDL_Platform::CheckGL();
+
+			//put the data in it
+			glBufferData(GL_ARRAY_BUFFER, linebuffer.size() * sizeof(Vector3), &linebuffer[0], GL_STATIC_DRAW);
+			SDL::SDL_Platform::CheckGL();
+
+
+			glEnableVertexAttribArray(0);
+			glVertexAttribPointer(
+				0,		//index
+				3,		//size
+				GL_FLOAT,	//type
+				GL_FALSE,	//normalised
+				sizeof(Vector3),	//stride
+				NULL	//pointer/offset
+				);
+			SDL::SDL_Platform::CheckGL();
+
+			GLuint prgrm = GetDefaultShaderProgram()->getID();
+			glUseProgram(prgrm);
+			SDL::SDL_Platform::CheckGL();
+
+			//get shader input indexes
+			GLint mvpIn = glGetUniformLocation(prgrm, "MVP");
+			SDL::SDL_Platform::CheckGL();
+
+			//Send MVP
+			Matrix4 projMatrix = Perspective((float)(60.0f*(M_PI / 180.0f)), (16.0f / 9.0f), 1.0f, 2000.0f);
+			Matrix4 mvp = projMatrix * _viewMat;
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
+			SDL::SDL_Platform::CheckGL();
+			glDisable(GL_DEPTH_TEST);
+			glDrawArrays(GL_LINES, 0, linebuffer.size());
+			SDL::SDL_Platform::CheckGL();
+
+			for (std::vector<Vector3>::iterator it = linebuffer.begin(); it != linebuffer.end(); ++it) {
+				//(*it)->Update(delta);
+			}
+
+			glDeleteBuffers(1, &vbo);
+			glDeleteVertexArrays(1, &vao);
+			glBindVertexArray(NULL);
+			glEnableVertexAttribArray(NULL);
+			SDL::SDL_Platform::CheckGL();
+			linebuffer.clear();
+		}
+
 		OGL::OGL_ShaderProgram* COGL_Renderer::GetDefaultShaderProgram()
 		{
 			if (_defaultProgram == nullptr)
@@ -139,5 +214,6 @@ namespace Engine{
 			}
 			return _defaultProgram;
 		}
+
 	}
 }

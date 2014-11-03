@@ -8,11 +8,12 @@ namespace Engine{
 	protected:
 		float _mass;
 		bool _useGravity;
+		bool _showdebug;
 	public:
 		CmPhysics();
 		~CmPhysics();
 
-		//void Render();
+		void Render();
 		//void Update(double delta);
 
 		float GetMass();

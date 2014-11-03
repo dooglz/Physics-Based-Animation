@@ -19,14 +19,15 @@ namespace Engine{
 	void CBulletSolver::Tick(unsigned long t, unsigned long  timeStep)
 	{
 	//	printf("Bullet tick\n");
-	//	dynamicsWorld->stepSimulation(t, timeStep);
+		//bullet takes things in seconds
+		dynamicsWorld->stepSimulation(((btScalar)t)*0.000001, (((btScalar)timeStep)*0.000001));
 	}
 
 	void CBulletSolver::Shutdown(){
-		//delete dynamicsWorld;
-		//delete solver;
-		//delete dispatcher;
-		//delete collisionConfiguration;
-		//delete broadphase;
+		delete dynamicsWorld;
+		delete solver;
+		delete dispatcher;
+		delete collisionConfiguration;
+		delete broadphase;
 	}
 }
