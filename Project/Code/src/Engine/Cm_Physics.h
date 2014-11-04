@@ -2,19 +2,20 @@
 #include "Component.h"
 
 namespace Engine{
-	class Mesh;
+	class CPhysicsObject;
 	class CmPhysics : public CComponent{
 
 	protected:
 		float _mass;
 		bool _useGravity;
 		bool _showdebug;
+		CPhysicsObject* _po;
 	public:
 		CmPhysics();
 		~CmPhysics();
 
 		void Render();
-		//void Update(double delta);
+		void Update(double delta);
 
 		float GetMass();
 		void SetMass(float m);

@@ -11,8 +11,8 @@
 
 #if defined BULLET
 //#include "BulletSolver.h"
-#elif defined CUSTOM
-#include "../Physics/Physics.h"
+#else
+#include "CustomPhysicsSolver.h"
 #endif
 
 namespace Engine{
@@ -35,8 +35,10 @@ namespace Engine{
 		EventManager->init();
 		#if defined BULLET
 			//PhysicsSolver = new CBulletSolver();
+		#else
+			PhysicsSolver = new CCustomSover();
 		#endif
-		//PhysicsSolver->Init();
+		PhysicsSolver->Init();
 
 		MeshLoader = new SDL::CSDL_Meshloader();
 
