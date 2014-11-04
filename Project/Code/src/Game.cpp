@@ -4,6 +4,7 @@
 #include "Engine/Input.h"
 #include "Engine/Cm_MeshRenderer.h"
 #include "Engine/Cm_Camera.h"
+#include "Engine/Cm_Physics.h"
 #include "Engine/Renderer.h"
 #include "Cm_FpsMotor.h"
 
@@ -40,7 +41,9 @@ void Game::Init(){
 	ent1->setPosition(Vector3(0, 1, 0));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
+	ent1->AddComponent(new Engine::CmPhysics());
 	Engine::ActiveScene->AddEntity(ent1);
+
 
 	ent2 = new Engine::Entity();
 	ent2->SetName("Cool cube2");
@@ -70,8 +73,8 @@ void Game::Update(double delta)
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
 	}
-	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
-	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
+	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
+	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
 }
 
 void Game::Shutdown()
