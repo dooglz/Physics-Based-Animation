@@ -25,7 +25,7 @@ namespace Engine{
 		Physics::PhysicsSytem* _system;
 	public:
 		void Init();
-		void Tick(unsigned long t, unsigned long  timeStep);
+		void Tick(double t, double  timeStep);
 		void Shutdown();
 		void createPlaneShape(Vector3 normal, float distance);
 		CPhysicsObject* CreateObject();

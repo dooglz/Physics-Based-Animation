@@ -7,7 +7,7 @@
 
 namespace Engine{
 	//Returns time in Microseconds.
-	unsigned long Time::getTime()
+	double Time::getTime()
 	{
 		#if defined(_PS3_)
 			//microseconds
@@ -15,7 +15,7 @@ namespace Engine{
 		#elif defined(_WINDOWS_)
 			//milliseconds * 10000
 		//	return ((unsigned long)(1000 * SDL_GetTicks()));
-			return  (long)(1000000*SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency());
+			return  (double)(SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency());
 
 
 		#endif

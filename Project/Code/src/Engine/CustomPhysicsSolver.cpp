@@ -8,7 +8,7 @@ namespace Engine{
 		_system->Init();
 	};
 
-	void  CCustomSover::Tick(unsigned long t, unsigned long  timeStep){
+	void  CCustomSover::Tick(double t, double  timeStep){
 		_system->Tick(t, timeStep);
 	};
 

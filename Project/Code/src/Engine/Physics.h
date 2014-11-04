@@ -25,7 +25,7 @@ namespace Engine{
 	public:
 		CPhysicsSolver(){};
 		virtual void Init() = 0;
-		virtual void Tick(unsigned long t, unsigned long  timeStep) = 0;
+		virtual void Tick(double t, double  timeStep) = 0;
 		virtual void Shutdown() = 0;
 		virtual void createPlaneShape(Vector3 normal, float distance) = 0;
 		virtual CPhysicsObject* CreateObject() = 0;
