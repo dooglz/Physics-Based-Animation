@@ -16,7 +16,7 @@ int main(int argc, char** argv)
 	//Current world time in physics land
 	double t = 0;
 	//Physics timestep (0.01 seconds)
-	double  physicsTimeStep = 100.01;
+	double  physicsTimeStep = 0.01;
 	//Current time in Microseconds.
 	double currentTime = Engine::Time::getTime();
 	//60fps in Microseconds.
@@ -27,14 +27,13 @@ int main(int argc, char** argv)
 	//Begin loop
 	while (Engine::Engine::Run() && GAME->Run())
 	{
-		unsigned long newTime = Engine::Time::getTime();
-		unsigned long delta = newTime - currentTime;
+		double newTime = Engine::Time::getTime();
+		double delta = newTime - currentTime;
 		currentTime = newTime;
 		// delta / 60fps
 		double deltaPercent = (double)delta / (double)tartgettime;
 
 		//Physics
-		
 		accumulator += delta;
 		while (accumulator >= physicsTimeStep)
 		{
@@ -42,7 +41,6 @@ int main(int argc, char** argv)
 			accumulator -= physicsTimeStep;
 			t += physicsTimeStep;
 		}
-		
 
 		//Engine Logic update
 		Engine::Engine::Update(deltaPercent);
@@ -51,7 +49,6 @@ int main(int argc, char** argv)
 
 		//Render
 		Engine::Engine::Render();
-	//	printf("Time: %u\tDelta: %u,\tpercent: %e\n",newTime,delta,deltaPercent);
 	}
 	
 	printf("Program Quitting\n");

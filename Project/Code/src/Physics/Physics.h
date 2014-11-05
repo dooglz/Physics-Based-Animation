@@ -4,30 +4,7 @@
 #include <Vector>
 
 namespace Physics{
-
-	class CPhysicsObject
-	{
-	private:
-
-	protected:
-		
-		Vector3 _rotation;
-		//---
-		
-		
-		
-	public:
-		Vector3 _position;
-		Vector3 _velocity;
-		float mass = 1.0f;
-		Vector3 _forces;
-		CPhysicsObject();
-		Vector3 getPosition();
-		Vector3 getRotation();
-		void setPosition(Vector3 v);
-		void setRotation(Vector3 v);
-	};
-
+	class CPhysicsObject;
 	class PhysicsSytem{
 
 	protected:

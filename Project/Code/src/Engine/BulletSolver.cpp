@@ -29,10 +29,10 @@ namespace Engine{
 	}
 
 	void CBulletSolver::Shutdown(){
-		delete dynamicsWorld;
+	/*	delete dynamicsWorld;
 		delete solver;
 		delete dispatcher;
 		delete collisionConfiguration;
-		delete broadphase;
+		delete broadphase;*/
 	}
 }

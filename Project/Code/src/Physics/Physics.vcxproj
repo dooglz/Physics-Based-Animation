@@ -99,9 +99,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Physics.h" />
+    <ClInclude Include="Physics_Object.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Physics_Object.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

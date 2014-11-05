@@ -13,11 +13,7 @@ namespace Engine{
 			//microseconds
 			return ((unsigned long)(sys_time_get_system_time()));
 		#elif defined(_WINDOWS_)
-			//milliseconds * 10000
-		//	return ((unsigned long)(1000 * SDL_GetTicks()));
-			return  (double)(SDL_GetPerformanceCounter() / SDL_GetPerformanceFrequency());
-
-
+			return  ((double)(SDL_GetPerformanceCounter()) / ((double)SDL_GetPerformanceFrequency()));
 		#endif
 			return 0;
 	}

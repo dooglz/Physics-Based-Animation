@@ -1,5 +1,6 @@
 #include "CustomPhysicsSolver.h"
 #include "../Physics/Physics.h"
+#include "../Physics/Physics_Object.h"
 
 namespace Engine{
 	void CCustomSover::Init()
