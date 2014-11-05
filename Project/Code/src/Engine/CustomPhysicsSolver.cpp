@@ -24,17 +24,28 @@ namespace Engine{
 		_system->createPlaneShape(normal, distance);
 	};
 
-	CPhysicsObject* CCustomSover::CreateObject()
+	CPhysicsObject* CCustomSover::CreateCubeObject(float mass, Vector3 position, float lw, float lh, float ld)
 	{
-		return new CCustomPhysicsObject();
+		return new CCustomCubePhysicsObject(mass, position, lw, lh, ld);
+	}
+
+	CPhysicsObject* CCustomSover::CreateSphereObject(float mass, Vector3 position, float radius)
+	{
+		
+		return new CCustomSpherePhysicsObject(mass, position, radius);
 	}
 
 	//---------
-
-	CCustomPhysicsObject::CCustomPhysicsObject()
+	CCustomCubePhysicsObject::CCustomCubePhysicsObject(float mass, Vector3 position, float lw, float lh, float ld)
 	{
-		_po = new Physics::CCube_Object(10, Vector3(0), 1, 1, 1);
+		_po = new Physics::CCube_Object(mass,position,lw,lh,ld);
 	}
+	CCustomSpherePhysicsObject::CCustomSpherePhysicsObject(float mass, Vector3 position, float radius)
+	{
+		_po = new Physics::CSphere_Object(mass, position,radius);
+	}
+	//---------
+
 
 	Vector3 CCustomPhysicsObject::getRotation()
 	{
@@ -45,4 +56,24 @@ namespace Engine{
 	{
 		return _po->getPosition();
 	}
+
+	bool CCustomPhysicsObject::UsesGravity()
+	{
+		return (_po->usesGravity);
+	}
+	void CCustomPhysicsObject::SetUsesGravity(bool b)
+	{
+		_po->usesGravity = b;
+	}
+
+	float CCustomPhysicsObject::GetMass()
+	{
+		return _po->GetMass();
+	}
+
+	void CCustomPhysicsObject::SetMass(float m)
+	{
+		_po->SetMass(m);
+	}
+
 }

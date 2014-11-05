@@ -145,7 +145,7 @@
     <ClInclude Include="OGL_Shader.h" />
     <ClInclude Include="OGL_ShaderProgram.h" />
     <ClInclude Include="OGL_VertexShader.h" />
-    <ClInclude Include="Physics.h" />
+    <ClInclude Include="Physics_Interface.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Renderer.h" />
     <ClInclude Include="Scene.h" />
@@ -174,7 +174,7 @@
     <ClCompile Include="OGL_Shader.cpp" />
     <ClCompile Include="OGL_ShaderProgram.cpp" />
     <ClCompile Include="OGL_VertexShader.cpp" />
-    <ClCompile Include="Physics.cpp" />
+    <ClCompile Include="Physics_Interface.cpp" />
     <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SDL_EventManager.cpp" />

@@ -10,6 +10,7 @@ namespace Physics{
 	protected:
 		
 	public:
+		Vector3 gavity;
 		std::vector<CPhysicsObject*> _scene;
 		void Init();
 		void Tick(double t, double timeStep);

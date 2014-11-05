@@ -1,5 +1,5 @@
 #pragma once
-#include "Physics.h"
+#include "Physics_Interface.h"
 
 class btBroadphaseInterface;
 class btDefaultCollisionConfiguration;

@@ -41,7 +41,8 @@ void Game::Init(){
 	ent1->setPosition(Vector3(0, 1, 0));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
-	ent1->AddComponent(new Engine::CmPhysics());
+	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
+	ent1->getComponent<Engine::CmPhysics_Cuboid>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent1);
 
 

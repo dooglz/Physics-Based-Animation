@@ -60,9 +60,12 @@ namespace Physics{
 		static void integrate(State &state, double t, double dt);
 		virtual Matrix3 CalculateInertiaTensor() = 0;
 	public:
+		bool usesGravity;
 		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
 		Vector3 getRotation();
+		float GetMass();
+		void SetMass(float m);
 		void AddForce(Vector3 v);
 		void AddTorque(Vector3 v);
 		void AddImpulse(Vector3 v);

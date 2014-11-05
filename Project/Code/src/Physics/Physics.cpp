@@ -8,13 +8,14 @@ namespace Physics{
 	void PhysicsSytem::Init(){
 		printf("Hello, I'm a physics engine\n");
 		System = this;
+		gavity = Vector3(0, -9.81f, 0);
 	}
 
 	void PhysicsSytem::Tick(double t, double timeStep)
 	{
 		//Gravity
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
-			(*it)->AddForce(Vector3(0, -9.81f, 0));
+
 		}
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {

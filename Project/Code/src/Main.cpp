@@ -2,7 +2,7 @@
 #include "Game.h"
 #include "Engine/engine.h"
 #include "Engine/time.h"
-#include "Engine/Physics.h"
+#include "Engine/Physics_interface.h"
 #include <stdint.h>
 Game* GAME;
 
