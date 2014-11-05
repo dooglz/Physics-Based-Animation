@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include "Physics_Object.h"
+#include "Physics_Objects_shapes.h"
 
 namespace Physics{
 	PhysicsSytem* System = NULL;
@@ -11,14 +12,19 @@ namespace Physics{
 
 	void PhysicsSytem::Tick(double t, double timeStep)
 	{
-		//Check collision
+		//Gravity
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
-			(*it)->AddForce(Vector3(0, 1.0f, 0));
+			(*it)->AddForce(Vector3(0, -9.81f, 0));
 		}
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
 			(*it)->Update(t,timeStep);
 		}
+		//Detect collisions
+		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
+			//Wololo
+		}
+		//Integrate again if necessary
 	}
 
 	void PhysicsSytem::Shutdown()

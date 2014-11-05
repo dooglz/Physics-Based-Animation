@@ -21,12 +21,18 @@
     <ClInclude Include="Physics_Object.h">
       <Filter>Resource Files</Filter>
     </ClInclude>
+    <ClInclude Include="Physics_objects_shapes.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Physics.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Physics_Object.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Physics_Objects_shapes.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

@@ -1,6 +1,6 @@
 #include "CustomPhysicsSolver.h"
 #include "../Physics/Physics.h"
-#include "../Physics/Physics_Object.h"
+#include "../Physics/Physics_Objects_shapes.h"
 
 namespace Engine{
 	void CCustomSover::Init()
@@ -33,7 +33,7 @@ namespace Engine{
 
 	CCustomPhysicsObject::CCustomPhysicsObject()
 	{
-		_po = new Physics::CPhysicsObject();
+		_po = new Physics::CCube_Object(10, Vector3(0), 1, 1, 1);
 	}
 
 	Vector3 CCustomPhysicsObject::getRotation()

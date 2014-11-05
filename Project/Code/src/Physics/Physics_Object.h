@@ -29,8 +29,8 @@ namespace Physics{
 			float size;                     // length of the cube sides in meters.
 			float mass;                     // mass of the cube in kilograms.
 			float inverseMass;              // inverse of the mass used to convert momentum to velocity.
-			float inertiaTensor;            // inertia tensor of the cube (i have simplified it to a single value due to the mass properties a cube).
-			float inverseInertiaTensor;     // inverse inertia tensor used to convert angular momentum to angular velocity.
+			Matrix3 inertiaTensor;            // inertia tensor of the cube (i have simplified it to a single value due to the mass properties a cube).
+			Matrix3 inverseInertiaTensor;     // inverse inertia tensor used to convert angular momentum to angular velocity.
 
 			/// Recalculate secondary state values from primary values.
 			void recalculate()
@@ -55,17 +55,17 @@ namespace Physics{
 		State _previous;		// previous physics state.
 		State _current;		// current physics state.
 
-		static Derivative evaluate(const State &state, float t);
-		static Derivative evaluate(State state, float t, float dt, const Derivative &derivative);
-		static void integrate(State &state, float t, float dt);
-
+		static Derivative evaluate(const State &state, double t);
+		static Derivative evaluate(State state, double t, double dt, const Derivative &derivative);
+		static void integrate(State &state, double t, double dt);
+		virtual Matrix3 CalculateInertiaTensor() = 0;
 	public:
-		CPhysicsObject();
+		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
 		Vector3 getRotation();
 		void AddForce(Vector3 v);
 		void AddTorque(Vector3 v);
 		void AddImpulse(Vector3 v);
-		void Update(float t, float timestep);
+		void Update(double t, double timestep);
 	};
 }
