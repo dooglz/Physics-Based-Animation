@@ -10,15 +10,18 @@ namespace Physics{
 			std::vector<Vector3> getDebugLines();
 		public:
 			CCube_Object(float mass, Vector3 position, float lw, float lh, float ld);
+			Vector3 GetSize() { return _size; }
 	};
 
 	class CPlane_Object : public CPhysicsObject
 	{
 	protected:
+		Vector3 _normal;
 		Matrix3 CalculateInertiaTensor();
 		std::vector<Vector3> getDebugLines();
 	public:
 		CPlane_Object(Vector3 position, Vector3 normal);
+		Vector3 GetNormal(){ return _normal; }
 	};
 
 	class CSphere_Object : public CPhysicsObject

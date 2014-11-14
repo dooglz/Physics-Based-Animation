@@ -43,6 +43,7 @@ namespace Physics{
 
 	CCube_Object::CCube_Object(float mass, Vector3 position, float lw, float lh, float ld) :CPhysicsObject(mass, position)
 	{
+		type = CUBEOID;
 		_size = Vector3(lw, lh, ld);
 		_current.inertiaTensor = CalculateInertiaTensor();
 		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
@@ -58,6 +59,7 @@ namespace Physics{
 
 	CSphere_Object::CSphere_Object(float mass, Vector3 position, float radius) :CPhysicsObject(mass, position)
 	{
+		type = SPHERE;
 		_radius = radius;
 		_current.inertiaTensor = CalculateInertiaTensor();
 		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
@@ -67,6 +69,8 @@ namespace Physics{
 
 	CPlane_Object::CPlane_Object(Vector3 position, Vector3 normal) : CPhysicsObject(0.0f, position)
 	{
+		type = PLANE;
+		_normal = normal;
 		_current.inertiaTensor = CalculateInertiaTensor();
 		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
 		_current.recalculate();

@@ -30,7 +30,7 @@ namespace Physics{
 		integrate(_current, t, timestep);
 		_current.forces = Vector3(0.0f);
 		_current.torques = Vector3(0.0f);
-		//if (usesGravity){ _current.forces += System->gavity; }
+		if (usesGravity){ _current.forces += System->gavity; }
 	}
 
 	Vector3 CPhysicsObject::getPosition()

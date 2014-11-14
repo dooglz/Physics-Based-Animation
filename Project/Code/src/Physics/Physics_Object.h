@@ -43,6 +43,8 @@ namespace Physics{
 			}
 		};
 
+		enum shapeType {CUBEOID,SPHERE,PLANE};
+
 	protected:
 
 		struct Derivative
@@ -61,6 +63,7 @@ namespace Physics{
 		static void integrate(State &state, double t, double dt);
 		virtual Matrix3 CalculateInertiaTensor() = 0;
 	public:
+		shapeType type;
 		bool usesGravity;
 		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
