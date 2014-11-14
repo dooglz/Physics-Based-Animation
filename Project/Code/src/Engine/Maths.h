@@ -23,7 +23,9 @@ struct stVertex
 	#define Vector2 glm::vec2
 	#define Quaternion glm::quat
 	#define Normalize glm::normalize
-	
+	#define Length glm::length
+	#define Distance glm::distance
+
 	#define Dot glm::dot
 	#define Cross glm::cross
 	#define Perspective glm::perspective

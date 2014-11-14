@@ -1,6 +1,7 @@
 #include "Physics.h"
 #include "Physics_Object.h"
 #include "Physics_Objects_shapes.h"
+#include "Collision_Detection.h"
 
 namespace Physics{
 	PhysicsSytem* System = NULL;
@@ -22,6 +23,8 @@ namespace Physics{
 			(*it)->Update(t,timeStep);
 		}
 		//Detect collisions
+		CCollisionDetection::Scan(_scene);
+
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
 			//Wololo
 		}

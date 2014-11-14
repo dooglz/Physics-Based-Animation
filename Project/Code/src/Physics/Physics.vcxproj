@@ -98,11 +98,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Collision_Detection.h" />
     <ClInclude Include="Physics.h" />
     <ClInclude Include="Physics_Object.h" />
     <ClInclude Include="Physics_objects_shapes.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Collision_Detection.cpp" />
     <ClCompile Include="Physics.cpp" />
     <ClCompile Include="Physics_Object.cpp" />
     <ClCompile Include="Physics_Objects_shapes.cpp" />
