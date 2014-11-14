@@ -68,8 +68,13 @@ namespace Physics{
 		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
 		Vector3 getRotation();
+		Vector3 GetLinearVeloicty();
+		Vector3 GetAngularVeloicty();
 		virtual std::vector<Vector3> getDebugLines() = 0;
+		Matrix3 GetInvTensor();
+		Matrix3 GetTensor();
 		float GetMass();
+		float GetInvMass();
 		void SetMass(float m);
 		void AddForce(Vector3 v);
 		void AddTorque(Vector3 v);

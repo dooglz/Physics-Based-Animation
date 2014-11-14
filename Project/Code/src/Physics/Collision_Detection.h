@@ -27,5 +27,6 @@ namespace Physics{
 		static void PlanePlane(CPlane_Object* A, CPlane_Object* B);
 	public:
 		static void Scan(std::vector<CPhysicsObject*> scene);
+		static void Resolve();
 	};
 }

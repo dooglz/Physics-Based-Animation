@@ -48,6 +48,31 @@ namespace Physics{
 		return _current.mass;
 	}
 
+	float CPhysicsObject::GetInvMass()
+	{
+		return _current.inverseMass;
+	}
+
+	Matrix3 CPhysicsObject::GetInvTensor()
+	{
+		return _current.inverseInertiaTensor;
+	}
+
+	Matrix3 CPhysicsObject::GetTensor()
+	{
+		return _current.inertiaTensor;
+	}
+
+	Vector3 CPhysicsObject::GetLinearVeloicty()
+	{
+		return _current.velocity;
+	}
+
+	Vector3 CPhysicsObject::GetAngularVeloicty()
+	{
+		return _current.angularVelocity;
+	}
+
 	void CPhysicsObject::SetMass(float m)
 	{
 		_current.mass = m;
@@ -69,8 +94,7 @@ namespace Physics{
 	
 	void CPhysicsObject::AddImpulse(Vector3 v)
 	{
-		//todo 
-		ASSERT(false);
+		_current.velocity += v;
 	}
 
 
