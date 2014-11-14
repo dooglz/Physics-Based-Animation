@@ -11,6 +11,36 @@ namespace Physics{
 		return mat;
 	}
 
+	std::vector<Vector3> CCube_Object::getDebugLines()
+	{
+		std::vector<Vector3> aa(4);
+		aa.push_back(_current.position + Vector3(_size.x, 0, 0));
+		aa.push_back(_current.position + Vector3(-_size.x, 0, 0));
+		aa.push_back(_current.position + Vector3(0, _size.y, 0));
+		aa.push_back(_current.position + Vector3(0, -_size.y , 0));
+		aa.push_back(_current.position + Vector3(0, 0, _size.z));
+		aa.push_back(_current.position + Vector3(0, 0, -_size.z));
+		return aa;
+	}
+	std::vector<Vector3> CSphere_Object::getDebugLines()
+	{
+		std::vector<Vector3> aa(4);
+		aa.push_back(Vector3(0, 0, 0));
+		aa.push_back(Vector3(1, 1, 0));
+		aa.push_back(Vector3(0, 0, 0));
+		aa.push_back(Vector3(-2, 1, 0));
+		return aa;
+	}
+	std::vector<Vector3> CPlane_Object::getDebugLines()
+	{
+		std::vector<Vector3> aa(4);
+		aa.push_back(_current.position + Vector3(-100, 0, 0));
+		aa.push_back(_current.position + Vector3(100, 0, 0));
+		aa.push_back(_current.position + Vector3(0, 0, -100));
+		aa.push_back(_current.position + Vector3(0, 0, 100));
+		return aa;
+	}
+
 	CCube_Object::CCube_Object(float mass, Vector3 position, float lw, float lh, float ld) :CPhysicsObject(mass, position)
 	{
 		_size = Vector3(lw, lh, ld);
@@ -33,5 +63,18 @@ namespace Physics{
 		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
 		_current.recalculate();
 		_previous = _current;
+	}
+
+	CPlane_Object::CPlane_Object(Vector3 position, Vector3 normal) : CPhysicsObject(0.0f, position)
+	{
+		_current.inertiaTensor = CalculateInertiaTensor();
+		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		_current.recalculate();
+		_previous = _current;
+	}
+
+	Matrix3 CPlane_Object::CalculateInertiaTensor()
+	{
+		return Matrix3(1.0f);
 	}
 }

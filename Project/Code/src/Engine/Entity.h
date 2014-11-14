@@ -39,7 +39,10 @@ namespace Engine{
 		void SetName(const std::string name){
 			_name = name;
 		}
-
+		std::string GetName()
+		{
+			return _name;
+		}
 		virtual void Update(double delta);
 		virtual void Render();
 

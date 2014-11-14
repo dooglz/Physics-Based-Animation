@@ -1,5 +1,6 @@
 #pragma once
 #include "Maths.h"
+#include <vector>
 
 namespace Engine{
 	//Should really be called physicsInterface.
@@ -18,6 +19,7 @@ namespace Engine{
 		virtual void SetMass(float m) = 0;
 		virtual bool UsesGravity() = 0;
 		virtual void SetUsesGravity(bool b) = 0;
+		virtual std::vector<Vector3> getDebugLines() = 0;
 	};
 
 	class CPhysicsSolver
@@ -34,6 +36,7 @@ namespace Engine{
 		virtual void createPlaneShape(Vector3 normal, float distance) = 0;
 		virtual CPhysicsObject* CreateCubeObject(float mass, Vector3 position, float lw, float lh, float ld) = 0;
 		virtual CPhysicsObject* CreateSphereObject(float mass, Vector3 position, float radius) = 0;
+		virtual CPhysicsObject* CreatePlaneObject(Vector3 position, Vector3 normal) = 0;
 	};
 
 	//global public reference to the renderer

@@ -20,6 +20,7 @@ namespace Engine{
 		void Shutdown(); 
 		CmCamera* GetActiveCamera();
 		void SetActiveCamera(CmCamera* c);
+		void report();
 	};
 
 

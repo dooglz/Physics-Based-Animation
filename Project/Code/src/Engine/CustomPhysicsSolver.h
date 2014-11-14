@@ -14,6 +14,7 @@ namespace Engine{
 	protected:
 		Physics::CPhysicsObject* _po;
 	public:
+		std::vector<Vector3> getDebugLines();
 		Vector3 getPosition();
 		Vector3 getRotation();
 		bool UsesGravity();
@@ -27,10 +28,17 @@ namespace Engine{
 	public:
 		CCustomCubePhysicsObject(float mass, Vector3 position, float lw, float lh, float ld);
 	};
+
 	class CCustomSpherePhysicsObject : public CCustomPhysicsObject
 	{
 	public:
 		CCustomSpherePhysicsObject(float mass, Vector3 position, float radius);
+	};
+
+	class CCustomPlanePhysicsObject : public CCustomPhysicsObject
+	{
+	public:
+		CCustomPlanePhysicsObject(Vector3 position, Vector3 normal);
 	};
 
 	class CCustomSover : public CPhysicsSolver{
@@ -44,5 +52,6 @@ namespace Engine{
 		void createPlaneShape(Vector3 normal, float distance);
 		CPhysicsObject* CreateCubeObject(float mass, Vector3 position, float lw, float lh, float ld);
 		CPhysicsObject* CreateSphereObject(float mass, Vector3 position, float radius);
+		CPhysicsObject* CreatePlaneObject(Vector3 position, Vector3 normal);
 	};
 }

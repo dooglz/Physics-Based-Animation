@@ -18,18 +18,25 @@ namespace Engine{
 
 	void CmPhysics::Update(double delta)
 	{
-		Ent->setPosition(_po->getPosition());
+		Vector3 v = _po->getPosition();
+		Ent->setPosition(v);
 		Ent->setRotation(_po->getRotation());
 	}
-
 	void CmPhysics::Render()
 	{
 		if (_showdebug)
 		{
 			Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
+			std::vector<Vector3> arr = _po->getDebugLines();
+			for (int i = 0; i < arr.size();)
+			{
+				Vector3 a = arr[i];
+				Vector3 b = arr[i + 1];
+				Renderer->DrawLine(arr[i], arr[i+1]);
+				i += 2;
+			}
 		}
 	}
-
 	//--
 
 	CmPhysics_Cuboid::CmPhysics_Cuboid(float mass, Vector3 position, float lw, float lh, float ld) :CmPhysics("Physics Cuboid")
@@ -46,5 +53,13 @@ namespace Engine{
 	}
 
 	CmPhysics_Sphere::~CmPhysics_Sphere()
+	{}
+	
+	CmPhysics_Plane::CmPhysics_Plane(Vector3 position,Vector3 normal) :CmPhysics("Physics Plane")
+	{
+		_po = PhysicsSolver->CreatePlaneObject(position, normal);
+	}
+
+	CmPhysics_Plane::~CmPhysics_Plane()
 	{}
 }

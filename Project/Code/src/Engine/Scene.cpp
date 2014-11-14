@@ -60,4 +60,11 @@ namespace Engine{
 		}
 		_activeCamera = c;
 	}
+
+	void Scene::report(){
+		printf("Scene report -- Ents:%i\n", _ents.size());
+		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
+			printf("%s - (%i,%i,%i)\n", (*it)->GetName(), (*it)->getPosition().x, (*it)->getPosition().y, (*it)->getPosition().z);
+		}
+	}
 }

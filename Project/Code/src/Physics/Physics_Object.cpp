@@ -5,11 +5,17 @@ namespace Physics{
 
 	CPhysicsObject::CPhysicsObject(float mass, Vector3 position)
 	{
-		printf("Hello, I'm a new physics object\n");
+		printf("Hello, I'm a new physics object, m:%f\n",mass);
 		System->_scene.push_back(this);
 		_current.mass = mass;
 		_current.position = position;
-		_current.inverseMass = 1.0f / _current.mass;
+		if (mass == 0.0f){
+			_current.inverseMass = 0.0f;
+		}
+		else
+		{
+			_current.inverseMass = 1.0f / _current.mass;
+		}
 		_current.momentum = Vector3(0, 0, 0);
 		//_current.orientation = Quaternion(0.0f);
 		_current.angularMomentum = Vector3(0, 0, 0);
@@ -18,11 +24,13 @@ namespace Physics{
 	void CPhysicsObject::Update(double t, double timestep)
 	{
 		_previous = _current;
-		if (_current.mass = 0){ return; }
+		if (_current.mass = 0){ 
+			return; 
+		}
 		integrate(_current, t, timestep);
 		_current.forces = Vector3(0.0f);
 		_current.torques = Vector3(0.0f);
-		if (usesGravity){ _current.forces += System->gavity; }
+		//if (usesGravity){ _current.forces += System->gavity; }
 	}
 
 	Vector3 CPhysicsObject::getPosition()

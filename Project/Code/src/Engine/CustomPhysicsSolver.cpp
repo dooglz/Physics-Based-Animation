@@ -31,8 +31,12 @@ namespace Engine{
 
 	CPhysicsObject* CCustomSover::CreateSphereObject(float mass, Vector3 position, float radius)
 	{
-		
 		return new CCustomSpherePhysicsObject(mass, position, radius);
+	}
+
+	CPhysicsObject* CCustomSover::CreatePlaneObject(Vector3 position, Vector3 normal)
+	{
+		return new CCustomPlanePhysicsObject(position, normal);
 	}
 
 	//---------
@@ -44,6 +48,13 @@ namespace Engine{
 	{
 		_po = new Physics::CSphere_Object(mass, position,radius);
 	}
+
+	CCustomPlanePhysicsObject::CCustomPlanePhysicsObject(Vector3 position, Vector3 normal)
+	{
+		_po = new Physics::CPlane_Object(position, normal);
+	}
+
+
 	//---------
 
 
@@ -75,5 +86,8 @@ namespace Engine{
 	{
 		_po->SetMass(m);
 	}
-
+	std::vector<Vector3> CCustomPhysicsObject::getDebugLines()
+	{
+		return _po->getDebugLines();
+	}
 }

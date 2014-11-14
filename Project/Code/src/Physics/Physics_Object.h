@@ -1,5 +1,6 @@
 #pragma once
 #include "../Engine/Maths.h"
+#include <vector>
 
 namespace Physics{
 	class CPhysicsObject
@@ -64,6 +65,7 @@ namespace Physics{
 		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
 		Vector3 getRotation();
+		virtual std::vector<Vector3> getDebugLines() = 0;
 		float GetMass();
 		void SetMass(float m);
 		void AddForce(Vector3 v);

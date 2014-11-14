@@ -35,4 +35,11 @@ namespace Engine{
 		CmPhysics_Sphere(float mass, Vector3 position, float radius);
 		~CmPhysics_Sphere();
 	};
+
+	class CmPhysics_Plane : public CmPhysics{
+
+	public:
+		CmPhysics_Plane(Vector3 position, Vector3 normal);
+		~CmPhysics_Plane();
+	};
 }

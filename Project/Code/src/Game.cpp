@@ -38,7 +38,7 @@ void Game::Init(){
 
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
-	ent1->setPosition(Vector3(0, 1, 0));
+	ent1->setPosition(Vector3(0, 3, 0));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
@@ -47,11 +47,12 @@ void Game::Init(){
 
 
 	ent2 = new Engine::Entity();
-	ent2->SetName("Cool cube2");
+	ent2->SetName("floor");
 	ent2->setPosition(Vector3(0, -0.05, 0));
 	ent2->setScale(Vector3(10, 0.1,10));
 	ent2->AddComponent(new Engine::CmMeshRenderer());
 	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
+	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, -0.05, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 
 	ent3 = new Engine::Entity();
@@ -73,6 +74,7 @@ void Game::Update(double delta)
 	a+=(float)delta;
 	if (Engine::Input::getMapData("action1") > 128){
 		printf("action pressed\n");
+		Engine::ActiveScene->report();
 	}
 	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
 	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
