@@ -28,7 +28,7 @@ namespace Engine{
 		{
 			Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
 			std::vector<Vector3> arr = _po->getDebugLines();
-			for (int i = 0; i < arr.size();)
+			for (unsigned int i = 0; i < arr.size();)
 			{
 				Vector3 a = arr[i];
 				Vector3 b = arr[i + 1];

@@ -24,9 +24,10 @@ namespace Physics{
 	void CPhysicsObject::Update(double t, double timestep)
 	{
 		_previous = _current;
-		if (_current.mass = 0){ 
+		if (_current.mass == 0.0f){ 
 			return; 
 		}
+
 		integrate(_current, t, timestep);
 		_current.forces = Vector3(0.0f);
 		_current.torques = Vector3(0.0f);
@@ -95,6 +96,7 @@ namespace Physics{
 	void CPhysicsObject::AddImpulse(Vector3 v)
 	{
 		_current.velocity += v;
+		_current.momentum = _current.velocity * _current.mass;
 	}
 
 

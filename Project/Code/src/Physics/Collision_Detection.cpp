@@ -6,11 +6,11 @@ namespace Physics{
 	void CCollisionDetection::Scan(std::vector<CPhysicsObject*> scene)
 	{
 		//foreach object
-		for (int i = 0; i < scene.size(); i++)
+		for (unsigned int i = 0; i < scene.size(); i++)
 		{
 			CPhysicsObject* objA = scene[i];
 
-			for (int j = i+1; j < scene.size(); j++)
+			for (unsigned int j = i + 1; j < scene.size(); j++)
 			{
 				CPhysicsObject* objB = scene[j];
 				//BROADPHASE
@@ -110,7 +110,7 @@ namespace Physics{
 			//return false;
 			return;
 		}
-		printf("CuboidPlane Collision!\n");
+		//printf("CuboidPlane Collision!\n");
 		//Collision!
 		Collision* c = new Collision();
 		c->objectA = a;
@@ -133,7 +133,7 @@ namespace Physics{
 	///
 	void CCollisionDetection::Resolve()
 	{
-		for (int i = 0; i < _collisions.size(); i++)
+		for (unsigned int i = 0; i < _collisions.size(); i++)
 		{
 			Collision* c = _collisions[i];
 			CPhysicsObject* objectA = c->objectA;
@@ -167,56 +167,56 @@ namespace Physics{
 			{
 				// Coefficient of Restitution
 				float e = 0.0f;
-				/*
+				
 				float normDiv = 
 				Dot(c->normal, c->normal) * 
 				((invMass0 + invMass1) + Dot( c->normal,
-					Cross(
-						Transform(Cross(r0, c->normal),InvInertia0), 
-						r0)
-					+ Cross(
-						Transform(Cross(r1, c->normal), InvInertia1)
-						, r1)
-					));
-				*/
-				float jn = -1 * (1 + e)*Dot(dv, c->normal);// / normDiv;
+					Cross((Cross(r0, c->normal)*InvInertia0), r0)
+					+ Cross( (Cross(r1, c->normal)* InvInertia1), r1)
+				));
+				
+				float jn = -1 * (1 + e)*Dot(dv, c->normal) / normDiv;
 			
 				// Hack fix to stop sinking
 				// bias impulse proportional to penetration distance
 				jn = jn + (c->penetration*1.5f);
 				
-				objectA->AddImpulse(invMass0 * c->normal * jn*300.0f);
+				Vector3 impulse = invMass0 * c->normal * jn;
+				objectA->AddImpulse(impulse);
 			//	c0.m_linVelocity += invMass0 * c->normal * jn;
 			//  c0.m_angVelocity += Transform(Cross(r0, c->normal * jn),InvInertia0);
-				objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
+				
+				impulse = invMass1 * c->normal * jn;
+				objectB->AddImpulse(-1.0f* impulse);
 			//	c1.m_linVelocity -= invMass1 * c->normal * jn;
 			//	c1.m_angVelocity -= Transform(Cross(r1, c->normal * jn),InvInertia1);
 			}
-			/*
+			
 			// TANGENT Impulse Code
 			{
 				// Work out our tangent vector , with is perpendicular
 				// to our collision normal
 				Vector3 tangent = Vector3(0, 0, 0);
-				tangent = dv - (Dot(dv, normal) * normal);
-				tangent = Normalize(tangent);
+				tangent = dv - (Dot(dv, c->normal) * c->normal);
+				if (tangent.x || tangent.y || tangent.z)
+				{
+					tangent = Normalize(tangent);
+				}
 			
-				float tangDiv = invMass0 + invMass1
-				+ Dot(tangent, Cross((Cross(r0, tangent)
-				* c0.m_invInertia), r0)
-				+ Cross((Cross(r1, tangent) * c1.m_invInertia), r1));
+				float tangDiv = invMass0 + invMass1 + Dot(tangent, Cross((Cross(r0, tangent) * InvInertia0), r0) + Cross((Cross(r1, tangent) * InvInertia1), r1));
 			
 				float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
-			
+				Vector3 impulse = invMass0 * tangent * jt;
 				// Apply contact impulse
-				c0.m_linVelocity += invMass0 * tangent * jt;
-				c0.m_angVelocity += Transform(Cross(r0, tangent * jt),InvInertia0);
-			
-				c1.m_linVelocity -= invMass1 * tangent * jt;
-				c1.m_angVelocity -= Transform(Cross(r1, tangent * jt),InvInertia1);
+				objectA->AddImpulse(impulse);
+				//c0.m_angVelocity += Transform(Cross(r0, tangent * jt),InvInertia0);
+				
+				impulse = -1.0f * invMass1 * tangent * jt;
+				objectB->AddImpulse(-1.0f * invMass1 * tangent * jt);
+				//c1.m_angVelocity -= Transform(Cross(r1, tangent * jt),InvInertia1);
 			} // TANGENT
-			*/
+			
 			delete c;
 		}
 		_collisions.clear();
