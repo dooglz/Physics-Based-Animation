@@ -19,7 +19,8 @@ namespace Physics{
 		_current.momentum = Vector3(0, 0, 0);
 		//_current.orientation = Quaternion(0.0f);
 		_current.angularMomentum = Vector3(0, 0, 0);
-		_current.torques += Vector3(0, 1.1f, 1.5f);
+
+		_current.torques += Vector3(25.1f,10.0f, 0);
 	}
 
 	void CPhysicsObject::Update(double t, double timestep)

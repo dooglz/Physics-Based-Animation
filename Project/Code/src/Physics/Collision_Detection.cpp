@@ -89,20 +89,16 @@ namespace Physics{
 
 	void CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b)
 	{
-	//	printf("SpherePlane!\n");
 		//assumme all plane are flat for now
 		float distance = -1.0f*b->getPosition().y;
-		//assume perfect sqaure
+		//assume perfect sphere
 		float radius = a->GetRadius();
 
 		float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
 		if (separation > radius)
 		{
-			//return false;
 			return;
 		}
-		//printf("CuboidPlane Collision!\n");
-		//Collision!
 		Collision* c = new Collision();
 		c->objectA = a;
 		c->objectB = b;
@@ -110,7 +106,6 @@ namespace Physics{
 		c->penetration = radius - separation;
 		c->point = a->getPosition() - b->GetNormal() * separation;
 		_collisions.push_back(c);
-		//return true;
 		return;
 
 	}
@@ -125,7 +120,7 @@ namespace Physics{
 	
 		//local coords on cube
 		Vector4 points[8] = { 
-			Vector4(a->GetSize().x,		a->GetSize().y,		a->GetSize().z,	1.0f),
+			Vector4(a->GetSize().x,	a->GetSize().y,		a->GetSize().z,	1.0f),
 			Vector4(-a->GetSize().x, a->GetSize().y, a->GetSize().z, 1.0f),
 			Vector4(a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
 			Vector4(-a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
@@ -230,7 +225,7 @@ namespace Physics{
 				Vector3 impulse = invMass0 * c->normal * jn;
 				Vector3 rotImpulse = InvInertia0 * Cross(r0, c->normal * jn);
 				objectA->AddImpulse(impulse);
-		//		objectA->AddRotationImpulse(rotImpulse);
+				objectA->AddRotationImpulse(rotImpulse);
 
 				impulse = invMass1 * c->normal * jn;
 				rotImpulse = Cross(r1, c->normal * jn) * InvInertia1;
@@ -239,7 +234,7 @@ namespace Physics{
 			}
 			
 			// TANGENT Impulse Code
-			/*
+			
 			{
 				// Work out our tangent vector , with is perpendicular
 				// to our collision normal
@@ -257,15 +252,15 @@ namespace Physics{
 				Vector3 impulse = invMass0 * tangent * jt;
 				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
 				// Apply contact impulse
-				//objectA->AddImpulse(impulse);
-				///objectA->AddRotationImpulse(rotImpulse);
+				objectA->AddImpulse(impulse);
+				objectA->AddRotationImpulse(rotImpulse);
 				
 				impulse = invMass1 * tangent * jt;
 				rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
 				objectB->AddImpulse(-1.0f * impulse);
 				objectB->AddRotationImpulse(-1.0f* rotImpulse);
 			} // TANGENT
-			*/
+			
 			delete c;
 		}
 		_collisions.clear();

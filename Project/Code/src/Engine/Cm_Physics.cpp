@@ -6,7 +6,7 @@
 namespace Engine{
 	CmPhysics::CmPhysics(std::string s) : Engine::CComponent(s)
 	{
-		_showdebug = true;
+		//_showdebug = true;
 	}
 
 	CmPhysics::~CmPhysics(){}
@@ -26,7 +26,7 @@ namespace Engine{
 	{
 		if (_showdebug)
 		{
-			Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
+			//Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
 			std::vector<Vector3> arr = _po->getDebugLines();
 			for (unsigned int i = 0; i < arr.size();)
 			{
