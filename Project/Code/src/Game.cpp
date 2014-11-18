@@ -58,7 +58,7 @@ void Game::Init(){
 	ent2->setPosition(Vector3(0, -0.01, 0));
 	ent2->setScale(Vector3(10, 0.1,10));
 	ent2->AddComponent(new Engine::CmMeshRenderer());
-	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
+	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/plane.obj");
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, -0.05, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 
