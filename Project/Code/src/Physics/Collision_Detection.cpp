@@ -84,12 +84,12 @@ namespace Physics{
 
 	void CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b)
 	{
-		printf("SphereCuboid!\n");
+		//printf("SphereCuboid!\n");
 	}
 
 	void CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b)
 	{
-		printf("SpherePlane!\n");
+	//	printf("SpherePlane!\n");
 		//assumme all plane are flat for now
 		float distance = -1.0f*b->getPosition().y;
 		//assume perfect sqaure
@@ -164,7 +164,6 @@ namespace Physics{
 				c->penetration = distances[i];
 				c->point = t + n * c->penetration;
 				_collisions.push_back(c);
-				Engine::Renderer->DrawCross(c->point, 0.5f);
 			}
 		}
 
@@ -181,8 +180,8 @@ namespace Physics{
 	{
 		for (unsigned int i = 0; i < _collisions.size(); i++)
 		{
-
 			Collision* c = _collisions[i];
+			Engine::Renderer->DrawCross(c->point, 0.5f);
 			CPhysicsObject* objectA = c->objectA;
 			CPhysicsObject* objectB = c->objectB;
 			// Some simple check code.
@@ -222,24 +221,25 @@ namespace Physics{
 					+ Cross( (Cross(r1, c->normal)* InvInertia1), r1)
 				));
 				
-				float jn = -1 * (1 + e)*Dot(dv, c->normal) / normDiv;
+				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
 			
 				// Hack fix to stop sinking
 				// bias impulse proportional to penetration distance
 				jn = jn + (c->penetration*1.5f);
 				
 				Vector3 impulse = invMass0 * c->normal * jn;
+				Vector3 rotImpulse = InvInertia0 * Cross(r0, c->normal * jn);
 				objectA->AddImpulse(impulse);
-			//	c0.m_linVelocity += invMass0 * c->normal * jn;
-			//  c0.m_angVelocity += Transform(Cross(r0, c->normal * jn),InvInertia0);
-				
+		//		objectA->AddRotationImpulse(rotImpulse);
+
 				impulse = invMass1 * c->normal * jn;
+				rotImpulse = Cross(r1, c->normal * jn) * InvInertia1;
 				objectB->AddImpulse(-1.0f* impulse);
-			//	c1.m_linVelocity -= invMass1 * c->normal * jn;
-			//	c1.m_angVelocity -= Transform(Cross(r1, c->normal * jn),InvInertia1);
+			//	objectB->AddRotationImpulse(-1.0f* rotImpulse);
 			}
-			/*
+			
 			// TANGENT Impulse Code
+			/*
 			{
 				// Work out our tangent vector , with is perpendicular
 				// to our collision normal
@@ -255,13 +255,15 @@ namespace Physics{
 				float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
 				Vector3 impulse = invMass0 * tangent * jt;
+				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
 				// Apply contact impulse
-				objectA->AddImpulse(impulse);
-				//c0.m_angVelocity += Transform(Cross(r0, tangent * jt),InvInertia0);
+				//objectA->AddImpulse(impulse);
+				///objectA->AddRotationImpulse(rotImpulse);
 				
-				impulse = -1.0f * invMass1 * tangent * jt;
-				objectB->AddImpulse(-1.0f * invMass1 * tangent * jt);
-				//c1.m_angVelocity -= Transform(Cross(r1, tangent * jt),InvInertia1);
+				impulse = invMass1 * tangent * jt;
+				rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
+				objectB->AddImpulse(-1.0f * impulse);
+				objectB->AddRotationImpulse(-1.0f* rotImpulse);
 			} // TANGENT
 			*/
 			delete c;

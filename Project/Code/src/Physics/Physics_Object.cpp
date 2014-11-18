@@ -19,6 +19,7 @@ namespace Physics{
 		_current.momentum = Vector3(0, 0, 0);
 		//_current.orientation = Quaternion(0.0f);
 		_current.angularMomentum = Vector3(0, 0, 0);
+		_current.torques += Vector3(0, 1.1f, 1.5f);
 	}
 
 	void CPhysicsObject::Update(double t, double timestep)
@@ -33,9 +34,11 @@ namespace Physics{
 		_current.torques = Vector3(0.0f);
 		if (usesGravity){
 			_current.forces += System->gavity; 
-			_current.forces += Vector3(10.1f,0, 0);
-		//	_current.torques += Vector3(0, 0.1f, 0);
+		//	_current.forces += Vector3(5.1f,0, 0);
 		}
+		//dampening
+		_current.velocity *= 0.9999f;
+		_current.angularVelocity *= 0.9999f;
 	}
 
 	Vector3 CPhysicsObject::getPosition()
@@ -103,6 +106,11 @@ namespace Physics{
 		_current.momentum = _current.velocity * _current.mass;
 	}
 
+	void CPhysicsObject::AddRotationImpulse(Vector3 v)
+	{
+		_current.angularVelocity += v;
+		_current.angularMomentum = _current.angularVelocity * _current.inverseInertiaTensor;
+	}
 
 	CPhysicsObject::Derivative CPhysicsObject::evaluate(const CPhysicsObject::State &state, double t)
 	{

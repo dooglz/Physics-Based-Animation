@@ -79,6 +79,7 @@ namespace Physics{
 		void AddForce(Vector3 v);
 		void AddTorque(Vector3 v);
 		void AddImpulse(Vector3 v);
+		void AddRotationImpulse(Vector3 v);
 		void Update(double t, double timestep);
 	};
 }

@@ -14,21 +14,17 @@ namespace Physics{
 	std::vector<Vector3> CCube_Object::getDebugLines()
 	{
 		std::vector<Vector3> aa(4);
-		aa.push_back(_current.position + Vector3(_size.x, 0, 0));
-		aa.push_back(_current.position + Vector3(-_size.x, 0, 0));
-		aa.push_back(_current.position + Vector3(0, _size.y, 0));
-		aa.push_back(_current.position + Vector3(0, -_size.y , 0));
-		aa.push_back(_current.position + Vector3(0, 0, _size.z));
-		aa.push_back(_current.position + Vector3(0, 0, -_size.z));
+		aa.push_back(_current.position + Vector3(_size.x, _size.y, _size.z));
+		aa.push_back(_current.position + Vector3(-_size.x, -_size.y, -_size.z));
+		aa.push_back(_current.position + Vector3(-_size.x, _size.y,-_size.z));
+		aa.push_back(_current.position + Vector3(_size.x, -_size.y, _size.z));
+		aa.push_back(_current.position + Vector3(_size.x, _size.y, -_size.z));
+		aa.push_back(_current.position + Vector3(-_size.x, -_size.y, _size.z));
 		return aa;
 	}
 	std::vector<Vector3> CSphere_Object::getDebugLines()
 	{
-		std::vector<Vector3> aa(4);
-		aa.push_back(Vector3(0, 0, 0));
-		aa.push_back(Vector3(1, 1, 0));
-		aa.push_back(Vector3(0, 0, 0));
-		aa.push_back(Vector3(-2, 1, 0));
+		std::vector<Vector3> aa(0);
 		return aa;
 	}
 	std::vector<Vector3> CPlane_Object::getDebugLines()

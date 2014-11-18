@@ -13,6 +13,7 @@
 Engine::Entity* ent1;
 Engine::Entity* ent2;
 Engine::Entity* ent3;
+Engine::Entity* ent4;
 float a = 0.0f;
 
 void Game::registerInputs()
@@ -43,6 +44,14 @@ void Game::Init(){
 	ent1->getComponent<Engine::CmPhysics_Cuboid>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent1);
 
+	ent4 = new Engine::Entity();
+	ent4->SetName("Cool sphere");
+	ent4->setPosition(Vector3(3, 3, 3));
+	ent4->AddComponent(new Engine::CmMeshRenderer());
+	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent4->getScale().x));
+	ent4->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
+	Engine::ActiveScene->AddEntity(ent4);
 
 	ent2 = new Engine::Entity();
 	ent2->SetName("floor");
@@ -74,7 +83,7 @@ void Game::Update(double delta)
 		printf("action pressed\n");
 		Engine::ActiveScene->report();
 	}
-	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
+//	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
 
 	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
 }
