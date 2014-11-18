@@ -65,7 +65,7 @@
 	//--
 	Matrix4 EulerToMatrix(const Vector3 euler)
 	{
-		return  glm::eulerAngleYXZ(euler.x, euler.y, euler.z);
+		return  glm::eulerAngleYXZ(euler.y, euler.x, euler.z);
 	}
 
 	Matrix4 QuatToMatrix(const Quaternion q)

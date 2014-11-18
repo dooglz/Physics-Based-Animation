@@ -135,6 +135,7 @@ namespace Physics{
 	{
 		for (unsigned int i = 0; i < _collisions.size(); i++)
 		{
+
 			Collision* c = _collisions[i];
 			CPhysicsObject* objectA = c->objectA;
 			CPhysicsObject* objectB = c->objectB;
@@ -166,7 +167,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				float e = 0.0f;
+				float e = 1.0f;
 				
 				float normDiv = 
 				Dot(c->normal, c->normal) * 

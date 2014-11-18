@@ -56,16 +56,16 @@ void CmFpsMotor::Update(double delta)
 {
 	Vector3 rot = Vector3(0);
 	if (Engine::Input::getMapData("down") > 128){
-		rot += Vector3(0, 1.0f, 0);
-	}
-	if (Engine::Input::getMapData("up") > 128){
-		rot += Vector3(0, -1.0f, 0);
-	}
-	if (Engine::Input::getMapData("left") > 128){
 		rot += Vector3(1.0f, 0, 0);
 	}
-	if (Engine::Input::getMapData("right") > 128){
+	if (Engine::Input::getMapData("up") > 128){
 		rot += Vector3(-1.0f, 0, 0);
+	}
+	if (Engine::Input::getMapData("left") > 128){
+		rot += Vector3(0, 1.0f, 0);
+	}
+	if (Engine::Input::getMapData("right") > 128){
+		rot += Vector3(0, -1.0f, 0);
 	}
 	Ent->setRotation(Ent->getRotation() + rot*20.0f*(float)delta);
 

@@ -26,8 +26,6 @@ void Game::registerInputs()
 	a.clear();
 }
 
-
-
 Game::Game(){
 	printf("Project for Physics Based Animation\n(SET09119) Edinburgh Napier University\nSam Serrels\n");
 }
@@ -58,7 +56,7 @@ void Game::Init(){
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
 	ent3->setPosition(Vector3(-2.8, 2.5, 2.3));
-	ent3->setRotation(Vector3(-0.99f, -0.43f,0));
+	ent3->setRotation(Vector3(-0.43f,- 0.99f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
