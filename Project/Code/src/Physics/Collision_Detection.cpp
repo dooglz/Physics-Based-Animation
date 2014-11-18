@@ -1,4 +1,5 @@
 #include "Collision_Detection.h"
+#include "../Engine/Renderer.h"
 
 namespace Physics{
 	std::vector<CCollisionDetection::Collision*> CCollisionDetection::_collisions;
@@ -89,20 +90,10 @@ namespace Physics{
 	void CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b)
 	{
 		printf("SpherePlane!\n");
-	}
-
-	void CCollisionDetection::CuboidCuboid(CCube_Object* a, CCube_Object* b)
-	{
-		printf("CuboidCuboid!\n");
-	}
-
-	void CCollisionDetection::CuboidPlane(CCube_Object* a, CPlane_Object* b)
-	{
-		
 		//assumme all plane are flat for now
 		float distance = -1.0f*b->getPosition().y;
 		//assume perfect sqaure
-		float radius = a->GetSize().x;
+		float radius = a->GetRadius();
 
 		float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
 		if (separation > radius)
@@ -121,6 +112,61 @@ namespace Physics{
 		_collisions.push_back(c);
 		//return true;
 		return;
+
+	}
+
+	void CCollisionDetection::CuboidCuboid(CCube_Object* a, CCube_Object* b)
+	{
+		printf("CuboidCuboid!\n");
+	}
+
+	void CCollisionDetection::CuboidPlane(CCube_Object* a, CPlane_Object* b)
+	{
+	
+		//local coords on cube
+		Vector4 points[8] = { 
+			Vector4(a->GetSize().x,		a->GetSize().y,		a->GetSize().z,	1.0f),
+			Vector4(-a->GetSize().x, a->GetSize().y, a->GetSize().z, 1.0f),
+			Vector4(a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
+			Vector4(-a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
+			Vector4(a->GetSize().x, a->GetSize().y, -a->GetSize().z, 1.0f),
+			Vector4(-a->GetSize().x, a->GetSize().y, -a->GetSize().z, 1.0f),
+			Vector4(a->GetSize().x, -a->GetSize().y, -a->GetSize().z, 1.0f),
+			Vector4(-a->GetSize().x, -a->GetSize().y, -a->GetSize().z, 1.0f)
+		};
+
+		//transfrom to global
+		Matrix4 rot = EulerToMatrix(a->getRotation());
+		Matrix4 trn = Translation(a->getPosition());
+		for (int i = 0; i < 8;i++)
+		{
+			points[i] = trn * rot * points[i];
+			//Engine::Renderer->DrawCross(Vector3(points[i]), 0.5f);
+		}
+
+		//For each point on the cube, which side of cube are they on?
+		float distances[8];
+		for (int i = 0; i < 8; i++)
+		{
+			Vector3 p = Vector3(0, 0, 0);
+			Vector3 n = Vector3(0, 1, 0); 
+
+			Vector3 t = (Vector3)points[i];
+
+			distances[i] = Dot(p, n) - Dot(t, n);
+
+			if (distances[i] > 0)
+			{
+				Collision* c = new Collision();
+				c->objectA = a;
+				c->objectB = b;
+				c->normal = b->GetNormal();
+				c->penetration = distances[i];
+				c->point = t + n * c->penetration;
+				_collisions.push_back(c);
+				Engine::Renderer->DrawCross(c->point, 0.5f);
+			}
+		}
 
 	}
 
@@ -161,7 +207,7 @@ namespace Physics{
 			float relativeMovement = -Dot(dv, c->normal);
 			if (relativeMovement < -0.01f)
 			{
-				return;
+				continue;
 			}
 			
 			// NORMAL Impulse
@@ -192,7 +238,7 @@ namespace Physics{
 			//	c1.m_linVelocity -= invMass1 * c->normal * jn;
 			//	c1.m_angVelocity -= Transform(Cross(r1, c->normal * jn),InvInertia1);
 			}
-			
+			/*
 			// TANGENT Impulse Code
 			{
 				// Work out our tangent vector , with is perpendicular
@@ -217,7 +263,7 @@ namespace Physics{
 				objectB->AddImpulse(-1.0f * invMass1 * tangent * jt);
 				//c1.m_angVelocity -= Transform(Cross(r1, tangent * jt),InvInertia1);
 			} // TANGENT
-			
+			*/
 			delete c;
 		}
 		_collisions.clear();

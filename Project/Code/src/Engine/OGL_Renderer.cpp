@@ -135,11 +135,19 @@ namespace Engine{
 			_defaultProgram->link();
 		}
 
+		void COGL_Renderer::DrawCross(Vector3 p1, float size)
+		{
+			DrawLine(p1 + Vector3(size, 0, 0), p1 - Vector3(size, 0, 0));
+			DrawLine(p1 + Vector3(0,size, 0), p1 - Vector3(0, size, 0));
+			DrawLine(p1 + Vector3(0, 0, size), p1 - Vector3(0, 0, size));
+		}
+
 		void COGL_Renderer::DrawLine(Vector3 p1, Vector3 p2)
 		{
 			linebuffer.push_back(p1);
 			linebuffer.push_back(p2);
 		}
+
 		void COGL_Renderer::ProcessLines()
 		{
 			if (linebuffer.size() < 1){ return; }

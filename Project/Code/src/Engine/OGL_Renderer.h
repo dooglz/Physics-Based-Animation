@@ -19,6 +19,7 @@ namespace Engine{
 			COGL_Renderer();
 			void renderMesh(Mesh* msh, Matrix4 mvp);
 			void DrawLine(Vector3 p1, Vector3 p2);
+			void DrawCross(Vector3 p1, float size);
 			void PrepFrame();
 			void PostRender();
 			void clearSurface();

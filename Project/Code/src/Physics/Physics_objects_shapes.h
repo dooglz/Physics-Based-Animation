@@ -32,5 +32,6 @@ namespace Physics{
 			float _radius;
 		public:
 			CSphere_Object(float mass, Vector3 position, float radius);
+			float GetRadius(){ return _radius; }
 	};
 }

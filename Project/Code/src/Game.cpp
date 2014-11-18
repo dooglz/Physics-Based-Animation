@@ -74,7 +74,8 @@ void Game::Update(double delta)
 		printf("action pressed\n");
 		Engine::ActiveScene->report();
 	}
-	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
+	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
+
 	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
 }
 
