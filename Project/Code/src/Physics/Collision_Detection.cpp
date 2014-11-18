@@ -207,7 +207,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				float e = 0.0f;
+				float e = 1.0f;
 				
 				float normDiv = 
 				Dot(c->normal, c->normal) * 
@@ -252,8 +252,8 @@ namespace Physics{
 				// Clamp min/max tangental component
 				Vector3 impulse = invMass0 * tangent * jt;
 				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
+				
 				// Apply contact impulse
-
 				if (invMass0 != 0)
 				{
 					objectA->AddImpulse(impulse);

@@ -46,7 +46,7 @@ void Game::Init(){
 
 	ent4 = new Engine::Entity();
 	ent4->SetName("Cool sphere");
-	ent4->setPosition(Vector3(3, 3, 3));
+	ent4->setPosition(Vector3(4, 5, 4));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent4->getScale().x));
@@ -55,8 +55,8 @@ void Game::Init(){
 
 	ent2 = new Engine::Entity();
 	ent2->SetName("floor");
-	ent2->setPosition(Vector3(0, -0.01, 0));
-	ent2->setScale(Vector3(10, 0.1,10));
+	ent2->setPosition(Vector3(0, 0, 0));
+	ent2->setScale(Vector3(30, 1,30));
 	ent2->AddComponent(new Engine::CmMeshRenderer());
 	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/plane.obj");
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, -0.05, 0), Vector3(0, 1, 0)));
