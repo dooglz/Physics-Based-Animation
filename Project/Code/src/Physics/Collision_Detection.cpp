@@ -207,7 +207,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				float e = 1.0f;
+				float e = 0.0f;
 				
 				float normDiv = 
 				Dot(c->normal, c->normal) * 
@@ -222,15 +222,16 @@ namespace Physics{
 				// bias impulse proportional to penetration distance
 				jn = jn + (c->penetration*1.5f);
 				
-				Vector3 impulse = invMass0 * c->normal * jn;
-				Vector3 rotImpulse = InvInertia0 * Cross(r0, c->normal * jn);
-				objectA->AddImpulse(impulse);
-				objectA->AddRotationImpulse(rotImpulse);
-
-				impulse = invMass1 * c->normal * jn;
-				rotImpulse = Cross(r1, c->normal * jn) * InvInertia1;
-				objectB->AddImpulse(-1.0f* impulse);
-			//	objectB->AddRotationImpulse(-1.0f* rotImpulse);
+				if (invMass0 != 0)
+				{
+					objectA->AddImpulse(invMass0 * c->normal * jn);
+					objectA->AddRotationImpulse(InvInertia0 * Cross(r0, c->normal * jn));
+				}
+				if (invMass1 != 0)
+				{
+					objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
+					objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
+				}
 			}
 			
 			// TANGENT Impulse Code
@@ -252,13 +253,19 @@ namespace Physics{
 				Vector3 impulse = invMass0 * tangent * jt;
 				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
 				// Apply contact impulse
-				objectA->AddImpulse(impulse);
-				objectA->AddRotationImpulse(rotImpulse);
-				
-				impulse = invMass1 * tangent * jt;
-				rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
-				objectB->AddImpulse(-1.0f * impulse);
-				objectB->AddRotationImpulse(-1.0f* rotImpulse);
+
+				if (invMass0 != 0)
+				{
+					objectA->AddImpulse(impulse);
+					objectA->AddRotationImpulse(rotImpulse);
+				}
+				if (invMass1 != 1)
+				{
+					impulse = invMass1 * tangent * jt;
+					rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
+					//	objectB->AddImpulse(-1.0f * impulse);
+					//	objectB->AddRotationImpulse(-1.0f* rotImpulse);
+				}
 			} // TANGENT
 			
 			delete c;

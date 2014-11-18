@@ -75,6 +75,7 @@ namespace Physics{
 
 	Matrix3 CPlane_Object::CalculateInertiaTensor()
 	{
+		//return Matrix3(0.0f);
 		return Matrix3(1.0f);
 	}
 }
