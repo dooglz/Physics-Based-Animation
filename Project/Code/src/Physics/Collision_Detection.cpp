@@ -62,16 +62,6 @@ namespace Physics{
 						PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB));
 					}
 				}
-
-				float distance = Distance(objA->getPosition(),objB->getPosition());
-				if (distance < (1.0f))
-				{
-					//Collision!
-					Collision* c = new Collision();
-					c->objectA = objA;
-					c->objectB = objB;
-					c->normal = Vector3(0, 1, 0);
-				}
 			}
 		}
 		Resolve();
@@ -79,7 +69,19 @@ namespace Physics{
 
 	void CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b)
 	{
-		printf("SphereSphere!\n");
+		const float distance = Distance(a->getPosition(),b->getPosition());
+		//DBG_ASSERT(distance > 0.00001 f);
+		const float sumRadius = (a->GetRadius() + b->GetRadius());
+		if (distance < sumRadius)
+		{
+			Collision* c = new Collision();
+			c->objectA = a;
+			c->objectB = b;
+			c->normal = Normalize(a->getPosition() - b->getPosition());
+			c->penetration = sumRadius - distance;
+			c->point = a->getPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f);
+			_collisions.push_back(c);
+		}
 	}
 
 	void CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b)
@@ -90,11 +92,11 @@ namespace Physics{
 	void CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b)
 	{
 		//assumme all plane are flat for now
-		float distance = -1.0f*b->getPosition().y;
+		const float distance = -1.0f*b->getPosition().y;
 		//assume perfect sphere
-		float radius = a->GetRadius();
+		const float radius = a->GetRadius();
 
-		float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
+		const float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
 		if (separation > radius)
 		{
 			return;
@@ -143,8 +145,8 @@ namespace Physics{
 		float distances[8];
 		for (int i = 0; i < 8; i++)
 		{
-			Vector3 p = Vector3(0, 0, 0);
-			Vector3 n = Vector3(0, 1, 0); 
+			Vector3 p = b->getPosition();
+			Vector3 n = b->GetNormal();
 
 			Vector3 t = (Vector3)points[i];
 
@@ -207,9 +209,9 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				float e = 1.0f;
+				const float e = 1.0f;
 				
-				float normDiv = 
+				const float normDiv =
 				Dot(c->normal, c->normal) * 
 				((invMass0 + invMass1) + Dot( c->normal,
 					Cross((Cross(r0, c->normal)*InvInertia0), r0)
@@ -246,9 +248,9 @@ namespace Physics{
 					tangent = Normalize(tangent);
 				}
 			
-				float tangDiv = invMass0 + invMass1 + Dot(tangent, Cross((Cross(r0, tangent) * InvInertia0), r0) + Cross((Cross(r1, tangent) * InvInertia1), r1));
+				const float tangDiv = invMass0 + invMass1 + Dot(tangent, Cross((Cross(r0, tangent) * InvInertia0), r0) + Cross((Cross(r1, tangent) * InvInertia1), r1));
 			
-				float jt = -1 * Dot(dv, tangent) / tangDiv;
+				const float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
 				Vector3 impulse = invMass0 * tangent * jt;
 				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
