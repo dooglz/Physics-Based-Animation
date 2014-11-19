@@ -37,7 +37,7 @@ void Game::Init(){
 
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
-	ent1->setPosition(Vector3(0, 3, 0));
+	ent1->setPosition(Vector3(3, 3, 3));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
@@ -46,7 +46,7 @@ void Game::Init(){
 
 	ent4 = new Engine::Entity();
 	ent4->SetName("Cool sphere");
-	ent4->setPosition(Vector3(4, 5, 4));
+	ent4->setPosition(Vector3(0, 5, 0));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent4->getScale().x));

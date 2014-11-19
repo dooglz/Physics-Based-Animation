@@ -265,10 +265,11 @@ namespace Physics{
 				{
 					impulse = invMass1 * tangent * jt;
 					rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
-					//	objectB->AddImpulse(-1.0f * impulse);
-					//	objectB->AddRotationImpulse(-1.0f* rotImpulse);
+					objectB->AddImpulse(-1.0f * impulse);
+					objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
 			} // TANGENT
+			
 			
 			delete c;
 		}

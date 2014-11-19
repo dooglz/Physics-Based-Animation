@@ -36,6 +36,7 @@ namespace Physics{
 		if (usesGravity){
 			_current.forces += System->gavity; 
 		//	_current.forces += Vector3(5.1f,0, 0);
+		//	_current.torques += Vector3(5.1f, 1.0f, 5.0f);
 		}
 		//dampening
 		_current.velocity *= 0.9999f;

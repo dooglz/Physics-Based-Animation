@@ -67,15 +67,16 @@ namespace Physics{
 	{
 		type = PLANE;
 		_normal = normal;
-		_current.inertiaTensor = CalculateInertiaTensor();
-		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		//_current.inertiaTensor = CalculateInertiaTensor();
+		//_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		_current.inverseInertiaTensor = Matrix3(0.0f);
 		_current.recalculate();
 		_previous = _current;
 	}
 
 	Matrix3 CPlane_Object::CalculateInertiaTensor()
 	{
-		//return Matrix3(0.0f);
-		return Matrix3(1.0f);
+		return Matrix3(0.0f);
+		//return Matrix3(1.0f);
 	}
 }
