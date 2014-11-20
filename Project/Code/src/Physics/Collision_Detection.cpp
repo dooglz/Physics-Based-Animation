@@ -70,6 +70,7 @@ namespace Physics{
 
 	bool CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b, bool resolve)
 	{
+		return false;
 		const float distance = Distance(a->getPosition(),b->getPosition());
 		ASSERT(distance > 0.00001f);
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
@@ -92,40 +93,40 @@ namespace Physics{
 
 	bool CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b, bool resolve)
 	{
-
-		// Early out check to see if we can exclude the contact
-		//
-	/*	if (fabs(relCenter.x) - B.Radius > HalfExtent.x ||
-			fabs(relCenter.y) - B.Radius > HalfExtent.y ||
-			fabs(relCenter.z) - B.Radius > HalfExtent.z)
-		{
-			return 0;
-		}
-		*/
 		// Clamp each coordinate to the cuboid
 		//
+		//WE need ot take roation into accout here, for realtive position to really work
+		Matrix4 rot = EulerToMatrix(b->getRotation());
+		Matrix4 trn = Translation(b->getPosition());
+		Matrix4 inv = Inverse(trn * rot);
+		Vector4 v4 = Vector4(a->getPosition(), 1);
+
+		//Vector3 realativePosition = a->getPosition() - b->getPosition();
+		v4 = inv * v4;
+		Vector3 realativePosition = Vector3(v4);
+
 		Vector3 closestPoint(
-			Clamp(a->getPosition().x, (2.0f*b->GetSize().x)),
-			Clamp(a->getPosition().y, (2.0f*b->GetSize().y)),
-			Clamp(a->getPosition().z, (2.0f*b->GetSize().z))
+			Clamp(realativePosition.x, (1.0f*b->GetSize().x)),
+			Clamp(realativePosition.y, (1.0f*b->GetSize().y)),
+			Clamp(realativePosition.z, (1.0f*b->GetSize().z))
 		);
 
+		Vector3 closestPointWorld = Vector3(trn * rot * Vector4(closestPoint, 1));
+
 		// Check we're in contact
-		//
-		Vector3 seperation = (a->getPosition() - closestPoint);
-		float distance = Length(seperation);
+		float distance = Length(closestPoint - realativePosition);
 		if (distance > a->GetRadius()) {
 			return false;
 		}
-
+		//printf("SphereCuboid!\n");
 		if (resolve)
 		{
 			Collision* c = new Collision();
 			c->objectA = a;
 			c->objectB = b;
-			c->normal = -Normalize(seperation - a->getPosition());
+			c->normal = -Normalize(closestPointWorld - a->getPosition());
 			c->penetration = a->GetRadius() - distance;
-			c->point = seperation;
+			c->point = closestPoint + b->getPosition();
 			_collisions.push_back(c);
 		}
 		return true;
@@ -200,6 +201,7 @@ namespace Physics{
 
 		if (separation < radius)
 		{
+			
 			if (resolve)
 			{
 				Collision* c = new Collision();
@@ -260,6 +262,7 @@ namespace Physics{
 
 			if (distances[i] > 0)
 			{
+			//	printf("CuboidPlane!\n");
 				if (resolve)
 				{
 					Collision* c = new Collision();
@@ -287,6 +290,7 @@ namespace Physics{
 	///
 	void CCollisionDetection::Resolve()
 	{
+		//printf("%i!\n", _collisions.size());
 		for (unsigned int i = 0; i < _collisions.size(); i++)
 		{
 			Collision* c = _collisions[i];
