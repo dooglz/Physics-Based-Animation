@@ -36,6 +36,16 @@
 		}
 		return v;
 	}
+	Vector4 Normalize(Vector4 v)
+	{
+		v = glm::normalize(v);
+		if (isnan(v.x) || isnan(v.y) || isnan(v.z))
+		{
+			return Vector4(0, 0, 0, 0);
+		}
+		return v;
+	}
+
 
 	Quaternion Normalize(Quaternion q)
 	{

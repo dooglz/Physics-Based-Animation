@@ -93,6 +93,7 @@ namespace Physics{
 
 	bool CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b, bool resolve)
 	{
+		return false;
 		// Clamp each coordinate to the cuboid
 		//
 		//WE need ot take roation into accout here, for realtive position to really work
@@ -270,7 +271,7 @@ namespace Physics{
 					c->objectB = b;
 					c->normal = b->GetNormal();
 					c->penetration = distances[i];
-					c->point = t + n * c->penetration;
+					c->point = t;// +n * c->penetration;
 					_collisions.push_back(c);
 				}
 				isCollided = true;
@@ -326,36 +327,40 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 0.5f;
+				const float e = 0.0f;
 				
-				const float normDiv =
-				Dot(c->normal, c->normal) * 
-				((invMass0 + invMass1) + Dot( c->normal,
-					Cross((Cross(r0, c->normal)*InvInertia0), r0)
-					+ Cross( (Cross(r1, c->normal)* InvInertia1), r1)
-				));
 
+				//IT'S THE INERTIA, IT'S BROKEN! STOPS THE CUBE BOUNCING
+
+				const float normDiv =
+					Dot(c->normal, c->normal) * 
+					((invMass0 + invMass1) + Dot(c->normal,
+					Cross((Cross(r0, c->normal)*InvInertia0), r0)
+					 + Cross( (Cross(r1, c->normal)* InvInertia1), r1)
+					));
 				ASSERT(normDiv > 0.0f);
 				
 				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
 			
 				// Hack fix to stop sinking
 				// bias impulse proportional to penetration distance
-				jn = jn + (c->penetration*1.5f);
+				jn = jn + (c->penetration*0.5f);
 				
 				if (invMass0 != 0)
 				{
 					Vector3 impulse = invMass0 * c->normal * jn;
 					objectA->AddImpulse(impulse);
-					objectA->AddRotationImpulse(InvInertia0 * Cross(r0, c->normal * jn));
+
+					impulse = InvInertia0 * Cross(r0, c->normal * jn);
+					objectA->AddRotationImpulse(impulse);
 				}
 				if (invMass1 != 0)
 				{
-					objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
-					objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
+					//objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
+					//objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
 				}
 			}
-			
+			/*
 			// TANGENT Impulse Code
 			{
 				// Work out our tangent vector , with is perpendicular
@@ -379,17 +384,17 @@ namespace Physics{
 					ASSERT(!isnan(impulse.x) && !isnan(impulse.y) && !isnan(impulse.z));
 					Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
 					objectA->AddImpulse(impulse);
-					objectA->AddRotationImpulse(rotImpulse);
+				//	objectA->AddRotationImpulse(rotImpulse);
 				}
 				if (invMass1 != 1)
 				{
 					Vector3 impulse = invMass1 * tangent * jt;
 					Vector3 rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
 					objectB->AddImpulse(-1.0f * impulse);
-					objectB->AddRotationImpulse(-1.0f* rotImpulse);
+					//objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
 			} // TANGENT
-			
+			*/
 			
 			delete c;
 		}

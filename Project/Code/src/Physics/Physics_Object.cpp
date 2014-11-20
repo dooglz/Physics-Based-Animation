@@ -18,7 +18,7 @@ namespace Physics{
 			_current.inverseMass = 1.0f / _current.mass;
 		}
 		_current.momentum = Vector3(0, 0, 0);
-		//_current.orientation = Quaternion(0.0f);
+		//_current.orientation = Normalize(Quaternion(0.9f,0,0,0.2f));
 		_current.angularMomentum = Vector3(0, 0, 0);
 
 	//	_current.torques += Vector3(25.1f, 10.0f, 50.0f);
@@ -37,7 +37,7 @@ namespace Physics{
 		if (usesGravity){
 			_current.forces += System->gavity; 
 		//	_current.forces += Vector3(5.1f,0, 0);
-			_current.torques += Vector3(5.1f, 1.0f, 5.0f);
+		//	_current.torques += Vector3(5.1f, 1.0f, 5.0f);
 		}
 		//dampening
 		_current.velocity *= 0.9999f;
@@ -66,7 +66,12 @@ namespace Physics{
 
 	Matrix3 CPhysicsObject::GetInvTensor()
 	{
-		return _current.inverseInertiaTensor;
+		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		Matrix4 m4 = Matrix4(_current.inverseInertiaTensor);
+		m4[3][3] = 1.0f;
+
+		//return Matrix3(Inverse(QuatToMatrix(_current.orientation)) * m4 * QuatToMatrix(_current.orientation));
+		return Matrix3(m4);
 	}
 
 	Matrix3 CPhysicsObject::GetTensor()
@@ -94,7 +99,7 @@ namespace Physics{
 		_current.mass = m;
 		_current.inverseMass = 1.0f / _current.mass;
 		_current.inertiaTensor = CalculateInertiaTensor();
-		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		_current.inverseInertiaTensor = GetInvTensor();
 		_current.recalculate();
 	}
 
@@ -112,13 +117,13 @@ namespace Physics{
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		_current.velocity += v;
-		_current.momentum = _current.velocity * _current.mass;
+	//	_current.momentum = _current.velocity * _current.mass;
 	}
 
 	void CPhysicsObject::AddRotationImpulse(Vector3 v)
 	{
 		_current.angularVelocity += v;
-		_current.angularMomentum = _current.angularVelocity * _current.inverseInertiaTensor;
+		_current.angularMomentum = _current.angularVelocity * GetInvTensor();
 	}
 
 	CPhysicsObject::Derivative CPhysicsObject::evaluate(const CPhysicsObject::State &state, double t)

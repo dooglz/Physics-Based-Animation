@@ -64,6 +64,7 @@ struct stVertex
 	Matrix4 Scale(const Vector3 scaleVector);
 
 	Vector3 Normalize(Vector3 v);
+	Vector4 Normalize(Vector4 v);
 	Quaternion Normalize(Quaternion q);
 
 	Vector3 GetForwardVector(Quaternion q);

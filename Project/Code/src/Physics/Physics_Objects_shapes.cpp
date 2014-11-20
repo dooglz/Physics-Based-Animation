@@ -44,7 +44,9 @@ namespace Physics{
 		_current.inertiaTensor = CalculateInertiaTensor();
 		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
 		_current.recalculate();
+		_current.orientation = Normalize(Quaternion(0.9f, 0, 0, 0.2f));
 		_previous = _current;
+
 	}
 
 	Matrix3 CSphere_Object::CalculateInertiaTensor()
