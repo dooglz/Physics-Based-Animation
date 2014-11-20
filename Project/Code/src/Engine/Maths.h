@@ -66,6 +66,16 @@ struct stVertex
 	Vector3 Normalize(Vector3 v);
 	Quaternion Normalize(Quaternion q);
 
+
+	Vector3 GetForwardVector(Quaternion q);
+
+
+	Vector3 GetUpVector(Quaternion q);
+
+	
+	Vector3 GetRightVector(Quaternion q);
+
+
 inline int randomColor()
 {
 	int x = rand() & 0xff;

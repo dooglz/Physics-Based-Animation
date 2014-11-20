@@ -117,3 +117,24 @@
 	}
 
 #endif
+
+Vector3 GetForwardVector(Quaternion q)
+{
+	return Vector3(2.0f * (q.x * q.z + q.w * q.y),
+		2.0f * (q.y * q.x - q.w * q.x),
+		1.0f - 2.0f * (q.x * q.x + q.y * q.y));
+}
+
+Vector3 GetUpVector(Quaternion q)
+{
+	return Vector3(2 * (q.x * q.y - q.w * q.z),
+		1.0f - 2.0f * (q.x * q.x + q.z * q.z),
+		2.0f * (q.y * q.z + q.w * q.x));
+}
+
+Vector3 GetRightVector(Quaternion q)
+{
+	return Vector3(1.0f - 2.0f * (q.y * q.y + q.z * q.z),
+		2.0f * (q.x * q.y + q.w * q.z),
+		2.0f * (q.x * q.z - q.w * q.y));
+}

@@ -68,6 +68,7 @@ namespace Physics{
 		CPhysicsObject(float mass, Vector3 position);
 		Vector3 getPosition();
 		Vector3 getRotation();
+		Quaternion getRotationQ();
 		Vector3 GetLinearVeloicty();
 		Vector3 GetAngularVeloicty();
 		virtual std::vector<Vector3> getDebugLines() = 0;

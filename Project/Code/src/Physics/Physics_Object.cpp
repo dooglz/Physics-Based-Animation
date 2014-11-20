@@ -84,6 +84,11 @@ namespace Physics{
 		return _current.angularVelocity;
 	}
 
+	Quaternion CPhysicsObject::getRotationQ()
+	{
+		return _current.orientation;
+	}
+
 	void CPhysicsObject::SetMass(float m)
 	{
 		_current.mass = m;

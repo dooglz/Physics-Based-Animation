@@ -11,7 +11,6 @@ CmFpsMotor::CmFpsMotor() : Engine::CComponent("FpsMotor")
 void CmFpsMotor::registerInputs()
 {
 	std::vector<std::string> a;
-
 	a.push_back("kb_left"); a.push_back("gp_1_x");
 	Engine::Input::addMap("left", a);
 	a.clear();

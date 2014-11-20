@@ -22,45 +22,45 @@ namespace Physics{
 				{
 					if (objB->type == CPhysicsObject::SPHERE)
 					{
-						SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB));
+						SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB),true);
 					}
 					else if (objB->type == CPhysicsObject::CUBEOID)
 					{
-						SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB));
+						SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB), true);
 					}
 					else if (objB->type == CPhysicsObject::PLANE)
 					{
-						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB));
+						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
 					}
 				}
 				else if(objA->type == CPhysicsObject::CUBEOID)
 				{
 					if (objB->type == CPhysicsObject::SPHERE)
 					{
-						SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA));
+						SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA), true);
 					}
 					else if (objB->type == CPhysicsObject::CUBEOID)
 					{
-						CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB));
+						CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB), true);
 					}
 					else if (objB->type == CPhysicsObject::PLANE)
 					{
-						CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB));
+						CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
 					}
 				}
 				else if (objA->type == CPhysicsObject::PLANE)
 				{
 					if (objB->type == CPhysicsObject::SPHERE)
 					{
-						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB));
+						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
 					}
 					else if (objB->type == CPhysicsObject::CUBEOID)
 					{
-						CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA));
+						CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
 					}
 					else if (objB->type == CPhysicsObject::PLANE)
 					{
-						PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB));
+						PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
 					}
 				}
 			}
@@ -68,29 +68,81 @@ namespace Physics{
 		Resolve();
 	}
 
-	void CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b)
+	bool CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b, bool resolve)
 	{
 		const float distance = Distance(a->getPosition(),b->getPosition());
 		ASSERT(distance > 0.00001f);
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
 		if (distance < sumRadius)
 		{
-			Collision* c = new Collision();
-			c->objectA = a;
-			c->objectB = b;
-			c->normal = Normalize(a->getPosition() - b->getPosition());
-			c->penetration = sumRadius - distance;
-			c->point = a->getPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f);
-			_collisions.push_back(c);
+			if (resolve)
+			{
+				Collision* c = new Collision();
+				c->objectA = a;
+				c->objectB = b;
+				c->normal = Normalize(a->getPosition() - b->getPosition());
+				c->penetration = sumRadius - distance;
+				c->point = a->getPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f);
+				_collisions.push_back(c);
+			}
+			return true;
 		}
+		return false;
 	}
 
-	void CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b)
+	bool CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b, bool resolve)
 	{
-		//printf("SphereCuboid!\n");
+		//Create a plane for each side of the cuboid
+		Vector3 positions[6];
+		Vector3 normals[6];
+		positions[0] = b->getPosition() + Vector3(b->GetSize().x, 0, 0);
+		positions[1] = b->getPosition() - Vector3(b->GetSize().x, 0, 0);
+		positions[2] = b->getPosition() + Vector3(0, b->GetSize().y, 0);
+		positions[3] = b->getPosition() - Vector3(0, b->GetSize().y, 0);
+		positions[4] = b->getPosition() + Vector3(0, 0, b->GetSize().z);
+		positions[5] = b->getPosition() - Vector3(0, 0, b->GetSize().z);
+
+
+		normals[0] = Normalize(GetRightVector(b->getRotationQ()));
+		normals[1] = -Normalize(GetRightVector(b->getRotationQ()));
+		normals[2] = Normalize(GetUpVector(b->getRotationQ()));
+		normals[3] = -Normalize(GetUpVector(b->getRotationQ()));
+		normals[4] = Normalize(GetForwardVector(b->getRotationQ()));
+		normals[5] = -Normalize(GetForwardVector(b->getRotationQ()));
+
+		bool hasCollided;
+		unsigned char count = 0;
+		for (int i = 0; i < 6; i++)
+		{
+			//Engine::Renderer->DrawLine(positions[i], positions[i] + (2.0f * normals[i]));
+
+			//assumme all plane are flat for now
+			const float distance = Dot(positions[i], normals[i]);
+			const float radius = a->GetRadius();
+
+			float separation = Dot(a->getPosition(), normals[i]) + distance;
+			//ASSERT(separation > 0.00001f);
+
+			if (isnan(separation))
+			{
+				separation = 0;
+			}
+
+			if (separation < radius)
+			{
+				count++;
+				Engine::Renderer->DrawCross(a->getPosition() - normals[i] * separation,1.0f);
+			}
+		}
+		printf("%i\n", count);
+		if (count ==6){
+			return true;
+		}
+
+		return false;
 	}
 
-	void CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b)
+	bool CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b, bool resolve)
 	{
 		//assumme all plane are flat for now
 		const float distance = -1.0f*b->getPosition().y;
@@ -106,27 +158,31 @@ namespace Physics{
 			separation = 0;
 		}
 
-		if (separation > radius)
+		if (separation < radius)
 		{
-			return;
+			if (resolve)
+			{
+				Collision* c = new Collision();
+				c->objectA = a;
+				c->objectB = b;
+				c->normal = b->GetNormal();
+				c->penetration = radius - separation;
+				c->point = a->getPosition() - b->GetNormal() * separation;
+				_collisions.push_back(c);
+			}
+			return true;
 		}
-		Collision* c = new Collision();
-		c->objectA = a;
-		c->objectB = b;
-		c->normal = b->GetNormal();
-		c->penetration = radius - separation;
-		c->point = a->getPosition() - b->GetNormal() * separation;
-		_collisions.push_back(c);
-		return;
 
+		return false;
 	}
 
-	void CCollisionDetection::CuboidCuboid(CCube_Object* a, CCube_Object* b)
+	bool CCollisionDetection::CuboidCuboid(CCube_Object* a, CCube_Object* b, bool resolve)
 	{
 		printf("CuboidCuboid!\n");
+		return false;
 	}
 
-	void CCollisionDetection::CuboidPlane(CCube_Object* a, CPlane_Object* b)
+	bool CCollisionDetection::CuboidPlane(CCube_Object* a, CPlane_Object* b, bool resolve)
 	{
 	
 		//local coords on cube
@@ -152,6 +208,7 @@ namespace Physics{
 
 		//For each point on the cube, which side of cube are they on?
 		float distances[8];
+		bool isCollided = false;
 		for (int i = 0; i < 8; i++)
 		{
 			Vector3 p = b->getPosition();
@@ -163,21 +220,27 @@ namespace Physics{
 
 			if (distances[i] > 0)
 			{
-				Collision* c = new Collision();
-				c->objectA = a;
-				c->objectB = b;
-				c->normal = b->GetNormal();
-				c->penetration = distances[i];
-				c->point = t + n * c->penetration;
-				_collisions.push_back(c);
+				if (resolve)
+				{
+					Collision* c = new Collision();
+					c->objectA = a;
+					c->objectB = b;
+					c->normal = b->GetNormal();
+					c->penetration = distances[i];
+					c->point = t + n * c->penetration;
+					_collisions.push_back(c);
+				}
+				isCollided = true;
 			}
 		}
+		return isCollided;
 
 	}
 
-	void CCollisionDetection::PlanePlane(CPlane_Object* A, CPlane_Object* B)
+	bool CCollisionDetection::PlanePlane(CPlane_Object* A, CPlane_Object* B, bool resolve)
 	{
 		printf("PlanePlane!\n");
+		return false;
 	}
 
 
