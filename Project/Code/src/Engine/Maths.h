@@ -22,7 +22,6 @@ struct stVertex
 	#define Vector3 glm::vec3
 	#define Vector2 glm::vec2
 	#define Quaternion glm::quat
-	#define Normalize glm::normalize
 	#define Length glm::length
 	#define Distance glm::distance
 
@@ -64,7 +63,8 @@ struct stVertex
 	Matrix4 Translation(const Vector3 translationVector);
 	Matrix4 Scale(const Vector3 scaleVector);
 
-	
+	Vector3 Normalize(Vector3 v);
+	Quaternion Normalize(Quaternion q);
 
 inline int randomColor()
 {

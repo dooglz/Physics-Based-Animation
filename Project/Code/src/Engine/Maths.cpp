@@ -27,7 +27,25 @@
 	}
 
 	//--
+	Vector3 Normalize(Vector3 v)
+	{
+		v = glm::normalize(v);
+		if (isnan(v.x) || isnan(v.y) || isnan(v.z))
+		{
+			return Vector3(0, 0, 0);
+		}
+		return v;
+	}
 
+	Quaternion Normalize(Quaternion q)
+	{
+		q = glm::normalize(q);
+		if (isnan(q.x) || isnan(q.y) || isnan(q.z) || isnan(q.w))
+		{
+			return Quaternion(0, 0, 0, 0);
+		}
+		return q;
+	}
 
 
 	Vector3 QuatToEuler(const Quaternion q)

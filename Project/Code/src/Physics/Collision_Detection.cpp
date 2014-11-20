@@ -1,5 +1,6 @@
 #include "Collision_Detection.h"
 #include "../Engine/Renderer.h"
+#include "../Engine/Utilities.h"
 
 namespace Physics{
 	std::vector<CCollisionDetection::Collision*> CCollisionDetection::_collisions;
@@ -70,7 +71,7 @@ namespace Physics{
 	void CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b)
 	{
 		const float distance = Distance(a->getPosition(),b->getPosition());
-		//DBG_ASSERT(distance > 0.00001 f);
+		ASSERT(distance > 0.00001f);
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
 		if (distance < sumRadius)
 		{
@@ -93,10 +94,18 @@ namespace Physics{
 	{
 		//assumme all plane are flat for now
 		const float distance = -1.0f*b->getPosition().y;
+
 		//assume perfect sphere
 		const float radius = a->GetRadius();
 
-		const float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
+		float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
+		//ASSERT(separation > 0.00001f);
+
+		if (isnan(separation))
+		{
+			separation = 0;
+		}
+
 		if (separation > radius)
 		{
 			return;
@@ -209,7 +218,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 1.0f;
+				const float e = 0.5f;
 				
 				const float normDiv =
 				Dot(c->normal, c->normal) * 
@@ -217,6 +226,8 @@ namespace Physics{
 					Cross((Cross(r0, c->normal)*InvInertia0), r0)
 					+ Cross( (Cross(r1, c->normal)* InvInertia1), r1)
 				));
+
+				ASSERT(normDiv > 0.0f);
 				
 				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
 			
@@ -226,7 +237,8 @@ namespace Physics{
 				
 				if (invMass0 != 0)
 				{
-					objectA->AddImpulse(invMass0 * c->normal * jn);
+					Vector3 impulse = invMass0 * c->normal * jn;
+					objectA->AddImpulse(impulse);
 					objectA->AddRotationImpulse(InvInertia0 * Cross(r0, c->normal * jn));
 				}
 				if (invMass1 != 0)
@@ -237,34 +249,34 @@ namespace Physics{
 			}
 			
 			// TANGENT Impulse Code
-			
 			{
 				// Work out our tangent vector , with is perpendicular
 				// to our collision normal
 				Vector3 tangent = Vector3(0, 0, 0);
 				tangent = dv - (Dot(dv, c->normal) * c->normal);
-				if (tangent.x || tangent.y || tangent.z)
-				{
-					tangent = Normalize(tangent);
-				}
-			
+
+				tangent = Normalize(tangent);
+				ASSERT(!isnan(tangent.x) && !isnan(tangent.y) && !isnan(tangent.z));
+
 				const float tangDiv = invMass0 + invMass1 + Dot(tangent, Cross((Cross(r0, tangent) * InvInertia0), r0) + Cross((Cross(r1, tangent) * InvInertia1), r1));
 			
 				const float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
-				Vector3 impulse = invMass0 * tangent * jt;
-				Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
+				
 				
 				// Apply contact impulse
 				if (invMass0 != 0)
 				{
+					Vector3 impulse = invMass0 * tangent * jt;
+					ASSERT(!isnan(impulse.x) && !isnan(impulse.y) && !isnan(impulse.z));
+					Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
 					objectA->AddImpulse(impulse);
 					objectA->AddRotationImpulse(rotImpulse);
 				}
 				if (invMass1 != 1)
 				{
-					impulse = invMass1 * tangent * jt;
-					rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
+					Vector3 impulse = invMass1 * tangent * jt;
+					Vector3 rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
 					objectB->AddImpulse(-1.0f * impulse);
 					objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}

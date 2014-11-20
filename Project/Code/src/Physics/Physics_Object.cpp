@@ -1,5 +1,6 @@
 #include "Physics_Object.h"
 #include "Physics.h"
+#include "../Engine/Utilities.h"
 
 namespace Physics{
 
@@ -20,7 +21,7 @@ namespace Physics{
 		//_current.orientation = Quaternion(0.0f);
 		_current.angularMomentum = Vector3(0, 0, 0);
 
-		_current.torques += Vector3(25.1f, 10.0f, 50.0f);
+	//	_current.torques += Vector3(25.1f, 10.0f, 50.0f);
 	}
 
 	void CPhysicsObject::Update(double t, double timestep)
@@ -104,6 +105,7 @@ namespace Physics{
 	
 	void CPhysicsObject::AddImpulse(Vector3 v)
 	{
+		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		_current.velocity += v;
 		_current.momentum = _current.velocity * _current.mass;
 	}
