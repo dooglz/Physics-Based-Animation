@@ -138,3 +138,11 @@ Vector3 GetRightVector(Quaternion q)
 		2.0f * (q.x * q.y + q.w * q.z),
 		2.0f * (q.x * q.z - q.w * q.y));
 }
+
+float Clamp(const float a, const float max)
+{
+	if (a > max){
+		return max;
+	}
+	return a;
+}

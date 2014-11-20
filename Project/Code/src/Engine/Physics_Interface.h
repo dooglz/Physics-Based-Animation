@@ -41,6 +41,7 @@ namespace Engine{
 
 	//global public reference to the renderer
 	extern CPhysicsSolver* PhysicsSolver;
+	extern bool PhysicsTickEnabled;
 
 
 }

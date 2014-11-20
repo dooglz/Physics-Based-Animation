@@ -92,6 +92,46 @@ namespace Physics{
 
 	bool CCollisionDetection::SphereCuboid(CSphere_Object* a, CCube_Object* b, bool resolve)
 	{
+
+		// Early out check to see if we can exclude the contact
+		//
+	/*	if (fabs(relCenter.x) - B.Radius > HalfExtent.x ||
+			fabs(relCenter.y) - B.Radius > HalfExtent.y ||
+			fabs(relCenter.z) - B.Radius > HalfExtent.z)
+		{
+			return 0;
+		}
+		*/
+		// Clamp each coordinate to the cuboid
+		//
+		Vector3 closestPoint(
+			Clamp(a->getPosition().x, (2.0f*b->GetSize().x)),
+			Clamp(a->getPosition().y, (2.0f*b->GetSize().y)),
+			Clamp(a->getPosition().z, (2.0f*b->GetSize().z))
+		);
+
+		// Check we're in contact
+		//
+		Vector3 seperation = (a->getPosition() - closestPoint);
+		float distance = Length(seperation);
+		if (distance > a->GetRadius()) {
+			return false;
+		}
+
+		if (resolve)
+		{
+			Collision* c = new Collision();
+			c->objectA = a;
+			c->objectB = b;
+			c->normal = -Normalize(seperation - a->getPosition());
+			c->penetration = a->GetRadius() - distance;
+			c->point = seperation;
+			_collisions.push_back(c);
+		}
+		return true;
+
+
+		/*
 		//Create a plane for each side of the cuboid
 		Vector3 positions[6];
 		Vector3 normals[6];
@@ -137,7 +177,7 @@ namespace Physics{
 		printf("%i\n", count);
 		if (count ==6){
 			return true;
-		}
+		}*/
 
 		return false;
 	}
@@ -251,6 +291,7 @@ namespace Physics{
 		{
 			Collision* c = _collisions[i];
 			Engine::Renderer->DrawCross(c->point, 0.5f);
+			Engine::Renderer->DrawLine(c->point, c->point + c->normal);
 			CPhysicsObject* objectA = c->objectA;
 			CPhysicsObject* objectB = c->objectB;
 			// Some simple check code.

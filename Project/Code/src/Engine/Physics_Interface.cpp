@@ -2,5 +2,5 @@
 
 namespace Engine{
 	CPhysicsSolver* PhysicsSolver = 0;
-
+	bool PhysicsTickEnabled = true;
 }

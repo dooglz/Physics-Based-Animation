@@ -6,6 +6,7 @@
 #include "Engine/Cm_Camera.h"
 #include "Engine/Cm_Physics.h"
 #include "Engine/Renderer.h"
+#include "Engine/Physics_interface.h"
 #include "Cm_FpsMotor.h"
 
 #include <stdio.h>
@@ -24,6 +25,9 @@ void Game::registerInputs()
 
 	a.push_back("kb_space"); a.push_back("gp_1_start"); a.push_back("ms_l");
 	Engine::Input::addMap("action1", a);
+	a.clear();
+	a.push_back("ms_r");
+	Engine::Input::addMap("action2", a);
 	a.clear();
 }
 
@@ -80,9 +84,14 @@ void Game::Update(double delta)
 	//printf("TICK: %f\n", delta*100);
 	a+=(float)delta;
 	if (Engine::Input::getMapData("action1") > 128){
-		printf("action pressed\n");
-		Engine::ActiveScene->report();
+		//printf("action pressed\n");
+		//Engine::ActiveScene->report();
+		Engine::PhysicsTickEnabled = false;
 	}
+	if (Engine::Input::getMapData("action2") > 128){
+		Engine::PhysicsTickEnabled = true;
+	}
+
 //	Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(3 * sin(a), 3.5f, 3 * cos(a)));
 
 	//Engine::Renderer->DrawLine(Vector3(0.0f), Vector3(-3 * sin(a), 3.5f, -3 * cos(a)));
