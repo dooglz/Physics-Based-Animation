@@ -271,7 +271,7 @@ namespace Physics{
 					c->objectB = b;
 					c->normal = b->GetNormal();
 					c->penetration = distances[i];
-					c->point = t;// +n * c->penetration;
+					c->point = t +n * c->penetration;
 					_collisions.push_back(c);
 				}
 				isCollided = true;
@@ -287,10 +287,12 @@ namespace Physics{
 		return false;
 	}
 
+	
 
 	///
 	void CCollisionDetection::Resolve()
 	{
+		//for (int a = 0; a < 2; ++a)
 		//printf("%i!\n", _collisions.size());
 		for (unsigned int i = 0; i < _collisions.size(); i++)
 		{
@@ -303,8 +305,8 @@ namespace Physics{
 		
 			const float invMass0 = objectA->GetInvMass();
 			const float invMass1 = objectB->GetInvMass();
-			const Matrix3 InvInertia0 = objectA->GetInvWorldTensor();
-			const Matrix3 InvInertia1 = objectB->GetInvWorldTensor();
+			const Matrix3 InvInertia0 = objectA->GetInvLocalTensor();
+			const Matrix3 InvInertia1 = objectB->GetInvLocalTensor();
 			
 			// Both objects are non movable
 			if ((invMass0 + invMass1) == 0.0) return;
@@ -329,9 +331,8 @@ namespace Physics{
 				// Coefficient of Restitution
 				const float e = 1.0f;
 		
-
 				const float normDiv =
-					Dot(c->normal, c->normal) * 
+					//Dot(c->normal, c->normal) * 
 					((invMass0 + invMass1) + Dot(c->normal,
 					Cross((Cross(r0, c->normal)*InvInertia0), r0)
 					 + Cross( (Cross(r1, c->normal)* InvInertia1), r1)
@@ -342,7 +343,7 @@ namespace Physics{
 			
 				// Hack fix to stop sinking
 				// bias impulse proportional to penetration distance
-				jn = jn + (c->penetration*0.5f);
+				jn = jn + (c->penetration*1.5f);
 				
 				if (invMass0 != 0)
 				{
@@ -393,10 +394,15 @@ namespace Physics{
 				}
 			} // TANGENT
 			*/
-			
+			//extern bool cleanup;
+			//if (cleanup)
 			delete c;
 		}
+		//extern bool cleanup;
+		//if (cleanup)
 		_collisions.clear();
 	}
 
 }
+
+static bool cleanup = false;

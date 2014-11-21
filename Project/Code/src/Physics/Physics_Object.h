@@ -73,6 +73,7 @@ namespace Physics{
 		Vector3 GetAngularVeloicty();
 		virtual std::vector<Vector3> getDebugLines() = 0;
 		Matrix3 GetInvWorldTensor();
+		Matrix3 GetInvLocalTensor();
 		void setTensor(Matrix3 t);
 		float GetMass();
 		float GetInvMass();

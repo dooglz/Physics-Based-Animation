@@ -4,17 +4,13 @@
 
 namespace Physics{
 
-	void CPhysicsObject::State::recalculate()
-	{
-		velocity = momentum * inverseMass;
-		angularVelocity = angularMomentum * GetInvWorldTensor();
-		Normalize(orientation);
-		spin = 0.5f * Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
-	}
 
 	Matrix3 CPhysicsObject::State::GetInvWorldTensor()
-	{		
-		return Inverse(QuatToMatrix3(Normalize(orientation))) * inverseInertiaTensor * QuatToMatrix3(Normalize(orientation));
+	{	
+		return inverseInertiaTensor * QuatToMatrix3(orientation);
+		//return QuatToMatrix3(orientation) * inverseInertiaTensor;
+		//return QuatToMatrix3(Normalize(orientation)) * inverseInertiaTensor * Inverse(QuatToMatrix3(Normalize(orientation)));
+		//return Inverse(QuatToMatrix3(Normalize(orientation))) * inverseInertiaTensor * QuatToMatrix3(Normalize(orientation));
 	}
 
 	void CPhysicsObject::State::SetTensor(Matrix3 t)
@@ -56,10 +52,10 @@ namespace Physics{
 		if (usesGravity){
 			_current.forces += System->gavity; 
 		//	_current.forces += Vector3(5.1f,0, 0);
-		//	_current.torques += Vector3(5.1f, 1.0f, 5.0f);
+		//	_current.torques += Vector3(0, 1.0f, 0);
 		}
-		_current.velocity *= 0.9999f;
-		_current.angularVelocity *= 0.9999f;
+		//_current.velocity *= 0.9999f;
+		//_current.angularVelocity *= 0.9999f;
 	}
 
 	void CPhysicsObject::SetMass(float m)
@@ -82,13 +78,14 @@ namespace Physics{
 	
 	void CPhysicsObject::AddImpulse(Vector3 v)
 	{
+		
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		Vector3 targetSpeed = (_current.velocity + v);
 		Vector3 diff = targetSpeed - _current.velocity;
 		Vector3 Acceleration = diff / 0.01f;
 		Vector3 force = _current.mass *  Acceleration;
 		AddForce(force);
-
+		
 		//_current.velocity += v;
 		//_current.momentum = _current.velocity * _current.mass;
 		//_current.momentum = Vector3(0);
@@ -96,6 +93,7 @@ namespace Physics{
 
 	void CPhysicsObject::AddRotationImpulse(Vector3 v)
 	{
+		
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		Vector3 targetSpeed = (_current.angularVelocity + v);
 		Vector3 diff = targetSpeed - _current.angularVelocity;
@@ -106,6 +104,14 @@ namespace Physics{
 		
 		//_current.angularVelocity += v;
 		//_current.angularMomentum = _current.angularVelocity * _current.GetInvLocalTensor();
+	}
+
+	void CPhysicsObject::State::recalculate()
+	{
+		velocity = momentum * inverseMass;
+		angularVelocity = angularMomentum * GetInvWorldTensor();
+		Normalize(orientation);
+		spin = 0.5f * Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
 	}
 
 	CPhysicsObject::Derivative CPhysicsObject::evaluate(const CPhysicsObject::State &state, double t)
@@ -149,6 +155,11 @@ namespace Physics{
 		state.angularMomentum += 1.0f / 6.0f * fdt * (a.torque + 2.0f*(b.torque + c.torque) + d.torque);
 
 		state.recalculate();
+	}
+
+	Matrix3 CPhysicsObject::GetInvLocalTensor()
+	{
+		return _current.GetInvLocalTensor();
 	}
 
 	Vector3 CPhysicsObject::getPosition()
