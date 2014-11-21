@@ -101,6 +101,11 @@
 		return glm::mat4_cast(q);
 	}
 
+	Matrix3 QuatToMatrix3(const Quaternion q)
+	{
+		return glm::mat3_cast(q);
+	}
+
 	// Angle in Radians
 	Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle)
 	{

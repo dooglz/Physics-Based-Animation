@@ -41,8 +41,7 @@ namespace Physics{
 	{
 		type = CUBEOID;
 		_size = Vector3(lw, lh, ld);
-		_current.inertiaTensor = CalculateInertiaTensor();
-		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		_current.SetTensor (CalculateInertiaTensor());
 		_current.recalculate();
 		_current.orientation = Normalize(Quaternion(0.9f, 0, 0, 0.2f));
 		_previous = _current;
@@ -59,8 +58,7 @@ namespace Physics{
 	{
 		type = SPHERE;
 		_radius = radius;
-		_current.inertiaTensor = CalculateInertiaTensor();
-		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
+		_current.SetTensor(CalculateInertiaTensor());
 		_current.recalculate();
 		_previous = _current;
 	}
@@ -69,9 +67,7 @@ namespace Physics{
 	{
 		type = PLANE;
 		_normal = normal;
-		//_current.inertiaTensor = CalculateInertiaTensor();
-		//_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
-		_current.inverseInertiaTensor = Matrix3(0.0f);
+		_current.SetTensor(CalculateInertiaTensor());
 		_current.recalculate();
 		_previous = _current;
 	}

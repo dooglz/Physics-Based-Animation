@@ -9,7 +9,10 @@ namespace Physics{
 
 		struct State
 		{
-
+		private:
+			Matrix3 inertiaTensor;            // inertia tensor of the cube (i have simplified it to a single value due to the mass properties a cube).
+			Matrix3 inverseInertiaTensor;     // inverse inertia tensor used to convert angular momentum to angular velocity.
+		public:
 			///
 			Vector3 forces;
 			Vector3 torques;
@@ -30,17 +33,12 @@ namespace Physics{
 			float size;                     // length of the cube sides in meters.
 			float mass;                     // mass of the cube in kilograms.
 			float inverseMass;              // inverse of the mass used to convert momentum to velocity.
-			Matrix3 inertiaTensor;            // inertia tensor of the cube (i have simplified it to a single value due to the mass properties a cube).
-			Matrix3 inverseInertiaTensor;     // inverse inertia tensor used to convert angular momentum to angular velocity.
+	
 
 			/// Recalculate secondary state values from primary values.
-			void recalculate()
-			{
-				velocity = momentum * inverseMass;
-				angularVelocity = angularMomentum * inverseInertiaTensor;
-				Normalize(orientation);
-				spin = 0.5f * Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
-			}
+			void recalculate();
+			Matrix3 GetInvWorldTensor();
+			void SetTensor(Matrix3 t);
 		};
 
 		enum shapeType {CUBEOID,SPHERE,PLANE};
@@ -72,8 +70,8 @@ namespace Physics{
 		Vector3 GetLinearVeloicty();
 		Vector3 GetAngularVeloicty();
 		virtual std::vector<Vector3> getDebugLines() = 0;
-		Matrix3 GetInvTensor();
-		Matrix3 GetTensor();
+		Matrix3 GetInvWorldTensor();
+		void setTensor(Matrix3 t);
 		float GetMass();
 		float GetInvMass();
 		void SetMass(float m);

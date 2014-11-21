@@ -4,6 +4,41 @@
 
 namespace Physics{
 
+	void CPhysicsObject::State::recalculate()
+	{
+		velocity = momentum * inverseMass;
+		angularVelocity = angularMomentum * GetInvWorldTensor();
+		Normalize(orientation);
+		spin = 0.5f * Quaternion(0, angularVelocity.x, angularVelocity.y, angularVelocity.z) * orientation;
+	}
+
+	Matrix3 CPhysicsObject::State::GetInvWorldTensor()
+	{		
+		return QuatToMatrix3(orientation) * inverseInertiaTensor;
+	}
+
+	void CPhysicsObject::State::SetTensor(Matrix3 t)
+	{
+		inertiaTensor = t;
+		if (t[0][0] || t[1][1] || t[2][2]){
+			inverseInertiaTensor = Inverse(inertiaTensor);
+		}
+		else
+		{
+			inverseInertiaTensor = Matrix3(0.0f);
+		}
+	}
+
+	Matrix3 CPhysicsObject::GetInvWorldTensor()
+	{
+		return _current.GetInvWorldTensor();
+	}
+
+	void CPhysicsObject::setTensor(Matrix3 t)
+	{
+		_current.SetTensor(t);
+	}
+
 	CPhysicsObject::CPhysicsObject(float mass, Vector3 position)
 	{
 		printf("Hello, I'm a new physics object, m:%f\n",mass);
@@ -64,21 +99,6 @@ namespace Physics{
 		return _current.inverseMass;
 	}
 
-	Matrix3 CPhysicsObject::GetInvTensor()
-	{
-		_current.inverseInertiaTensor = Inverse(_current.inertiaTensor);
-		Matrix4 m4 = Matrix4(_current.inverseInertiaTensor);
-		m4[3][3] = 1.0f;
-
-		//return Matrix3(Inverse(QuatToMatrix(_current.orientation)) * m4 * QuatToMatrix(_current.orientation));
-		return Matrix3(m4);
-	}
-
-	Matrix3 CPhysicsObject::GetTensor()
-	{
-		return _current.inertiaTensor;
-	}
-
 	Vector3 CPhysicsObject::GetLinearVeloicty()
 	{
 		return _current.velocity;
@@ -98,8 +118,7 @@ namespace Physics{
 	{
 		_current.mass = m;
 		_current.inverseMass = 1.0f / _current.mass;
-		_current.inertiaTensor = CalculateInertiaTensor();
-		_current.inverseInertiaTensor = GetInvTensor();
+		_current.SetTensor(CalculateInertiaTensor());
 		_current.recalculate();
 	}
 
@@ -117,13 +136,13 @@ namespace Physics{
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		_current.velocity += v;
-	//	_current.momentum = _current.velocity * _current.mass;
+		_current.momentum = _current.velocity * _current.mass;
 	}
 
 	void CPhysicsObject::AddRotationImpulse(Vector3 v)
 	{
 		_current.angularVelocity += v;
-		_current.angularMomentum = _current.angularVelocity * GetInvTensor();
+		_current.angularMomentum = _current.angularVelocity * GetInvWorldTensor();
 	}
 
 	CPhysicsObject::Derivative CPhysicsObject::evaluate(const CPhysicsObject::State &state, double t)

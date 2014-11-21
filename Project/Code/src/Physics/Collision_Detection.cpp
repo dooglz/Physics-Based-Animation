@@ -303,8 +303,8 @@ namespace Physics{
 		
 			const float invMass0 = objectA->GetInvMass();
 			const float invMass1 = objectB->GetInvMass();
-			const Matrix3 InvInertia0 = objectA->GetInvTensor();
-			const Matrix3 InvInertia1 = objectB->GetInvTensor();
+			const Matrix3 InvInertia0 = objectA->GetInvWorldTensor();
+			const Matrix3 InvInertia1 = objectB->GetInvWorldTensor();
 			
 			// Both objects are non movable
 			if ((invMass0 + invMass1) == 0.0) return;
@@ -327,7 +327,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 0.0f;
+				const float e = 1.0f;
 				
 
 				//IT'S THE INERTIA, IT'S BROKEN! STOPS THE CUBE BOUNCING
@@ -356,8 +356,8 @@ namespace Physics{
 				}
 				if (invMass1 != 0)
 				{
-					//objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
-					//objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
+					objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
+					objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
 				}
 			}
 			/*

@@ -58,6 +58,7 @@ struct stVertex
 
 	Matrix4 EulerToMatrix(const Vector3 euler);
 	Matrix4 QuatToMatrix(const Quaternion q);
+	Matrix3 QuatToMatrix3(const Quaternion q);
 	Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
 
 	Matrix4 Translation(const Vector3 translationVector);
