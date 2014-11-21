@@ -14,7 +14,7 @@ namespace Physics{
 
 	Matrix3 CPhysicsObject::State::GetInvWorldTensor()
 	{		
-		return QuatToMatrix3(orientation) * inverseInertiaTensor;
+		return Inverse(QuatToMatrix3(Normalize(orientation))) * inverseInertiaTensor * QuatToMatrix3(Normalize(orientation));
 	}
 
 	void CPhysicsObject::State::SetTensor(Matrix3 t)
@@ -22,21 +22,9 @@ namespace Physics{
 		inertiaTensor = t;
 		if (t[0][0] || t[1][1] || t[2][2]){
 			inverseInertiaTensor = Inverse(inertiaTensor);
-		}
-		else
-		{
+		}else{
 			inverseInertiaTensor = Matrix3(0.0f);
 		}
-	}
-
-	Matrix3 CPhysicsObject::GetInvWorldTensor()
-	{
-		return _current.GetInvWorldTensor();
-	}
-
-	void CPhysicsObject::setTensor(Matrix3 t)
-	{
-		_current.SetTensor(t);
 	}
 
 	CPhysicsObject::CPhysicsObject(float mass, Vector3 position)
@@ -47,16 +35,13 @@ namespace Physics{
 		_current.position = position;
 		if (mass == 0.0f){
 			_current.inverseMass = 0.0f;
-		}
-		else
-		{
+		}else{
 			_current.inverseMass = 1.0f / _current.mass;
 		}
 		_current.momentum = Vector3(0, 0, 0);
 		//_current.orientation = Normalize(Quaternion(0.9f,0,0,0.2f));
 		_current.angularMomentum = Vector3(0, 0, 0);
-
-	//	_current.torques += Vector3(25.1f, 10.0f, 50.0f);
+		//_current.torques += Vector3(25.1f, 10.0f, 50.0f);
 	}
 
 	void CPhysicsObject::Update(double t, double timestep)
@@ -65,7 +50,6 @@ namespace Physics{
 		if (_current.mass == 0.0f){ 
 			return; 
 		}
-
 		integrate(_current, t, timestep);
 		_current.forces = Vector3(0.0f);
 		_current.torques = Vector3(0.0f);
@@ -74,44 +58,8 @@ namespace Physics{
 		//	_current.forces += Vector3(5.1f,0, 0);
 		//	_current.torques += Vector3(5.1f, 1.0f, 5.0f);
 		}
-		//dampening
 		_current.velocity *= 0.9999f;
 		_current.angularVelocity *= 0.9999f;
-	}
-
-	Vector3 CPhysicsObject::getPosition()
-	{
-		return _current.position;
-	}
-
-	Vector3 CPhysicsObject::getRotation()
-	{
-		return QuatToEuler(_current.orientation);
-	}
-
-	float CPhysicsObject::GetMass()
-	{
-		return _current.mass;
-	}
-
-	float CPhysicsObject::GetInvMass()
-	{
-		return _current.inverseMass;
-	}
-
-	Vector3 CPhysicsObject::GetLinearVeloicty()
-	{
-		return _current.velocity;
-	}
-
-	Vector3 CPhysicsObject::GetAngularVeloicty()
-	{
-		return _current.angularVelocity;
-	}
-
-	Quaternion CPhysicsObject::getRotationQ()
-	{
-		return _current.orientation;
 	}
 
 	void CPhysicsObject::SetMass(float m)
@@ -135,14 +83,29 @@ namespace Physics{
 	void CPhysicsObject::AddImpulse(Vector3 v)
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
-		_current.velocity += v;
-		_current.momentum = _current.velocity * _current.mass;
+		Vector3 targetSpeed = (_current.velocity + v);
+		Vector3 diff = targetSpeed - _current.velocity;
+		Vector3 Acceleration = diff / 0.01f;
+		Vector3 force = _current.mass *  Acceleration;
+		AddForce(force);
+
+		//_current.velocity += v;
+		//_current.momentum = _current.velocity * _current.mass;
+		//_current.momentum = Vector3(0);
 	}
 
 	void CPhysicsObject::AddRotationImpulse(Vector3 v)
 	{
-		_current.angularVelocity += v;
-		_current.angularMomentum = _current.angularVelocity * GetInvWorldTensor();
+		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
+		Vector3 targetSpeed = (_current.angularVelocity + v);
+		Vector3 diff = targetSpeed - _current.angularVelocity;
+		Vector3 Acceleration = diff / 0.01f;
+		Vector3 force = Acceleration * (_current.GetInvWorldTensor());
+		
+		AddTorque(force);
+		
+		//_current.angularVelocity += v;
+		//_current.angularMomentum = _current.angularVelocity * _current.GetInvLocalTensor();
 	}
 
 	CPhysicsObject::Derivative CPhysicsObject::evaluate(const CPhysicsObject::State &state, double t)
@@ -186,5 +149,60 @@ namespace Physics{
 		state.angularMomentum += 1.0f / 6.0f * fdt * (a.torque + 2.0f*(b.torque + c.torque) + d.torque);
 
 		state.recalculate();
+	}
+
+	Vector3 CPhysicsObject::getPosition()
+	{
+		return _current.position;
+	}
+
+	Vector3 CPhysicsObject::getRotation()
+	{
+		return QuatToEuler(_current.orientation);
+	}
+
+	float CPhysicsObject::GetMass()
+	{
+		return _current.mass;
+	}
+
+	float CPhysicsObject::GetInvMass()
+	{
+		return _current.inverseMass;
+	}
+
+	Vector3 CPhysicsObject::GetLinearVeloicty()
+	{
+		return _current.velocity;
+	}
+
+	Vector3 CPhysicsObject::GetAngularVeloicty()
+	{
+		return _current.angularVelocity;
+	}
+
+	Quaternion CPhysicsObject::getRotationQ()
+	{
+		return _current.orientation;
+	}
+
+	Matrix3 CPhysicsObject::GetInvWorldTensor()
+	{
+		return _current.GetInvWorldTensor();
+	}
+
+	void CPhysicsObject::setTensor(Matrix3 t)
+	{
+		_current.SetTensor(t);
+	}
+
+	Matrix3 CPhysicsObject::State::GetLocalTensor()
+	{
+		return inertiaTensor;
+	}
+
+	Matrix3 CPhysicsObject::State::GetInvLocalTensor()
+	{
+		return inverseInertiaTensor;
 	}
 }

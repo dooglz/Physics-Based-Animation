@@ -328,9 +328,7 @@ namespace Physics{
 			{
 				// Coefficient of Restitution
 				const float e = 1.0f;
-				
-
-				//IT'S THE INERTIA, IT'S BROKEN! STOPS THE CUBE BOUNCING
+		
 
 				const float normDiv =
 					Dot(c->normal, c->normal) * 

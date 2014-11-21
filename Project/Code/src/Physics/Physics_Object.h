@@ -38,6 +38,8 @@ namespace Physics{
 			/// Recalculate secondary state values from primary values.
 			void recalculate();
 			Matrix3 GetInvWorldTensor();
+			Matrix3 GetInvLocalTensor();
+			Matrix3 GetLocalTensor();
 			void SetTensor(Matrix3 t);
 		};
 

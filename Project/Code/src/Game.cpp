@@ -15,6 +15,7 @@ Engine::Entity* ent1;
 Engine::Entity* ent2;
 Engine::Entity* ent3;
 Engine::Entity* ent4;
+Engine::Entity* ent5;
 float a = 0.0f;
 
 void Game::registerInputs()
@@ -50,13 +51,23 @@ void Game::Init(){
 
 	ent4 = new Engine::Entity();
 	ent4->SetName("Cool sphere");
-	ent4->setPosition(Vector3(3, 6, -3));
+	ent4->setPosition(Vector3(3, 5, -3));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent4->getScale().x));
 	ent4->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent4);
-
+	/*
+	ent5 = new Engine::Entity();
+	ent5->SetName("Cool sphere 2");
+	ent5->setPosition(Vector3(6, 5, -2));
+	ent5->setScale(Vector3(2, 2, 2));
+	ent5->AddComponent(new Engine::CmMeshRenderer());
+	ent5->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+	ent5->AddComponent(new Engine::CmPhysics_Sphere(40, ent5->getPosition(), ent5->getScale().x));
+	ent5->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
+	Engine::ActiveScene->AddEntity(ent5);
+	*/
 	ent2 = new Engine::Entity();
 	ent2->SetName("floor");
 	ent2->setPosition(Vector3(0, 0, 0));

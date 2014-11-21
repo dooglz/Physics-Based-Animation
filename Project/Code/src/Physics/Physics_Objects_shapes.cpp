@@ -4,10 +4,14 @@ namespace Physics{
 
 	Matrix3 CCube_Object::CalculateInertiaTensor()
 	{
+		float width =	1.0f*_size.x;
+		float height =	1.0f*_size.z;
+		float depth =	1.0f*_size.y;
+
 		Matrix3 mat;
-		mat[0][0] = (_current.mass / 12.0f)*((_size.x*_size.x) + (_size.y*_size.y));
-		mat[1][1] = (_current.mass / 12.0f)*((_size.z*_size.z) + (_size.y*_size.y));
-		mat[2][2] = (_current.mass / 12.0f)*((_size.z*_size.z) + (_size.x*_size.x));
+		mat[0][0] = (_current.mass / 12.0f)*(height*height + depth*depth);
+		mat[1][1] = (_current.mass / 12.0f)*(width*width + depth*depth);
+		mat[2][2] = (_current.mass / 12.0f)*(width*width + height*height);
 		return mat;
 	}
 
