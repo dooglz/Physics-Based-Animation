@@ -25,14 +25,14 @@ namespace Engine{
 	class CmPhysics_Cuboid : public CmPhysics{
 
 	public:
-		CmPhysics_Cuboid(float mass, Vector3 position,float lw, float lh, float ld);
+		CmPhysics_Cuboid(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld);
 		~CmPhysics_Cuboid();
 	};
 
 	class CmPhysics_Sphere : public CmPhysics{
 
 	public:
-		CmPhysics_Sphere(float mass, Vector3 position, float radius);
+		CmPhysics_Sphere(float mass, Vector3 position, Quaternion rotation, float radius);
 		~CmPhysics_Sphere();
 	};
 

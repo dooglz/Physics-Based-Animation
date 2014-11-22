@@ -20,7 +20,7 @@ namespace Physics{
 		}
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
-			(*it)->Update(t,timeStep);
+			(*it)->Integrate(t,timeStep);
 		}
 		//Detect collisions
 		CCollisionDetection::Scan(_scene);

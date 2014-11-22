@@ -45,7 +45,7 @@ void Game::Init(){
 	ent1->setPosition(Vector3(3, 4, -3));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
-	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
+	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(),ent1->getRotation(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
 	ent1->getComponent<Engine::CmPhysics_Cuboid>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent1);
 
@@ -54,7 +54,7 @@ void Game::Init(){
 	ent4->setPosition(Vector3(3, 5, 3));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
-	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent4->getScale().x));
+	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent1->getRotation(), ent4->getScale().x));
 	ent4->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent4);
 	/*

@@ -26,13 +26,13 @@ namespace Engine{
 	class CCustomCubePhysicsObject : public CCustomPhysicsObject
 	{
 	public:
-		CCustomCubePhysicsObject(float mass, Vector3 position, float lw, float lh, float ld);
+		CCustomCubePhysicsObject(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld);
 	};
 
 	class CCustomSpherePhysicsObject : public CCustomPhysicsObject
 	{
 	public:
-		CCustomSpherePhysicsObject(float mass, Vector3 position, float radius);
+		CCustomSpherePhysicsObject(float mass, Vector3 position, Quaternion rotation, float radius);
 	};
 
 	class CCustomPlanePhysicsObject : public CCustomPhysicsObject
@@ -50,8 +50,8 @@ namespace Engine{
 		void Tick(double t, double  timeStep);
 		void Shutdown();
 		void createPlaneShape(Vector3 normal, float distance);
-		CPhysicsObject* CreateCubeObject(float mass, Vector3 position, float lw, float lh, float ld);
-		CPhysicsObject* CreateSphereObject(float mass, Vector3 position, float radius);
+		CPhysicsObject* CreateCubeObject(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld);
+		CPhysicsObject* CreateSphereObject(float mass, Vector3 position, Quaternion rotation, float radius);
 		CPhysicsObject* CreatePlaneObject(Vector3 position, Vector3 normal);
 	};
 }

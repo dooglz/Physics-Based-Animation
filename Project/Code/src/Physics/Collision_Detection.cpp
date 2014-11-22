@@ -71,7 +71,7 @@ namespace Physics{
 	bool CCollisionDetection::SphereSphere(CSphere_Object* a, CSphere_Object* b, bool resolve)
 	{
 		return false;
-		const float distance = Distance(a->getPosition(),b->getPosition());
+		const float distance = Distance(a->GetPosition(),b->GetPosition());
 		ASSERT(distance > 0.00001f);
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
 		if (distance < sumRadius)
@@ -81,9 +81,9 @@ namespace Physics{
 				Collision* c = new Collision();
 				c->objectA = a;
 				c->objectB = b;
-				c->normal = Normalize(a->getPosition() - b->getPosition());
+				c->normal = Normalize(a->GetPosition() - b->GetPosition());
 				c->penetration = sumRadius - distance;
-				c->point = a->getPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f);
+				c->point = a->GetPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f);
 				_collisions.push_back(c);
 			}
 			return true;
@@ -97,10 +97,10 @@ namespace Physics{
 		// Clamp each coordinate to the cuboid
 		//
 		//WE need ot take roation into accout here, for realtive position to really work
-		Matrix4 rot = EulerToMatrix(b->getRotation());
-		Matrix4 trn = Translation(b->getPosition());
+		Matrix4 rot = QuatToMatrix(b->GetOrientation());
+		Matrix4 trn = Translation(b->GetPosition());
 		Matrix4 inv = Inverse(trn * rot);
-		Vector4 v4 = Vector4(a->getPosition(), 1);
+		Vector4 v4 = Vector4(a->GetPosition(), 1);
 
 		//Vector3 realativePosition = a->getPosition() - b->getPosition();
 		v4 = inv * v4;
@@ -125,9 +125,9 @@ namespace Physics{
 			Collision* c = new Collision();
 			c->objectA = a;
 			c->objectB = b;
-			c->normal = -Normalize(closestPointWorld - a->getPosition());
+			c->normal = -Normalize(closestPointWorld - a->GetPosition());
 			c->penetration = a->GetRadius() - distance;
-			c->point = closestPoint + b->getPosition();
+			c->point = closestPoint + b->GetPosition();
 			_collisions.push_back(c);
 		}
 		return true;
@@ -187,12 +187,12 @@ namespace Physics{
 	bool CCollisionDetection::SpherePlane(CSphere_Object* a, CPlane_Object* b, bool resolve)
 	{
 		//assumme all plane are flat for now
-		const float distance = -1.0f*b->getPosition().y;
+		const float distance = -1.0f*b->GetPosition().y;
 
 		//assume perfect sphere
 		const float radius = a->GetRadius();
 
-		float separation = Dot(a->getPosition(), b->GetNormal()) + distance;
+		float separation = Dot(a->GetPosition(), b->GetNormal()) + distance;
 		//ASSERT(separation > 0.00001f);
 
 		if (isnan(separation))
@@ -210,7 +210,7 @@ namespace Physics{
 				c->objectB = b;
 				c->normal = b->GetNormal();
 				c->penetration = radius - separation;
-				c->point = a->getPosition() - b->GetNormal() * separation;
+				c->point = a->GetPosition() - b->GetNormal() * separation;
 				_collisions.push_back(c);
 			}
 			return true;
@@ -241,8 +241,8 @@ namespace Physics{
 		};
 
 		//transfrom to global
-		Matrix4 rot = EulerToMatrix(a->getRotation());
-		Matrix4 trn = Translation(a->getPosition());
+		Matrix4 rot = QuatToMatrix(a->GetOrientation());
+		Matrix4 trn = Translation(a->GetPosition());
 		for (int i = 0; i < 8;i++)
 		{
 			points[i] = trn * rot * points[i];
@@ -254,7 +254,7 @@ namespace Physics{
 		bool isCollided = false;
 		for (int i = 0; i < 8; i++)
 		{
-			Vector3 p = b->getPosition();
+			Vector3 p = b->GetPosition();
 			Vector3 n = b->GetNormal();
 
 			Vector3 t = (Vector3)points[i];
@@ -305,13 +305,13 @@ namespace Physics{
 		
 			const float invMass0 = objectA->GetInvMass();
 			const float invMass1 = objectB->GetInvMass();
-			const Matrix3 InvInertia0 = objectA->GetInvLocalTensor();
-			const Matrix3 InvInertia1 = objectB->GetInvLocalTensor();
+			const Matrix4 InvInertia0 = objectA->GetInvWorldTensor();
+			const Matrix4 InvInertia1 = objectB->GetInvWorldTensor();
 			
 			// Both objects are non movable
 			if ((invMass0 + invMass1) == 0.0) return;
-			Vector3 r0 = c->point - objectA->getPosition();
-			Vector3 r1 = c->point - objectB->getPosition();
+			Vector3 r0 = c->point - objectA->GetPosition();
+			Vector3 r1 = c->point - objectB->GetPosition();
 			Vector3 v0 = objectA->GetLinearVeloicty() + Cross(objectA->GetAngularVeloicty(), r0);
 			Vector3 v1 = objectB->GetLinearVeloicty() + Cross(objectB->GetAngularVeloicty(), r1);
 		
@@ -331,12 +331,11 @@ namespace Physics{
 				// Coefficient of Restitution
 				const float e = 1.0f;
 		
-				const float normDiv =
-					//Dot(c->normal, c->normal) * 
-					((invMass0 + invMass1) + Dot(c->normal,
-					Cross((Cross(r0, c->normal)*InvInertia0), r0)
-					 + Cross( (Cross(r1, c->normal)* InvInertia1), r1)
-					));
+				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
+					((invMass0 + invMass1) +
+					Dot(c->normal,
+					Cross(Vector3((InvInertia0 * Vector4(Cross(r0, c->normal), 0))), r0) +
+					Cross(Vector3((InvInertia1 * Vector4(Cross(r1, c->normal), 0))), r1)));
 				ASSERT(normDiv > 0.0f);
 				
 				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
@@ -350,13 +349,13 @@ namespace Physics{
 					Vector3 impulse = invMass0 * c->normal * jn;
 					objectA->AddImpulse(impulse);
 
-					impulse = InvInertia0 * Cross(r0, c->normal * jn);
+					impulse = Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
 					objectA->AddRotationImpulse(impulse);
 				}
 				if (invMass1 != 0)
 				{
 					objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
-					objectB->AddRotationImpulse(-1.0f* Cross(r1, c->normal * jn) * InvInertia1);
+					objectB->AddRotationImpulse(-1.0f* Vector3(Vector4(Cross(r1, c->normal * jn), 0) * InvInertia1));
 				}
 			}
 			/*

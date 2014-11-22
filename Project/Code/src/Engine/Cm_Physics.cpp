@@ -39,17 +39,17 @@ namespace Engine{
 	}
 	//--
 
-	CmPhysics_Cuboid::CmPhysics_Cuboid(float mass, Vector3 position, float lw, float lh, float ld) :CmPhysics("Physics Cuboid")
+	CmPhysics_Cuboid::CmPhysics_Cuboid(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld) :CmPhysics("Physics Cuboid")
 	{
-		_po = PhysicsSolver->CreateCubeObject(mass, position, lw, lh, ld);
+		_po = PhysicsSolver->CreateCubeObject(mass, position, rotation, lw, lh, ld);
 	}
 
 	CmPhysics_Cuboid::~CmPhysics_Cuboid()
 	{}
 
-	CmPhysics_Sphere::CmPhysics_Sphere(float mass, Vector3 position, float radius) :CmPhysics("Physics Sphere")
+	CmPhysics_Sphere::CmPhysics_Sphere(float mass, Vector3 position, Quaternion rotation, float radius) :CmPhysics("Physics Sphere")
 	{
-		_po = PhysicsSolver->CreateSphereObject(mass, position, radius);
+		_po = PhysicsSolver->CreateSphereObject(mass, position, rotation, radius);
 	}
 
 	CmPhysics_Sphere::~CmPhysics_Sphere()

@@ -34,8 +34,8 @@ namespace Engine{
 		virtual void Tick(double t, double  timeStep) = 0;
 		virtual void Shutdown() = 0;
 		virtual void createPlaneShape(Vector3 normal, float distance) = 0;
-		virtual CPhysicsObject* CreateCubeObject(float mass, Vector3 position, float lw, float lh, float ld) = 0;
-		virtual CPhysicsObject* CreateSphereObject(float mass, Vector3 position, float radius) = 0;
+		virtual CPhysicsObject* CreateCubeObject(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld) = 0;
+		virtual CPhysicsObject* CreateSphereObject(float mass, Vector3 position, Quaternion rotation, float radius) = 0;
 		virtual CPhysicsObject* CreatePlaneObject(Vector3 position, Vector3 normal) = 0;
 	};
 

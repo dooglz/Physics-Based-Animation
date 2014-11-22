@@ -24,7 +24,7 @@ struct stVertex
 	#define Quaternion glm::quat
 	#define Length glm::length
 	#define Distance glm::distance
-
+	#define Transpose glm::transpose
 	#define Dot glm::dot
 	#define Cross glm::cross
 	#define Perspective glm::perspective

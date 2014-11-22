@@ -6,10 +6,10 @@ namespace Physics{
 	{
 		protected:
 			Vector3 _size;
-			Matrix3 CalculateInertiaTensor();
+			Matrix4 CalculateInverseInertiaTensor();
 			std::vector<Vector3> getDebugLines();
 		public:
-			CCube_Object(float mass, Vector3 position, float lw, float lh, float ld);
+			CCube_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float lw, const float lh, const float ld);
 			Vector3 GetSize() { return _size; }
 	};
 
@@ -17,21 +17,21 @@ namespace Physics{
 	{
 	protected:
 		Vector3 _normal;
-		Matrix3 CalculateInertiaTensor();
+		Matrix4 CalculateInverseInertiaTensor();
 		std::vector<Vector3> getDebugLines();
 	public:
-		CPlane_Object(Vector3 position, Vector3 normal);
+		CPlane_Object(const Vector3& position, const Vector3& normal);
 		Vector3 GetNormal(){ return _normal; }
 	};
 
 	class CSphere_Object : public CPhysicsObject
 	{
 		protected:
-			Matrix3 CalculateInertiaTensor();
+			Matrix4 CalculateInverseInertiaTensor();
 			std::vector<Vector3> getDebugLines();
 			float _radius;
 		public:
-			CSphere_Object(float mass, Vector3 position, float radius);
+			CSphere_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float radius);
 			float GetRadius(){ return _radius; }
 	};
 }
