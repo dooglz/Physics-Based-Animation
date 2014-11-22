@@ -77,7 +77,7 @@ namespace Physics{
 	{
 		if (_invMass <= 0.0f) return;
 		_forces += f;
-//		_torques += Cross((p - _position), f);
+		_torques += Cross((p - _position), f);
 	}
 
 	void CPhysicsObject::AddTorque(const Vector3& v)
@@ -90,16 +90,12 @@ namespace Physics{
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		_linVelocity += v;
-		//_current.momentum = _current.velocity * _current.mass;
-		//_current.momentum = Vector3(0);
 	}
 
 	void CPhysicsObject::AddRotationImpulse(const Vector3& v)
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
-
 		_angVelocity += v;
-		//_current.angularMomentum = _current.angularVelocity * _current.GetInvLocalTensor();
 	}
 
 

@@ -14,9 +14,9 @@ namespace Physics{
 		float depth =	1.0f*(_size.z*_size.z);
 
 		Matrix4 mat;
-		mat[0][0] = (_invMass * 12.0f)* (height + depth);
-		mat[1][1] = (_invMass * 12.0f)* (width + depth);
-		mat[2][2] = (_invMass * 12.0f)* (width + height);
+		mat[1][1] = (_invMass * 12.0f)* (height + depth);
+		mat[2][2] = (_invMass * 12.0f)* (width + depth);
+		mat[0][0] = (_invMass * 12.0f)* (width + height);
 		mat[3][3] = 1.0f;
 		return mat;
 	}

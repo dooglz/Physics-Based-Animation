@@ -52,7 +52,7 @@ namespace Physics{
 				{
 					if (objB->type == CPhysicsObject::SPHERE)
 					{
-						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+						SpherePlane(static_cast<CSphere_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
 					}
 					else if (objB->type == CPhysicsObject::CUBEOID)
 					{
@@ -131,57 +131,6 @@ namespace Physics{
 			_collisions.push_back(c);
 		}
 		return true;
-
-
-		/*
-		//Create a plane for each side of the cuboid
-		Vector3 positions[6];
-		Vector3 normals[6];
-		positions[0] = b->getPosition() + Vector3(b->GetSize().x, 0, 0);
-		positions[1] = b->getPosition() - Vector3(b->GetSize().x, 0, 0);
-		positions[2] = b->getPosition() + Vector3(0, b->GetSize().y, 0);
-		positions[3] = b->getPosition() - Vector3(0, b->GetSize().y, 0);
-		positions[4] = b->getPosition() + Vector3(0, 0, b->GetSize().z);
-		positions[5] = b->getPosition() - Vector3(0, 0, b->GetSize().z);
-
-
-		normals[0] = Normalize(GetRightVector(b->getRotationQ()));
-		normals[1] = -Normalize(GetRightVector(b->getRotationQ()));
-		normals[2] = Normalize(GetUpVector(b->getRotationQ()));
-		normals[3] = -Normalize(GetUpVector(b->getRotationQ()));
-		normals[4] = Normalize(GetForwardVector(b->getRotationQ()));
-		normals[5] = -Normalize(GetForwardVector(b->getRotationQ()));
-
-		bool hasCollided;
-		unsigned char count = 0;
-		for (int i = 0; i < 6; i++)
-		{
-			//Engine::Renderer->DrawLine(positions[i], positions[i] + (2.0f * normals[i]));
-
-			//assumme all plane are flat for now
-			const float distance = Dot(positions[i], normals[i]);
-			const float radius = a->GetRadius();
-
-			float separation = Dot(a->getPosition(), normals[i]) + distance;
-			//ASSERT(separation > 0.00001f);
-
-			if (isnan(separation))
-			{
-				separation = 0;
-			}
-
-			if (separation < radius)
-			{
-				count++;
-				Engine::Renderer->DrawCross(a->getPosition() - normals[i] * separation,1.0f);
-			}
-		}
-		printf("%i\n", count);
-		if (count ==6){
-			return true;
-		}*/
-
-		return false;
 	}
 
 	bool CCollisionDetection::SpherePlane(CSphere_Object* const a,CPlane_Object* const b, const bool resolve)
@@ -329,7 +278,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 1.0f;
+				const float e = 0.1f;
 		
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +
