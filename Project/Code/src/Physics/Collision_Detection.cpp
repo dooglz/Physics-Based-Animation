@@ -344,22 +344,15 @@ namespace Physics{
 				// bias impulse proportional to penetration distance
 				jn = jn + (c->penetration*1.5f);
 				
-				if (invMass0 != 0)
-				{
-					Vector3 impulse = invMass0 * c->normal * jn;
-					objectA->AddImpulse(impulse);
+				objectA->AddImpulse(c->normal * jn * invMass0);
+				objectA->AddRotationImpulse(0.5f*Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0)));
 
-					impulse = Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
-					objectA->AddRotationImpulse(impulse);
-				}
-				if (invMass1 != 0)
-				{
-					objectB->AddImpulse(-1.0f* invMass1 * c->normal * jn);
-					objectB->AddRotationImpulse(-1.0f* Vector3(Vector4(Cross(r1, c->normal * jn), 0) * InvInertia1));
-				}
+			//	objectB->AddImpulse(-1.0f* c->normal * jn * invMass1);
+			//	objectB->AddRotationImpulse(-1.0f* Vector3(InvInertia1 * Vector4(Cross(r1, c->normal * jn), 0)));
 			}
 			
 			// TANGENT Impulse Code
+			#if 0
 			{
 				// Work out our tangent vector , with is perpendicular
 				// to our collision normal
@@ -393,7 +386,8 @@ namespace Physics{
 					objectB->AddImpulse(-1.0f * impulse);
 					//objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
-			} // TANGENT
+			}
+			#endif// TANGENT
 			
 			//extern bool cleanup;
 			//if (cleanup)
