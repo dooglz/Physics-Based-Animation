@@ -16,7 +16,7 @@ namespace Engine{
 	public:
 		std::vector<Vector3> getDebugLines();
 		Vector3 getPosition();
-		Vector3 getRotation();
+		Quaternion getRotation();
 		bool UsesGravity();
 		void SetUsesGravity(bool b);
 		float GetMass();

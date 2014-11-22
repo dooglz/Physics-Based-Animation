@@ -7,7 +7,7 @@ namespace Engine{
 	Entity::Entity(){
 		_scale = Vector3(1.0f);
 		_position = Vector3(0.0f);
-		_rotation = Vector3(0.0f);
+		_rotation = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
 		CalculateTransform();
 	}
 
@@ -19,7 +19,7 @@ namespace Engine{
 
 	Vector3 Entity::getScale(){ return _scale; }
 	Vector3 Entity::getPosition(){ return _position; }
-	Vector3 Entity::getRotation(){ return _rotation; }
+	Quaternion Entity::getRotation(){ return _rotation; }
 
 	void Entity::setScale(const Vector3 v3)
 	{
@@ -34,8 +34,14 @@ namespace Engine{
 	void Entity::setRotation(const Vector3 v3)
 	{
 		_changed = true;
-		_rotation = v3;
+		_rotation = EulerToQuat(v3);
 	}
+	void Entity::setRotation(const Quaternion q)
+	{
+		_changed = true;
+		_rotation = q;
+	}
+
 
 	Matrix4 Entity::getTranform()
 	{
@@ -51,7 +57,7 @@ namespace Engine{
 	void Entity::CalculateTransform()
 	{
 		Matrix4 scl = Scale(_scale);
-		Matrix4 rot = EulerToMatrix(_rotation);
+		Matrix4 rot = QuatToMatrix(_rotation);
 		Matrix4 trn = Translation(_position);
 		//_transform =  (scl * rot * trn);
 		_transform = (trn * rot * scl);

@@ -14,7 +14,7 @@ namespace Engine{
 	public:
 		CPhysicsObject(){};
 		virtual Vector3 getPosition() = 0;
-		virtual Vector3 getRotation() = 0;
+		virtual Quaternion getRotation() = 0;
 		virtual float GetMass() = 0;
 		virtual void SetMass(float m) = 0;
 		virtual bool UsesGravity() = 0;

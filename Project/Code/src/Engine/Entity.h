@@ -13,7 +13,7 @@ namespace Engine{
 		std::string _name;
 		bool _changed;
 		Vector3 _position;
-		Vector3 _rotation;
+		Quaternion _rotation;
 		Vector3 _scale;
 		Matrix4 _transform;
 		void CalculateTransform();
@@ -27,13 +27,14 @@ namespace Engine{
 
 		Vector3 getScale();
 		Vector3 getPosition();
-		Vector3 getRotation();
+		Quaternion getRotation();
 		Matrix4 getTranform();
 
 		//TODO void setTransform(const Matrix4 m4);
 		void setScale(const Vector3 v3);
 		void setPosition(const Vector3 v3);
 		void setRotation(const Vector3 v3);
+		void setRotation(const Quaternion q);
 		bool isVisible();
 		void setVisibility(const bool b);
 		void SetName(const std::string name){

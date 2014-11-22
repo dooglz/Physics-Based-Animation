@@ -66,7 +66,7 @@ void CmFpsMotor::Update(double delta)
 	if (Engine::Input::getMapData("right") > 128){
 		rot += Vector3(0, -1.0f, 0);
 	}
-	Ent->setRotation(Ent->getRotation() + rot*20.0f*(float)delta);
+	Ent->setRotation(Ent->getRotation() * AngleAxisToQuat(rot,20.0f*(float)delta) );
 
 	//ijkl
 	rot = Vector3(0);

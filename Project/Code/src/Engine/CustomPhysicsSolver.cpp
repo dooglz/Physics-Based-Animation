@@ -62,9 +62,9 @@ namespace Engine{
 	//---------
 
 
-	Vector3 CCustomPhysicsObject::getRotation()
+	Quaternion CCustomPhysicsObject::getRotation()
 	{
-		return _po->getRotation();
+		return _po->getRotationQ();
 	}
 
 	Vector3 CCustomPhysicsObject::getPosition()

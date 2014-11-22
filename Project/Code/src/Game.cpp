@@ -92,7 +92,7 @@ void Game::Init(){
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
 	ent3->setPosition(Vector3(-3.0, 2.5, 3.0));
-	ent3->setRotation(Vector3(-0.43f,- 0.99f, 0));
+	ent3->setRotation(Vector3(0.00f,-1.2f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
