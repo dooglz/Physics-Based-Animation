@@ -10,7 +10,7 @@ namespace Physics{
 			std::vector<Vector3> getDebugLines();
 		public:
 			CCube_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float lw, const float lh, const float ld);
-			Vector3 GetSize() { return _size; }
+			Vector3 GetSize() const { return _size; }
 	};
 
 	class CPlane_Object : public CPhysicsObject
@@ -21,7 +21,7 @@ namespace Physics{
 		std::vector<Vector3> getDebugLines();
 	public:
 		CPlane_Object(const Vector3& position, const Vector3& normal);
-		Vector3 GetNormal(){ return _normal; }
+		Vector3 GetNormal()const { return _normal; }
 	};
 
 	class CSphere_Object : public CPhysicsObject
@@ -32,6 +32,6 @@ namespace Physics{
 			float _radius;
 		public:
 			CSphere_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float radius);
-			float GetRadius(){ return _radius; }
+			float GetRadius()const { return _radius; }
 	};
 }

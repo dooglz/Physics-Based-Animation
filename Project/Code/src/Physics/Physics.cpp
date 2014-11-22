@@ -1,6 +1,6 @@
 #include "Physics.h"
 #include "Physics_Object.h"
-#include "Physics_Objects_shapes.h"
+
 #include "Collision_Detection.h"
 
 namespace Physics{
@@ -12,12 +12,8 @@ namespace Physics{
 		gavity = Vector3(0, -9.81f, 0);
 	}
 
-	void PhysicsSytem::Tick(double t, double timeStep)
+	void PhysicsSytem::Tick(const double t, const  double timeStep)
 	{
-		//Gravity
-		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
-
-		}
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
 			(*it)->Integrate(t,timeStep);
@@ -32,11 +28,6 @@ namespace Physics{
 	}
 
 	void PhysicsSytem::Shutdown()
-	{
-
-	}
-
-	void PhysicsSytem::createPlaneShape(Vector3 normal, float distance)
 	{
 
 	}

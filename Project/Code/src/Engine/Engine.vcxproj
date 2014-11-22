@@ -128,7 +128,6 @@
     <ClInclude Include="BulletSolver.h" />
     <ClInclude Include="Cm_Camera.h" />
     <ClInclude Include="Cm_Physics.h" />
-    <ClInclude Include="Cm_PlaneCollider.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="CustomPhysicsSolver.h" />
     <ClInclude Include="engine.h" />
@@ -160,7 +159,6 @@
     <ClCompile Include="Cm_Camera.cpp" />
     <ClCompile Include="Cm_MeshRenderer.cpp" />
     <ClCompile Include="Cm_Physics.cpp" />
-    <ClCompile Include="Cm_PlaneColider.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="CustomPhysicsSolver.cpp" />
     <ClCompile Include="Engine.cpp" />

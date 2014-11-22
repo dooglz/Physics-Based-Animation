@@ -4,7 +4,7 @@
 
 namespace Physics{
 
-	CPhysicsObject::CPhysicsObject(float mass, const Vector3& position, const  Quaternion& rotation)
+	CPhysicsObject::CPhysicsObject(const float mass, const Vector3& position, const  Quaternion& rotation)
 	{
 		printf("Hello, I'm a new physics object, m:%f, pos:(%f,%f%,%f)\n", mass, position.x, position.y, position.z);
 		System->_scene.push_back(this);
@@ -18,7 +18,7 @@ namespace Physics{
 		//_torques += Vector3(25.1f, 10.0f, 50.0f);
 	}
 
-	void CPhysicsObject::Integrate(double dt, double timestep)
+	void CPhysicsObject::Integrate(const double dt, const double timestep)
 	{
 		float dtf = (float)timestep;
 		UpdateMatrix();
@@ -61,7 +61,7 @@ namespace Physics{
 		*/
 	}
 
-	void CPhysicsObject::SetMass(float m)
+	void CPhysicsObject::SetMass(const float m)
 	{
 		if (m == 0.0f){
 			_invMass = 0.0f;
@@ -73,20 +73,20 @@ namespace Physics{
 		UpdateMatrix();
 	}
 
-	void CPhysicsObject::AddForce(Vector3& p, Vector3& f)
+	void CPhysicsObject::AddForce(const Vector3& p, const  Vector3& f)
 	{
 		if (_invMass <= 0.0f) return;
 		_forces += f;
 //		_torques += Cross((p - _position), f);
 	}
 
-	void CPhysicsObject::AddTorque(Vector3 v)
+	void CPhysicsObject::AddTorque(const Vector3& v)
 	{
 		if (_invMass <= 0.0f) return;
 		_torques += v;
 	}
 
-	void CPhysicsObject::AddImpulse(Vector3 v)
+	void CPhysicsObject::AddImpulse(const Vector3& v)
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 		_linVelocity += v;
@@ -94,7 +94,7 @@ namespace Physics{
 		//_current.momentum = Vector3(0);
 	}
 
-	void CPhysicsObject::AddRotationImpulse(Vector3 v)
+	void CPhysicsObject::AddRotationImpulse(const Vector3& v)
 	{
 		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
 
@@ -103,22 +103,22 @@ namespace Physics{
 	}
 
 
-	Matrix4 CPhysicsObject::GetInvLocalTensor()
+	Matrix4 CPhysicsObject::GetInvLocalTensor() const
 	{
 		return _localInvInertia;
 	}
 
-	Vector3 CPhysicsObject::GetPosition()
+	Vector3 CPhysicsObject::GetPosition() const
 	{
 		return _position;
 	}
 
-	float CPhysicsObject::GetInvMass()
+	float CPhysicsObject::GetInvMass() const
 	{
 		return _invMass;
 	}
 
-	float CPhysicsObject::GetMass()
+	float CPhysicsObject::GetMass() const
 	{
 		if (_invMass == 0.0f){
 			return 0;
@@ -126,22 +126,22 @@ namespace Physics{
 		return (1.0f/_invMass);
 	}
 
-	Vector3 CPhysicsObject::GetLinearVeloicty()
+	Vector3 CPhysicsObject::GetLinearVeloicty() const
 	{
 		return _linVelocity;
 	}
 
-	Vector3 CPhysicsObject::GetAngularVeloicty()
+	Vector3 CPhysicsObject::GetAngularVeloicty() const
 	{
 		return _angVelocity;
 	}
 
-	Quaternion CPhysicsObject::GetOrientation()
+	Quaternion CPhysicsObject::GetOrientation() const
 	{
 		return _orientation;
 	}
 
-	Matrix4 CPhysicsObject::GetInvWorldTensor()
+	Matrix4 CPhysicsObject::GetInvWorldTensor() const
 	{
 		return _worldInvInertia;
 	}

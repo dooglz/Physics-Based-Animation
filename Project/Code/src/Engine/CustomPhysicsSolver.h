@@ -49,7 +49,6 @@ namespace Engine{
 		void Init();
 		void Tick(double t, double  timeStep);
 		void Shutdown();
-		void createPlaneShape(Vector3 normal, float distance);
 		CPhysicsObject* CreateCubeObject(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld);
 		CPhysicsObject* CreateSphereObject(float mass, Vector3 position, Quaternion rotation, float radius);
 		CPhysicsObject* CreatePlaneObject(Vector3 position, Vector3 normal);

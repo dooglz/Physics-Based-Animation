@@ -13,9 +13,8 @@ namespace Physics{
 		Vector3 gavity;
 		std::vector<CPhysicsObject*> _scene;
 		void Init();
-		void Tick(double t, double timeStep);
+		void Tick(const double t, const double timeStep);
 		void Shutdown();
-		void createPlaneShape(Vector3 normal, float distance);
 	};
 
 	extern PhysicsSytem* System;

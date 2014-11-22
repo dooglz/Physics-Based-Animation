@@ -22,12 +22,6 @@ namespace Engine{
 		_system->Shutdown();
 		delete _system;
 	};
-
-	void  CCustomSover::createPlaneShape(Vector3 normal, float distance)
-	{
-		_system->createPlaneShape(normal, distance);
-	};
-
 	CPhysicsObject* CCustomSover::CreateCubeObject(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld)
 	{
 		return new CCustomCubePhysicsObject(mass, position, rotation, lw, lh, ld);

@@ -109,9 +109,6 @@
     <ClInclude Include="BulletSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Cm_PlaneCollider.h">
-      <Filter>Header Files\Components</Filter>
-    </ClInclude>
     <ClInclude Include="CustomPhysicsSolver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -185,9 +182,6 @@
     </ClCompile>
     <ClCompile Include="BulletSolver.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cm_PlaneColider.cpp">
-      <Filter>Source Files\Components</Filter>
     </ClCompile>
     <ClCompile Include="CustomPhysicsSolver.cpp">
       <Filter>Source Files</Filter>

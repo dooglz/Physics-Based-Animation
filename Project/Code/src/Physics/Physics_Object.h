@@ -32,25 +32,25 @@ namespace Physics{
 
 	public:
 		void UpdateMatrix();
-		void Integrate(double dt, double timestep);
+		void Integrate(const double dt, const double timestep);
 		virtual std::vector<Vector3> getDebugLines() = 0;
-		CPhysicsObject(float mass, const Vector3& position, const  Quaternion& rotation);
+		CPhysicsObject(const float mass, const Vector3& position, const  Quaternion& rotation);
 
 		//
-		void AddForce(Vector3& v, Vector3& p);
-		void AddTorque(Vector3 v);
-		void AddImpulse(Vector3 v);
-		void AddRotationImpulse(Vector3 v);
+		void AddForce(const Vector3& v, const Vector3& p);
+		void AddTorque(const Vector3& v);
+		void AddImpulse(const Vector3& v);
+		void AddRotationImpulse(const Vector3& v);
 
 		//getters and setters
-		Vector3 GetPosition();
-		Quaternion GetOrientation();
-		Vector3 GetLinearVeloicty();
-		Vector3 GetAngularVeloicty();
-		Matrix4 GetInvWorldTensor();
-		Matrix4 GetInvLocalTensor();
-		float GetMass();
-		float GetInvMass();
-		void SetMass(float m);
+		Vector3 GetPosition() const;
+		Quaternion GetOrientation() const;
+		Vector3 GetLinearVeloicty() const;
+		Vector3 GetAngularVeloicty() const;
+		Matrix4 GetInvWorldTensor() const;
+		Matrix4 GetInvLocalTensor() const;
+		float GetMass() const;
+		float GetInvMass() const;
+		void SetMass(const float m);
 	};
 }
