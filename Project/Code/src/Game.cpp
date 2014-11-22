@@ -77,13 +77,13 @@ void Game::Init(){
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 0;
+	unsigned int a = 100;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = ((float)M_PI / ((float)a))*i;
 		Engine::Entity* e = new Engine::Entity();
 		e->SetName("Cool spher");
-		e->setPosition(Vector3((6.0f*sin(aa)), 10.0f + (6.0f*sin(i)), (-6.0f*cos(aa))));
+		e->setPosition(Vector3((10.0f*sin(0.2f*aa)) + (6.0f*sin(aa)), 10.0f + (6.0f*sin(i)), (-6.0f*cos(aa))));
 		e->AddComponent(new Engine::CmMeshRenderer());
 		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 		e->AddComponent(new Engine::CmPhysics_Sphere(10, e->getPosition(), e->getRotation(), 1.0f));

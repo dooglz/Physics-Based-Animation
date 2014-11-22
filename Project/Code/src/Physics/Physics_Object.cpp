@@ -29,7 +29,8 @@ namespace Physics{
 		// Add Gravity
 		if (usesGravity){
 			AddForce(_position, Vector3(0, -9.8f * (1.0f / _invMass), 0));
-			//AddForce(_position, Vector3(0, 0, 0));
+			//AddRotationImpulse(Vector3(0, 0, 0.01f));
+		//	AddForce(_position+Vector3(1.0f,0,0), Vector3(0, 0.01f, 0));
 		}
 
 		// Update Linear
@@ -39,11 +40,15 @@ namespace Physics{
 
 		// Update Angular
 		_angVelocity += Vector3(((_worldInvInertia * Vector4(_torques,0)) * dtf));
-		Quaternion Qvel = (Quaternion(_angVelocity.x, _angVelocity.y, _angVelocity.z, 0) * 0.5f) * _orientation;
+		Quaternion Qvel = (Quaternion(0, _angVelocity.x, _angVelocity.y, _angVelocity.z) * 0.5f) * _orientation;
 		_orientation += Qvel * dtf;
 
 		_orientation = Normalize(_orientation);
 		_torques = Vector3(0, 0, 0);
+
+		//damping
+		_angVelocity *= 0.999f;
+		_linVelocity *= 0.999f;
 
 		UpdateMatrix();
 	}

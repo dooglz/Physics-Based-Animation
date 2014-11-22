@@ -278,7 +278,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 0.1f;
+				const float e = 1.0f;
 		
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +
@@ -294,10 +294,12 @@ namespace Physics{
 				jn = jn + (c->penetration*1.5f);
 				
 				objectA->AddImpulse(c->normal * jn * invMass0);
-				objectA->AddRotationImpulse(Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0)));
+				Vector3 r = Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
+				Vector3 r2 = Vector3(r.y,r.x,r.z);
+				objectA->AddRotationImpulse(r);
 
-			//	objectB->AddImpulse(-1.0f* c->normal * jn * invMass1);
-			//	objectB->AddRotationImpulse(-1.0f* Vector3(InvInertia1 * Vector4(Cross(r1, c->normal * jn), 0)));
+				objectB->AddImpulse(-1.0f* c->normal * jn * invMass1);
+				objectB->AddRotationImpulse(-1.0f* Vector3(InvInertia1 * Vector4(Cross(r1, c->normal * jn), 0)));
 			}
 			
 			// TANGENT Impulse Code
@@ -326,14 +328,14 @@ namespace Physics{
 					ASSERT(!isnan(impulse.x) && !isnan(impulse.y) && !isnan(impulse.z));
 					Vector3 rotImpulse = Vector3(InvInertia0 * Vector4(Cross(r0, tangent * jt), 0));
 					objectA->AddImpulse(impulse);
-				//	objectA->AddRotationImpulse(rotImpulse);
+					objectA->AddRotationImpulse(rotImpulse);
 				}
 				if (invMass1 != 1)
 				{
 					Vector3 impulse = invMass1 * tangent * jt;
 					Vector3 rotImpulse = Vector3(Vector4(Cross(r1, tangent * jt), 0) *  InvInertia1);
 					objectB->AddImpulse(-1.0f * impulse);
-					//objectB->AddRotationImpulse(-1.0f* rotImpulse);
+					objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
 			}
 			#endif// TANGENT

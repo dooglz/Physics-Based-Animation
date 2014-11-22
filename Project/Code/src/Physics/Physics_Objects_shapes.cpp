@@ -15,8 +15,8 @@ namespace Physics{
 
 		Matrix4 mat;
 		mat[1][1] = (_invMass * 12.0f)* (height + depth);
-		mat[2][2] = (_invMass * 12.0f)* (width + depth);
-		mat[0][0] = (_invMass * 12.0f)* (width + height);
+		mat[0][0] = (_invMass * 12.0f)* (width + depth);
+		mat[2][2] = (_invMass * 12.0f)* (width + height);
 		mat[3][3] = 1.0f;
 		return mat;
 	}
@@ -47,6 +47,7 @@ namespace Physics{
 	CCube_Object::CCube_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float lw, const float lh, const float ld) :CPhysicsObject(mass, position, rotation)
 	{
 		type = CUBEOID;
+		_orientation = Normalize(Quaternion(2.0f,0,0,9.0f));
 		_size = Vector3(lw, lh, ld);
 		SetMass(mass);
 	}
