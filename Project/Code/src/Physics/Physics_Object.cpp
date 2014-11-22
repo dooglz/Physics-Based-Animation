@@ -15,12 +15,12 @@ namespace Physics{
 		_torques = Vector3(0, 0, 0);
 		_forces = Vector3(0, 0, 0);
 		//SetMass(mass);
-		//_current.torques += Vector3(25.1f, 10.0f, 50.0f);
+		//_torques += Vector3(25.1f, 10.0f, 50.0f);
 	}
 
 	void CPhysicsObject::Integrate(double dt, double timestep)
 	{
-		float dtf = (float)dt;
+		float dtf = (float)timestep;
 		UpdateMatrix();
 		if (_invMass == 0.0f){
 			return;
@@ -28,7 +28,8 @@ namespace Physics{
 
 		// Add Gravity
 		if (usesGravity){
-			//AddForce(_position, Vector3(0, 9.8f * (1.0f / _invMass), 0));
+			AddForce(_position, Vector3(0, -9.8f * (1.0f / _invMass), 0));
+			//AddForce(_position, Vector3(0, 0, 0));
 		}
 
 		// Update Linear
@@ -72,11 +73,11 @@ namespace Physics{
 		UpdateMatrix();
 	}
 
-	void CPhysicsObject::AddForce(Vector3& f, Vector3& p)
+	void CPhysicsObject::AddForce(Vector3& p, Vector3& f)
 	{
 		if (_invMass <= 0.0f) return;
 		_forces += f;
-		_torques += Cross((p - _position), f);
+//		_torques += Cross((p - _position), f);
 	}
 
 	void CPhysicsObject::AddTorque(Vector3 v)

@@ -358,7 +358,7 @@ namespace Physics{
 					objectB->AddRotationImpulse(-1.0f* Vector3(Vector4(Cross(r1, c->normal * jn), 0) * InvInertia1));
 				}
 			}
-			/*
+			
 			// TANGENT Impulse Code
 			{
 				// Work out our tangent vector , with is perpendicular
@@ -369,7 +369,9 @@ namespace Physics{
 				tangent = Normalize(tangent);
 				ASSERT(!isnan(tangent.x) && !isnan(tangent.y) && !isnan(tangent.z));
 
-				const float tangDiv = invMass0 + invMass1 + Dot(tangent, Cross((Cross(r0, tangent) * InvInertia0), r0) + Cross((Cross(r1, tangent) * InvInertia1), r1));
+				const float tangDiv = invMass0 + invMass1 + 
+					Dot(tangent, Cross(Vector3((Vector4(Cross(r0, tangent), 0) * InvInertia0)), r0) + 
+					Cross(Vector3((Vector4(Cross(r1, tangent), 0) * InvInertia1)), r1));
 			
 				const float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
@@ -380,19 +382,19 @@ namespace Physics{
 				{
 					Vector3 impulse = invMass0 * tangent * jt;
 					ASSERT(!isnan(impulse.x) && !isnan(impulse.y) && !isnan(impulse.z));
-					Vector3 rotImpulse = InvInertia0 * Cross(r0, tangent * jt);
+					Vector3 rotImpulse = Vector3(InvInertia0 * Vector4(Cross(r0, tangent * jt), 0));
 					objectA->AddImpulse(impulse);
 				//	objectA->AddRotationImpulse(rotImpulse);
 				}
 				if (invMass1 != 1)
 				{
 					Vector3 impulse = invMass1 * tangent * jt;
-					Vector3 rotImpulse = Cross(r1, tangent * jt) *  InvInertia1;
+					Vector3 rotImpulse = Vector3(Vector4(Cross(r1, tangent * jt), 0) *  InvInertia1);
 					objectB->AddImpulse(-1.0f * impulse);
 					//objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
 			} // TANGENT
-			*/
+			
 			//extern bool cleanup;
 			//if (cleanup)
 			delete c;
