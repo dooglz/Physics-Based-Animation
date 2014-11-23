@@ -3,6 +3,6 @@
 namespace Engine{
 	CPhysicsSolver* PhysicsSolver = 0;
 	bool PhysicsTickEnabled = true;
-	bool PhysicsEnabled = true;
+	bool PhysicsEnabled = false;
 }
 	

@@ -15,6 +15,7 @@ struct stVertex
 	#include "glm/gtc/quaternion.hpp"
 	#include "glm/gtc/matrix_transform.hpp"
 	#include "glm/gtc/matrix_inverse.hpp"
+	#include "glm/gtc/matrix_access.hpp"
 	//TODO implement generic methods to change values in vectors
 	#define Matrix4 glm::mat4
 	#define Matrix3 glm::mat3
@@ -43,36 +44,55 @@ struct stVertex
 	#define setZ(a) z=a;
 #endif
 
-	void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle);
-	void QuatToAngleAxis(const Quaternion q, Vector3 &axis, float &angle);
-	void MatrixToAngleAxis(const Matrix4 m, Vector3 &axis, float &angle);
+void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle);
+void QuatToAngleAxis(const Quaternion q, Vector3 &axis, float &angle);
+void MatrixToAngleAxis(const Matrix4 m, Vector3 &axis, float &angle);
 
-	Vector3 QuatToEuler(const Quaternion q);
-	Vector3 AngleAxisToEuler(const Vector3 axis, const float angle);
-	Vector3 MatrixToEuler(const Matrix4 m);
-	Vector3 GetTransaltion(const Matrix4 m);
+Vector3 QuatToEuler(const Quaternion q);
+Vector3 AngleAxisToEuler(const Vector3 axis, const float angle);
+Vector3 MatrixToEuler(const Matrix4 m);
+Vector3 GetTransaltion(const Matrix4 m);
 
-	Quaternion EulerToQuat(const Vector3 euler);
-	Quaternion AngleAxisToQuat(const Vector3 axis, const float angle);
-	Quaternion MatrixToQuat(const Matrix4 m);
+Quaternion EulerToQuat(const Vector3 euler);
+Quaternion AngleAxisToQuat(const Vector3 axis, const float angle);
+Quaternion MatrixToQuat(const Matrix4 m);
 
-	Matrix4 EulerToMatrix(const Vector3 euler);
-	Matrix4 QuatToMatrix(const Quaternion q);
-	Matrix3 QuatToMatrix3(const Quaternion q);
-	Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
+Matrix4 EulerToMatrix(const Vector3 euler);
+Matrix4 QuatToMatrix(const Quaternion q);
+Matrix3 QuatToMatrix3(const Quaternion q);
+Matrix4 AngleAxisToMatrix(const Vector3 axis, const float angle);
 
-	Matrix4 Translation(const Vector3 translationVector);
-	Matrix4 Scale(const Vector3 scaleVector);
+Matrix4 Translation(const Vector3 translationVector);
+Matrix4 Scale(const Vector3 scaleVector);
 
-	Vector3 Normalize(Vector3 v);
-	Vector4 Normalize(Vector4 v);
-	Quaternion Normalize(Quaternion q);
+Vector3 Normalize(Vector3 v);
+Vector4 Normalize(Vector4 v);
+Quaternion Normalize(Quaternion q);
 
-	Vector3 GetForwardVector(Quaternion q);
-	Vector3 GetUpVector(Quaternion q);
-	Vector3 GetRightVector(Quaternion q);
+Vector3 GetForwardVector(Quaternion q);
+Vector3 GetUpVector(Quaternion q);
+Vector3 GetRightVector(Quaternion q);
 	
-	float Clamp(const float a, const float max);
+float Clamp(const float a, const float max);
+
+class Plane
+{
+
+public:
+
+	Vector3 normal, point;
+	float d;
+
+	Plane::Plane(Vector3 &v1, Vector3 &v2, Vector3 &v3);
+	Plane::Plane(void);
+	Plane::~Plane();
+
+	void set3Points(Vector3 &v1, Vector3 &v2, Vector3 &v3);
+	void setNormalAndPoint(Vector3 &normal, Vector3 &point);
+	void setCoefficients(float a, float b, float c, float d);
+	float distance(Vector3 &p);
+};
+
 
 
 inline int randomColor()

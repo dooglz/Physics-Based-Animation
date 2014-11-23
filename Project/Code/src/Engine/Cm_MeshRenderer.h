@@ -14,5 +14,6 @@ namespace Engine{
 		void setMesh(Mesh* msh);
 		void setMesh(std::string meshname);
 		void Render();
+		bool culled;
 	};
 }

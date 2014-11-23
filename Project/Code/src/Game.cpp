@@ -54,20 +54,11 @@ void Game::Init(){
 	ent4->setPosition(Vector3(3, 5, 3));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+	ent4->getComponent<Engine::CmMeshRenderer>()->culled = true;
 	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent1->getRotation(), ent4->getScale().x));
 	ent4->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
 	Engine::ActiveScene->AddEntity(ent4);
-	/*
-	ent5 = new Engine::Entity();
-	ent5->SetName("Cool sphere 2");
-	ent5->setPosition(Vector3(6, 5, -2));
-	ent5->setScale(Vector3(2, 2, 2));
-	ent5->AddComponent(new Engine::CmMeshRenderer());
-	ent5->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
-	ent5->AddComponent(new Engine::CmPhysics_Sphere(40, ent5->getPosition(), ent5->getScale().x));
-	ent5->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
-	Engine::ActiveScene->AddEntity(ent5);
-	*/
+
 	ent2 = new Engine::Entity();
 	ent2->SetName("floor");
 	ent2->setPosition(Vector3(0, 0, 0));
@@ -77,7 +68,7 @@ void Game::Init(){
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 100;
+	unsigned int a = 2000;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
@@ -86,6 +77,7 @@ void Game::Init(){
 		e->setPosition(Vector3((20.0f*sin(aa)), 25.0f + (20.0f*sin(0.5f*i)), (-20.0f*cos(aa))));
 		e->AddComponent(new Engine::CmMeshRenderer());
 		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+		e->getComponent<Engine::CmMeshRenderer>()->culled = true;
 		e->AddComponent(new Engine::CmPhysics_Sphere(10, e->getPosition(), e->getRotation(), 1.0f));
 		e->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
 		Engine::ActiveScene->AddEntity(e);
