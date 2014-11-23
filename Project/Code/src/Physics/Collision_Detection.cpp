@@ -70,7 +70,7 @@ namespace Physics{
 
 	bool CCollisionDetection::SphereSphere(CSphere_Object*const  a, CSphere_Object*const b, const bool resolve)
 	{
-		return false;
+		//return false;
 		const float distance = Distance(a->GetPosition(),b->GetPosition());
 		ASSERT(distance > 0.00001f);
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
@@ -81,7 +81,7 @@ namespace Physics{
 				Collision* c = new Collision(
 					a, b,	//Objects 
 					Normalize(a->GetPosition() - b->GetPosition()), //Collsion Normal
-					a->GetPosition() - c->normal * (a->GetRadius() - c->penetration*0.5f), //Point
+					a->GetPosition() - (Normalize(a->GetPosition() - b->GetPosition())) * (a->GetRadius() - (sumRadius - distance)*0.5f), //Point
 					sumRadius - distance	//Penentration
 					);
 				_collisions.push_back(c);

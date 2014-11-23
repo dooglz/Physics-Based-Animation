@@ -46,7 +46,7 @@ namespace Engine{
 			float distance = Dot(Renderer->aan, (Ent->getPosition() - Renderer->aap));
 			if (distance < 0){
 				culledObjects++;
-				return;
+			//	return;
 			}
 		}
 		renderedObjects++;

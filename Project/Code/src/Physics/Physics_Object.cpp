@@ -26,6 +26,17 @@ namespace Physics{
 			return;
 		}
 
+		//keep everything contained
+		if (_position.x * _position.x > 900.0f){
+			AddImpulse(Vector3(-2.0f*_linVelocity.x, 0, 0));
+		}
+		if (_position.z * _position.z > 900.0f){
+			AddImpulse(Vector3(0,0,-2.0f*_linVelocity.z));
+		}
+		if (_position.y * _position.y > 2500.0f){
+			AddImpulse(Vector3(0,-2.0f*_linVelocity.y,0));
+		}
+
 		// Add Gravity
 		if (usesGravity){
 			AddForce(_position, Vector3(0, -9.8f * (1.0f / _invMass), 0));

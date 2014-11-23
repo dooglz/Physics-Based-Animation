@@ -8,7 +8,7 @@ namespace Engine
 	{
 		_viewMat = vm;
 		_viewprojectionMat = _projectionMat * _viewMat;
-		aap = -Vector3(glm::column(vm, 3));
+		aap = Vector3(glm::column(vm, 3));
 		aan = Normalize(Vector3(glm::column(_viewprojectionMat, 2)));
 	}
 

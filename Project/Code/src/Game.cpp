@@ -42,7 +42,7 @@ void Game::Init(){
 
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
-	ent1->setPosition(Vector3(3, 4, -3));
+	ent1->setPosition(Vector3(7, 4, 7));
 	ent1->AddComponent(new Engine::CmMeshRenderer());
 	ent1->getComponent<Engine::CmMeshRenderer>()->setMesh("models/cube.obj");
 	ent1->AddComponent(new Engine::CmPhysics_Cuboid(10,ent1->getPosition(),ent1->getRotation(), ent1->getScale().x, ent1->getScale().y, ent1->getScale().z));
@@ -51,7 +51,7 @@ void Game::Init(){
 
 	ent4 = new Engine::Entity();
 	ent4->SetName("Cool sphere");
-	ent4->setPosition(Vector3(3, 5, 3));
+	ent4->setPosition(Vector3(7, 5, 3));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
 	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 	ent4->getComponent<Engine::CmMeshRenderer>()->culled = true;
@@ -68,7 +68,7 @@ void Game::Init(){
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 2000;
+	unsigned int a = 250;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
@@ -85,8 +85,9 @@ void Game::Init(){
 	
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
-	ent3->setPosition(Vector3(-3.0, 2.5, 3.0));
-	ent3->setRotation(Vector3(0.00f,0, 0));
+	//ent3->setPosition(Vector3(0, 2.5, 0));
+	ent3->setPosition(Vector3(-30, 10, -30));
+	ent3->setRotation(Vector3(0.00f,180.0f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
