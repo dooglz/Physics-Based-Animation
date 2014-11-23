@@ -77,13 +77,13 @@ void Game::Init(){
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 100;
+	unsigned int a = 1500;
 	for (unsigned int i = 0; i < a; i++)
 	{
-		aa = ((float)M_PI / ((float)a))*i;
+		aa = (2.0f*(float)M_PI / ((float)a))*i;
 		Engine::Entity* e = new Engine::Entity();
 		e->SetName("Cool spher");
-		e->setPosition(Vector3((10.0f*sin(0.2f*aa)) + (6.0f*sin(aa)), 10.0f + (6.0f*sin(i)), (-6.0f*cos(aa))));
+		e->setPosition(Vector3((20.0f*sin(aa)), 25.0f + (20.0f*sin(0.5f*i)), (-20.0f*cos(aa))));
 		e->AddComponent(new Engine::CmMeshRenderer());
 		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
 		e->AddComponent(new Engine::CmPhysics_Sphere(10, e->getPosition(), e->getRotation(), 1.0f));
@@ -94,7 +94,7 @@ void Game::Init(){
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
 	ent3->setPosition(Vector3(-3.0, 2.5, 3.0));
-	ent3->setRotation(Vector3(0.00f,-1.2f, 0));
+	ent3->setRotation(Vector3(0.00f,0, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically

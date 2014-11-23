@@ -6,17 +6,17 @@
 namespace Engine{
 	Scene* ActiveScene = NULL;
 
-	int Scene::Population(){ return _ents.size(); }
+	int Scene::Population()const{ return _ents.size(); }
 
-	void Scene::AddEntity(Entity* e){
+	void Scene::AddEntity(Entity*const e){
 		//TODO: check to see if already have entitiy
 		_ents.push_back(e);
 	}
 
-	bool Scene::RemoveEntity(Entity* e){ return false; }
-	const std::vector<Entity*> Scene::GetList(){ return _ents; }
+	bool Scene::RemoveEntity(Entity*const e){ return false; }
+	const std::vector<Entity*const> Scene::GetList(){ return _ents; }
 
-	void Scene::Update(double delta){
+	void Scene::Update(const double delta){
 		if (_ents.size() < 1){ return; }
 		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
 			(*it)->Update(delta);
@@ -31,17 +31,10 @@ namespace Engine{
 			Renderer->SetViewMatrix(Matrix4(1.0f));
 		}else{
 			Renderer->SetViewMatrix(Inverse(_activeCamera->GetParent()->getTranform()));
-			//viewMat = _activeCamera->getTranform();
-			//viewMat = Lookat(_activeCamera->getPosition(), Vector3(_activeCamera->getTranform()[2]), Vector3(_activeCamera->getTranform()[1]));
 		}
 
 		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
 			(*it)->Render();
-		}
-
-		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
-//			if ((*it)->getMesh() == nullptr){ continue; }
-	//		Renderer->renderMesh((*it)->getMesh(), viewMat * (*it)->getTranform());
 		}
 	}
 
@@ -49,11 +42,12 @@ namespace Engine{
 
 	}
 
-	CmCamera* Scene::GetActiveCamera()
+	CmCamera* Scene::GetActiveCamera() const
 	{
 		return _activeCamera;
 	}
-	void Scene::SetActiveCamera(CmCamera* c)
+
+	void Scene::SetActiveCamera(CmCamera*const c)
 	{
 		if (_activeCamera != NULL){
 			_activeCamera->Deactivate();
@@ -61,9 +55,10 @@ namespace Engine{
 		_activeCamera = c;
 	}
 
-	void Scene::report(){
+	void Scene::report() const
+	{
 		printf("Scene report -- Ents:%i\n", _ents.size());
-		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
+		for (std::vector<Entity*>::const_iterator it = _ents.begin(); it != _ents.end(); ++it) {
 			printf("%s - (%i,%i,%i)\n", (*it)->GetName(), (*it)->getPosition().x, (*it)->getPosition().y, (*it)->getPosition().z);
 		}
 	}

@@ -18,9 +18,12 @@ namespace Engine{
 
 	void CmPhysics::Update(double delta)
 	{
-		Vector3 v = _po->getPosition();
-		Ent->setPosition(v);
-		Ent->setRotation(_po->getRotation());
+		if (_po->getPosition() != Ent->getPosition()){
+			Ent->setPosition(_po->getPosition());
+		}	
+		if (_po->getRotation() != Ent->getRotation()){
+			Ent->setRotation(_po->getRotation());
+		}
 	}
 	void CmPhysics::Render()
 	{

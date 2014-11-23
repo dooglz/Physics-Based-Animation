@@ -10,6 +10,9 @@ namespace Engine{
 	};
 
 	void  CCustomSover::Tick(double t, double  timeStep){
+		if (!PhysicsEnabled){
+			return;
+		}
 		if (!PhysicsTickEnabled){
 			t = 0.0;
 			timeStep = 0;

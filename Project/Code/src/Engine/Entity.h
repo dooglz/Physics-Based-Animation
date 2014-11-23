@@ -5,7 +5,6 @@
 #include "Component.h"
 namespace Engine{
 	class Mesh;
-//	class CComponent;
 	class Entity{
 
 	protected:
@@ -17,10 +16,7 @@ namespace Engine{
 		Vector3 _scale;
 		Matrix4 _transform;
 		void CalculateTransform();
-
-		std::vector<CComponent*> _components;
-
-
+		std::vector<CComponent*const> _components;
 	public:
 		Entity();
 		~Entity();
@@ -31,25 +27,20 @@ namespace Engine{
 		Matrix4 getTranform();
 
 		//TODO void setTransform(const Matrix4 m4);
-		void setScale(const Vector3 v3);
-		void setPosition(const Vector3 v3);
-		void setRotation(const Vector3 v3);
-		void setRotation(const Quaternion q);
+		void setScale(const Vector3& v3);
+		void setPosition(const Vector3& v3);
+		void setRotation(const Vector3& v3);
+		void setRotation(const Quaternion& q);
 		bool isVisible();
 		void setVisibility(const bool b);
-		void SetName(const std::string name){
-			_name = name;
-		}
-		std::string GetName()
-		{
-			return _name;
-		}
-		virtual void Update(double delta);
+		void SetName(std::string const& name);
+		std::string GetName() const;
+		virtual void Update(const double delta);
 		virtual void Render();
 
-		void AddComponent(CComponent* c);
-		void RemoveComponent(CComponent* c);
-		std::vector<CComponent*> GetComponents(std::string name);
+		void AddComponent(CComponent* const c);
+		void RemoveComponent(CComponent* const c);
+		std::vector<CComponent*> GetComponents(std::string const& name) const;
 
 		template <typename T> 
 		T* getComponent()

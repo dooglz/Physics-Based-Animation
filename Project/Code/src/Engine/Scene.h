@@ -8,19 +8,19 @@ namespace Engine{
 	class Scene{
 
 	protected:
-		std::vector<Entity*> _ents;
+		std::vector<Entity*const> _ents;
 		CmCamera* _activeCamera;
 	public:
-		int Population();
-		void AddEntity(Entity* e);
-		bool RemoveEntity(Entity* e);
-		const std::vector<Entity*> GetList();
-		void Update(double delta);
+		int Population() const;
+		void AddEntity(Entity* const e);
+		bool RemoveEntity(Entity*const e);
+		const std::vector<Entity*const> GetList();
+		void Update(const double delta);
 		void Render();
 		void Shutdown(); 
-		CmCamera* GetActiveCamera();
-		void SetActiveCamera(CmCamera* c);
-		void report();
+		CmCamera* GetActiveCamera() const;
+		void SetActiveCamera(CmCamera*const c);
+		void report() const;
 	};
 
 

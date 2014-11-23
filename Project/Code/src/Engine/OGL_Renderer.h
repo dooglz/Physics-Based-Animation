@@ -13,13 +13,13 @@ namespace Engine{
 		protected:
 			static OGL::OGL_ShaderProgram* _defaultProgram;
 			static void loadShaders();
-			static std::vector<Vector3> linebuffer;
+			static std::vector<const Vector3> linebuffer;
 			void ProcessLines();
 		public:
 			COGL_Renderer();
-			void renderMesh(Mesh* msh, Matrix4 mvp);
-			void DrawLine(Vector3 p1, Vector3 p2);
-			void DrawCross(Vector3 p1, float size);
+			void renderMesh(Mesh*const msh, const Matrix4& mvp);
+			void DrawLine(const Vector3& p1, const Vector3& p2);
+			void DrawCross(const Vector3& p1, const float size);
 			void PrepFrame();
 			void PostRender();
 			void clearSurface();

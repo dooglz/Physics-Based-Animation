@@ -14,7 +14,7 @@ namespace Engine{
 		float f = 0.0f;
 
 		OGL::OGL_ShaderProgram* COGL_Renderer::_defaultProgram;
-		std::vector<Vector3> COGL_Renderer::linebuffer;
+		std::vector<const Vector3> COGL_Renderer::linebuffer;
 
 		void COGL_Renderer::clearSurface()
 		{
@@ -32,7 +32,7 @@ namespace Engine{
 
 		}
 
-		void COGL_Renderer::renderMesh(Mesh* msh, Matrix4 mvp)
+		void COGL_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
 		{
 			ASSERT(msh->program != NULL);
 			glUseProgram(msh->program->getID());
@@ -43,9 +43,7 @@ namespace Engine{
 			SDL::SDL_Platform::CheckGL();
 
 			//Send MVP
-			Matrix4 projMatrix = Perspective((float)(60.0f*(M_PI / 180.0f)), (16.0f / 9.0f), 1.0f, 2000.0f);
-			mvp = projMatrix * _viewMat * mvp ;
-			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat*mvp));
 			SDL::SDL_Platform::CheckGL();
 
 			//Bind to VAO
@@ -135,14 +133,14 @@ namespace Engine{
 			_defaultProgram->link();
 		}
 
-		void COGL_Renderer::DrawCross(Vector3 p1, float size)
+		void COGL_Renderer::DrawCross(const Vector3& p1, const float size)
 		{
 			DrawLine(p1 + Vector3(size, 0, 0), p1 - Vector3(size, 0, 0));
 			DrawLine(p1 + Vector3(0,size, 0), p1 - Vector3(0, size, 0));
 			DrawLine(p1 + Vector3(0, 0, size), p1 - Vector3(0, 0, size));
 		}
 
-		void COGL_Renderer::DrawLine(Vector3 p1, Vector3 p2)
+		void COGL_Renderer::DrawLine(const Vector3& p1, const Vector3& p2)
 		{
 			linebuffer.push_back(p1);
 			linebuffer.push_back(p2);
@@ -194,9 +192,7 @@ namespace Engine{
 			SDL::SDL_Platform::CheckGL();
 
 			//Send MVP
-			Matrix4 projMatrix = Perspective((float)(60.0f*(M_PI / 180.0f)), (16.0f / 9.0f), 1.0f, 2000.0f);
-			Matrix4 mvp = projMatrix * _viewMat;
-			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat));
 			SDL::SDL_Platform::CheckGL();
 			glDisable(GL_DEPTH_TEST);
 			glDrawArrays(GL_LINES, 0, linebuffer.size());

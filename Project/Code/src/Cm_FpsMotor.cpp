@@ -60,13 +60,15 @@ void CmFpsMotor::Update(double delta)
 	if (Engine::Input::getMapData("up") > 128){
 		rot += Vector3(-1.0f, 0, 0);
 	}
+	Ent->setRotation( Normalize(Ent->getRotation() * AngleAxisToQuat(rot, 20.0f*(float)delta)));
+	rot = Vector3(0);
 	if (Engine::Input::getMapData("left") > 128){
 		rot += Vector3(0, 1.0f, 0);
 	}
 	if (Engine::Input::getMapData("right") > 128){
 		rot += Vector3(0, -1.0f, 0);
-	}
-	Ent->setRotation(Ent->getRotation() * AngleAxisToQuat(rot,20.0f*(float)delta) );
+	}	
+	Ent->setRotation(Normalize(Ent->getRotation() * AngleAxisToQuat(rot, 20.0f*(float)delta)));
 
 	//ijkl
 	rot = Vector3(0);
@@ -82,7 +84,7 @@ void CmFpsMotor::Update(double delta)
 	if (Engine::Input::getMapData("I") > 128){
 		rot += Vector3(0, 0, -1.0f);
 	}
-	Ent->setPosition(Ent->getPosition() + rot*20.0f*(float)delta);
+	Ent->setPosition(Ent->getPosition() + rot*40.0f*(float)delta);
 
 	//wasd
 	rot = Vector3(0);

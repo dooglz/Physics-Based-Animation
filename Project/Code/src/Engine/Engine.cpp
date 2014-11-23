@@ -52,7 +52,7 @@ namespace Engine{
 		Platform->createwindow();
 	}
 
-	void Engine::Update(double delta)
+	void Engine::Update(const double delta)
 	{
 		EventManager->processEvents();
 		ActiveScene->Update(delta);

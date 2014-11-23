@@ -21,27 +21,33 @@ namespace Engine{
 	Vector3 Entity::getPosition(){ return _position; }
 	Quaternion Entity::getRotation(){ return _rotation; }
 
-	void Entity::setScale(const Vector3 v3)
+	void Entity::setScale(const Vector3& v3)
 	{
 		_changed = true;
 		_scale = v3;
 	}
-	void Entity::setPosition(const Vector3 v3)
+	void Entity::setPosition(const Vector3& v3)
 	{
 		_changed = true;
 		_position = v3;
 	}
-	void Entity::setRotation(const Vector3 v3)
+	void Entity::setRotation(const Vector3& v3)
 	{
 		_changed = true;
 		_rotation = EulerToQuat(v3);
 	}
-	void Entity::setRotation(const Quaternion q)
+	void Entity::setRotation(const Quaternion& q)
 	{
 		_changed = true;
 		_rotation = q;
 	}
-
+	std::string Entity::GetName() const
+	{
+		return _name;
+	}
+	void Entity::SetName(std::string const& name){
+		_name = name;
+	}
 
 	Matrix4 Entity::getTranform()
 	{
@@ -68,27 +74,25 @@ namespace Engine{
 	void Entity::setVisibility(const bool b){ _visible = b; }
 
 
-	void Entity::Update(double delta){
-		//printf("eTICK: %f\n", delta * 100);
+	void Entity::Update(const double delta){
 		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Update(delta);
 		}
 	};
 
 	void Entity::Render(){
-		//printf("eTICK: %f\n", delta * 100);
 		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Render();
 		}
 	};
 
-	void Entity::AddComponent(CComponent* c)
+	void Entity::AddComponent(CComponent* const c)
 	{
 		_components.push_back(c);
 		c->SetParent(this);
 	}
 
-	void Entity::RemoveComponent(CComponent* c)
+	void Entity::RemoveComponent(CComponent* const c)
 	{
 		std::vector<CComponent*>::iterator position = std::find(_components.begin(), _components.end(), c);
 		if (position != _components.end()) {
@@ -96,12 +100,12 @@ namespace Engine{
 		}
 	}
 
-	std::vector<CComponent*> Entity::GetComponents(std::string name)
+	std::vector<CComponent*> Entity::GetComponents(std::string const& name) const
 	{
 		std::vector<CComponent*> c;
 		if (_components.size() < 1){ return c; }
 		std::vector<CComponent*>::iterator it;
-		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*>::const_iterator it = _components.begin(); it != _components.end(); ++it) {
 			if ((*it)->GetToken() == name){
 				c.push_back((*it));
 			}

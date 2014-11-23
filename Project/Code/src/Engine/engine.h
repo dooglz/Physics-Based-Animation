@@ -12,7 +12,7 @@ namespace Engine{
 		static void Init();
 		static void createwindow();
 
-		static void Update(double delta);
+		static void Update(const double delta);
 		static void Render();
 		static void Stop();
 
