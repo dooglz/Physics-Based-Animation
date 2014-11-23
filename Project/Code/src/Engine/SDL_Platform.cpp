@@ -9,8 +9,8 @@
 #include <glew/glew.h>
 #include <sdl/SDL.h>
 //#include <sdl\SDL_opengl.h>
-#define DEFAULT_HEIGHT 720
-#define DEFAULT_WIDTH 1280
+#define DEFAULT_HEIGHT 1440
+#define DEFAULT_WIDTH 2560
 
 
 void SDLVersionInfo()
@@ -134,5 +134,24 @@ namespace Engine{
 			SDL_DestroyWindow(_window);
 			SDL_Quit();
 		}
+
+		void SDL_Platform::SaveFile(const std::string& name)
+		{
+
+			int x = 0;
+			int y = 0;
+			int w = _screenWidth;
+			int h = _screenHeight;
+
+			//_gContext->
+			unsigned char * pixels = new unsigned char[w*h * 4]; // 4 bytes for RGBA
+			glReadPixels(x, y, w, h, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
+			SDL_Surface * surf = SDL_CreateRGBSurfaceFrom(pixels, w, h, 8 * 4, w * 4, 0, 0, 0, 0);
+			SDL_SaveBMP(surf, name.c_str());
+
+			SDL_FreeSurface(surf);
+			delete[] pixels;
+		}
+
 	}
 }

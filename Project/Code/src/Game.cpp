@@ -62,13 +62,13 @@ void Game::Init(){
 	ent2 = new Engine::Entity();
 	ent2->SetName("floor");
 	ent2->setPosition(Vector3(0, 0, 0));
-	ent2->setScale(Vector3(30, 1,30));
+	ent2->setScale(Vector3(60, 1,60));
 	ent2->AddComponent(new Engine::CmMeshRenderer());
 	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/plane.obj");
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 300;
+	unsigned int a = 1000;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
@@ -86,8 +86,8 @@ void Game::Init(){
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
 	//ent3->setPosition(Vector3(0, 2.5, 0));
-	ent3->setPosition(Vector3(-30, 10, -30));
-	ent3->setRotation(Vector3(0.00f,180.0f, 0));
+	ent3->setPosition(Vector3(-60, 20, -60));
+	ent3->setRotation(Vector3(0.00f,179.85f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically

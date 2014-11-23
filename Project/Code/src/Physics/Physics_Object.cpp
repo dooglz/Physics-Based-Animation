@@ -27,13 +27,13 @@ namespace Physics{
 		}
 
 		//keep everything contained
-		if (_position.x * _position.x > 900.0f){
+		if (_position.x * _position.x > 3600.0f){
 			AddImpulse(Vector3(-1.9f*_linVelocity.x, 0, 0));
 		}
-		if (_position.z * _position.z > 900.0f){
+		if (_position.z * _position.z > 3600.0f){
 			AddImpulse(Vector3(0,0,-1.9f*_linVelocity.z));
 		}
-		if (_position.y * _position.y > 2500.0f){
+		if (_position.y * _position.y > 3600.0f){
 			AddImpulse(Vector3(0,-1.9f*_linVelocity.y,0));
 		}
 		

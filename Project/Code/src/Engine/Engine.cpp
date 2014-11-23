@@ -84,4 +84,9 @@ namespace Engine{
 		delete Platform;
 	}
 
+	void Engine::SaveFile(const std::string& name)
+	{
+		SDL::SDL_Platform::SaveFile(name);
+	}
+
 }
