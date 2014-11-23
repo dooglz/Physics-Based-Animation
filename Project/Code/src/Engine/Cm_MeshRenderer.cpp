@@ -6,8 +6,8 @@
 
 //TODO: remove this
 #include "OGL_Renderer.h"
-int coolio1;
-int coolio2;
+int culledObjects;
+int renderedObjects;
 namespace Engine{
 
 	CmMeshRenderer::CmMeshRenderer() : CComponent("MeshRenderer"){
@@ -43,27 +43,13 @@ namespace Engine{
 		ASSERT(_mesh != nullptr);
 		//frustrum check
 		if (culled){
-			unsigned int a = Renderer->GetFrustum().pointAInFrustum(Ent->getPosition());
-			if (a == FrustumG::OUTSIDE)
-			{
-			//	printf("view: %s \t OUTSIDE\n", Ent->GetName());
-				
-				coolio1++;
+			float distance = Dot(Renderer->aan, (Ent->getPosition() - Renderer->aap));
+			if (distance < 0){
+				culledObjects++;
 				return;
 			}
-			else if(a == FrustumG::INTERSECT)
-			{
-			//	printf("view: %s \t INTERSECT%i\n", Ent->GetName());
-			}
-			else if (a == FrustumG::INSIDE)
-			{
-			//	printf("view: %s \t INSIDE%i\n", Ent->GetName());
-			}
-
-			coolio2++;
 		}
-
-
+		renderedObjects++;
 		Renderer->renderMesh(_mesh, Ent->getTranform());
 	}
 

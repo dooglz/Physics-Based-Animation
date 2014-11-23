@@ -5,8 +5,8 @@
 #include "Engine/Physics_interface.h"
 #include <stdint.h>
 Game* GAME;
-extern int coolio1;
-extern int coolio2;
+extern int culledObjects;
+extern int renderedObjects;
 
 int main(int argc, char** argv)
 {
@@ -56,10 +56,10 @@ int main(int argc, char** argv)
 		GAME->Update(deltaPercent);
 
 		//Render
-		coolio1 = 0;
-		coolio2 = 0;
+		culledObjects = 0;
+		renderedObjects = 0;
 		Engine::Engine::Render();
-		printf("%i\t%i\n", coolio1, coolio2);
+		printf("%i\t%i\n", culledObjects, renderedObjects);
 	}
 	
 	printf("Program Quitting\n");
