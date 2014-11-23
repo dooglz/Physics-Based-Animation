@@ -27,6 +27,7 @@ namespace Engine{
 			SDL::SDL_Platform::CheckGL();
 		}
 
+
 		COGL_Renderer::COGL_Renderer()
 		{
 
@@ -38,12 +39,10 @@ namespace Engine{
 			glUseProgram(msh->program->getID());
 			SDL::SDL_Platform::CheckGL();
 
-			//get shader input indexes
-			GLint mvpIn = glGetUniformLocation(msh->program->getID(), "MVP");
+			GLint mvpIn = glGetUniformLocation(msh->program->getID(), "modelprojection");
 			SDL::SDL_Platform::CheckGL();
-
-			//Send MVP
-			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat*mvp));
+			//Send VP
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(mvp));
 			SDL::SDL_Platform::CheckGL();
 
 			//Bind to VAO
@@ -96,6 +95,16 @@ namespace Engine{
 
 			SDL::SDL_Platform::CheckGL();
 			clearSurface();
+
+			//TODO - change this to _current_program;
+			glUseProgram(_defaultProgram->getID());
+			SDL::SDL_Platform::CheckGL();
+			GLint mvpIn = glGetUniformLocation(_defaultProgram->getID(), "viewprojection");
+			SDL::SDL_Platform::CheckGL();
+			//Send VP, technically we should only need to do this once. //TODO that
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat));
+			SDL::SDL_Platform::CheckGL();
+
 			
 		}
 

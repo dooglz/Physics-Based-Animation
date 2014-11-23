@@ -23,28 +23,35 @@ namespace Engine{
 
 	void Entity::setScale(const Vector3& v3)
 	{
+		if (v3 == _scale){ return; }
 		_changed = true;
 		_scale = v3;
 	}
+
 	void Entity::setPosition(const Vector3& v3)
 	{
+		if (v3 == _position){ return; }
 		_changed = true;
 		_position = v3;
 	}
+
 	void Entity::setRotation(const Vector3& v3)
 	{
-		_changed = true;
-		_rotation = EulerToQuat(v3);
+		setRotation(EulerToQuat(v3));
 	}
+
 	void Entity::setRotation(const Quaternion& q)
 	{
+		if (q == _rotation){ return; }
 		_changed = true;
 		_rotation = q;
 	}
+
 	std::string Entity::GetName() const
 	{
 		return _name;
 	}
+
 	void Entity::SetName(std::string const& name){
 		_name = name;
 	}
