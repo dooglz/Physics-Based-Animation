@@ -16,6 +16,7 @@ struct stVertex
 	#include "glm/gtc/matrix_transform.hpp"
 	#include "glm/gtc/matrix_inverse.hpp"
 	#include "glm/gtc/matrix_access.hpp"
+	#include "glm/gtx/norm.hpp"
 	//TODO implement generic methods to change values in vectors
 	#define Matrix4 glm::mat4
 	#define Matrix3 glm::mat3
@@ -25,6 +26,7 @@ struct stVertex
 	#define Quaternion glm::quat
 	#define Length glm::length
 	#define Distance glm::distance
+	#define Distance2 glm::distance2
 	#define Transpose glm::transpose
 	#define Dot glm::dot
 	#define Cross glm::cross

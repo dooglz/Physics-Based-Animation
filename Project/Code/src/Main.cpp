@@ -44,7 +44,7 @@ int main(int argc, char** argv)
 			accumulator -= physicsTimeStep;
 			t +=  physicsTimeStep;
 			tt = Engine::Time::getTime();
-			if ((tt - newTime) > (0.01 / tartgettime)){
+			if ((tt - newTime) > (0.005 / tartgettime)){
 				//printf("Physics stall\n");
 				break;
 			}
@@ -59,7 +59,7 @@ int main(int argc, char** argv)
 		culledObjects = 0;
 		renderedObjects = 0;
 		Engine::Engine::Render();
-		printf("%i\t%i\n", culledObjects, renderedObjects);
+	//	printf("%i\t%i\n", culledObjects, renderedObjects);
 	}
 	
 	printf("Program Quitting\n");

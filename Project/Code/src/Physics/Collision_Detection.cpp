@@ -71,13 +71,15 @@ namespace Physics{
 	bool CCollisionDetection::SphereSphere(CSphere_Object*const  a, CSphere_Object*const b, const bool resolve)
 	{
 		//return false;
-		const float distance = Distance(a->GetPosition(),b->GetPosition());
+		float distance = Distance2(a->GetPosition(),b->GetPosition());
 		ASSERT(distance > 0.00001f);
+
 		const float sumRadius = (a->GetRadius() + b->GetRadius());
-		if (distance < sumRadius)
+		if (distance < (sumRadius * sumRadius))
 		{
 			if (resolve)
 			{
+				distance = sqrt(distance);
 				Collision* c = new Collision(
 					a, b,	//Objects 
 					Normalize(a->GetPosition() - b->GetPosition()), //Collsion Normal

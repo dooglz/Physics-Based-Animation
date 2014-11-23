@@ -6,7 +6,6 @@
 	#include "glm/gtc/quaternion.hpp"
 	#include "glm/gtx/euler_angles.hpp"
 	#include "glm/gtc/matrix_transform.hpp"
-
 	void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle)
 	{
 		Quaternion q = EulerToQuat(euler);
@@ -19,7 +18,6 @@
 		axis = glm::axis(q);
 		angle = glm::angle(q);
 	}
-
 	void MatrixToAngleAxis(const Matrix4 m, Vector3 &axis, float &angle){
 		Quaternion q = MatrixToQuat(m);
 		axis = glm::axis(q);
