@@ -21,7 +21,6 @@ int main(int argc, char** argv)
 	double currentTime = Engine::Time::getTime();
 	//60fps in Microseconds.
 	double tartgettime = 60;
-
 	double accumulator = 0;
 
 	//Begin loop
@@ -35,11 +34,18 @@ int main(int argc, char** argv)
 
 		//Physics
 		accumulator += delta;
+
+		double tt = 0;
 		while (accumulator >= physicsTimeStep)
 		{
 			Engine::PhysicsSolver->Tick(t, physicsTimeStep);
 			accumulator -= physicsTimeStep;
-			t += physicsTimeStep;
+			t +=  physicsTimeStep;
+			tt = Engine::Time::getTime();
+			if ((tt - newTime) > (0.01 / tartgettime)){
+				//printf("Physics stall\n");
+				break;
+			}
 		}
 
 		//Engine Logic update
