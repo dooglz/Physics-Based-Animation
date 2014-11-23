@@ -197,11 +197,11 @@ namespace Engine{
 			SDL::SDL_Platform::CheckGL();
 
 			//get shader input indexes
-			GLint mvpIn = glGetUniformLocation(prgrm, "MVP");
+			GLint mvpIn = glGetUniformLocation(prgrm, "modelprojection");
 			SDL::SDL_Platform::CheckGL();
 
 			//Send MVP
-			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(_viewprojectionMat));
+			glUniformMatrix4fv(mvpIn, 1, false, glm::value_ptr(Matrix4(1.0f)));
 			SDL::SDL_Platform::CheckGL();
 			glDisable(GL_DEPTH_TEST);
 			glDrawArrays(GL_LINES, 0, linebuffer.size());
