@@ -9,14 +9,18 @@ namespace Physics{
 			return Matrix4(0.0f);
 		}
 
-		float width =	1.0f*(_size.x*_size.x);
-		float height =	1.0f*(_size.y*_size.y);
-		float depth =	1.0f*(_size.z*_size.z);
+		float x2 = 4.0f*(_size.x*_size.x);
+		float y2 = 4.0f*(_size.y*_size.y);
+		float z2 = 4.0f*(_size.z*_size.z);
+
+		float ix = (y2 + z2) / (_invMass * 12.0f);
+		float iy = (x2 + z2) / (_invMass * 12.0f);
+		float iz = (x2 + y2) / (_invMass * 12.0f);
 
 		Matrix4 mat;
-		mat[1][1] = (_invMass * 12.0f)* (height + depth);
-		mat[0][0] = (_invMass * 12.0f)* (width + depth);
-		mat[2][2] = (_invMass * 12.0f)* (width + height);
+		mat[0][0] = 1.0f / ix;
+		mat[1][1] = 1.0f / iy;
+		mat[2][2] = 1.0f / iz;
 		mat[3][3] = 1.0f;
 		return mat;
 	}
@@ -47,7 +51,7 @@ namespace Physics{
 	CCube_Object::CCube_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float lw, const float lh, const float ld) :CPhysicsObject(mass, position, rotation)
 	{
 		type = CUBEOID;
-		_orientation = Normalize(Quaternion(2.0f,0,0,9.0f));
+		//_orientation = Normalize(Quaternion(2.0f,0,0,9.0f));
 		_size = Vector3(lw, lh, ld);
 		SetMass(mass);
 	}
