@@ -16,7 +16,7 @@ namespace Engine{
 		Vector3 _scale;
 		Matrix4 _transform;
 		void CalculateTransform();
-		std::vector<CComponent*const> _components;
+		std::vector<CComponent*> _components;
 	public:
 		Entity();
 		~Entity();
@@ -40,13 +40,13 @@ namespace Engine{
 
 		void AddComponent(CComponent* const c);
 		void RemoveComponent(CComponent* const c);
-		std::vector<CComponent*> GetComponents(std::string const& name) const;
+		std::vector<CComponent*const> GetComponents(std::string const& name) const;
 
 		template <typename T> 
-		T* getComponent()
+		T*const getComponent()
 		{
-			std::vector<CComponent*>::iterator it;
-			for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			std::vector<CComponent*const>::iterator it;
+			for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
 				//printf("Checking %s against %s \n", typeid(**it).name(), typeid(T).name());
 				if (&typeid(**it) == &typeid(T)){
 					return static_cast<T*>(*it);

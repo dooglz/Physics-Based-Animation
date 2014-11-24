@@ -13,7 +13,7 @@ namespace Engine{
 	}
 
 	Entity::~Entity(){
-		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			delete (*it);
 		}
 	}
@@ -83,13 +83,13 @@ namespace Engine{
 
 
 	void Entity::Update(const double delta){
-		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Update(delta);
 		}
 	};
 
 	void Entity::Render(){
-		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Render();
 		}
 	};
@@ -102,18 +102,18 @@ namespace Engine{
 
 	void Entity::RemoveComponent(CComponent* const c)
 	{
-		std::vector<CComponent*>::iterator position = std::find(_components.begin(), _components.end(), c);
+		std::vector<CComponent*const>::iterator position = std::find(_components.begin(), _components.end(), c);
 		if (position != _components.end()) {
 			_components.erase(position);
 		}
 	}
 
-	std::vector<CComponent*> Entity::GetComponents(std::string const& name) const
+	std::vector<CComponent*const> Entity::GetComponents(std::string const& name) const
 	{
-		std::vector<CComponent*> c;
+		std::vector<CComponent*const> c;
 		if (_components.size() < 1){ return c; }
-		std::vector<CComponent*>::iterator it;
-		for (std::vector<CComponent*>::const_iterator it = _components.begin(); it != _components.end(); ++it) {
+		std::vector<CComponent*const>::iterator it;
+		for (std::vector<CComponent*const>::const_iterator it = _components.begin(); it != _components.end(); ++it) {
 			if ((*it)->GetToken() == name){
 				c.push_back((*it));
 			}

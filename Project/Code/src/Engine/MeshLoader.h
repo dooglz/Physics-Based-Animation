@@ -1,13 +1,13 @@
 #pragma once
 #include <String>
-#include <unordered_map>
+#include <hash_map>
 
 namespace Engine{
 	//This class is responsible for loading in mesh files, and decoding them to Mesh objects
 	class Mesh;
 	class CMeshloader{
 	protected:
-		std::unordered_map<std::string, Mesh*> _meshLibrary;
+		std::hash_map<std::string, Mesh*> _meshLibrary;
 	private:
 
 	public:

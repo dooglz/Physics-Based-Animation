@@ -14,7 +14,7 @@ namespace Engine{
 	}
 
 	bool Scene::RemoveEntity(Entity*const e){ return false; }
-	const std::vector<Entity*const> Scene::GetList(){ return _ents; }
+	const std::vector<Entity*> Scene::GetList(){ return _ents; }
 
 	void Scene::Update(const double delta){
 		if (_ents.size() < 1){ return; }

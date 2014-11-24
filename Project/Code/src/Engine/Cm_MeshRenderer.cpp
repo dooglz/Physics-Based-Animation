@@ -40,7 +40,7 @@ namespace Engine{
 
 	void CmMeshRenderer::Render()
 	{
-		ASSERT(_mesh != nullptr);
+		ASSERT(_mesh != NULL);
 		//frustrum check
 		if (culled){
 			float distance = Dot(Renderer->aan, (Ent->getPosition() - Renderer->aap));
