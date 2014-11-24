@@ -8,7 +8,7 @@ namespace Engine{
 	class Entity{
 
 	protected:
-		bool _visible = true;
+		bool _visible;
 		std::string _name;
 		bool _changed;
 		Vector3 _position;

@@ -9,8 +9,8 @@
 #include <glew/glew.h>
 #include <sdl/SDL.h>
 //#include <sdl\SDL_opengl.h>
-#define DEFAULT_HEIGHT 1440
-#define DEFAULT_WIDTH 2560
+#define DEFAULT_HEIGHT 768
+#define DEFAULT_WIDTH 1366
 
 
 void SDLVersionInfo()

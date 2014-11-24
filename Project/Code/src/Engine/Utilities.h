@@ -32,6 +32,8 @@
 	#include "libdbg.h"
 	#define HALT _SCE_BREAK();
 #elif defined(_PS3_)
+	#include <stdio.h>
+	#include <stdlib.h>	
 	//#define HALT { __asm__ volatile( "trap" ); }
 	#define HALT { exit (1); }
 #elif defined(_XBOX360_)

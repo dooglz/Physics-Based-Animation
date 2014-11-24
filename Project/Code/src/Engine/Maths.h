@@ -33,17 +33,43 @@ struct stVertex
 	#define Perspective glm::perspective
 	#define Inverse glm::inverse
 	#define Lookat glm::lookAt
-	#ifndef M_PI
-		#define M_PI 3.14159265358979323846
-	#endif
-
 	//HAX
 	#define getX() x
 	#define getY() y
 	#define getZ() z
+	#define getW() w
 	#define setX(a) x=a;
 	#define setY(a) y=a;
 	#define setZ(a) z=a;
+	#define setW(a) w=a;
+#elif defined(_PS3_)
+	#include <vectormath/cpp/vectormath_aos.h>
+	#include <stdlib.h>
+	//using namespace Vectormath::Aos;
+	#define Matrix4 Vectormath::Aos::Matrix4
+	#define Matrix3 Vectormath::Aos::Matrix3
+	#define Vector3 Vectormath::Aos::Vector3
+	#define Vector4 Vectormath::Aos::Vector4
+	#define Point3 Vectormath::Aos::Point3
+	#define Quaternion Vectormath::Aos::Quat
+	//
+	#define Length Vectormath::Aos::length
+	#define Distance Vectormath::Aos::distance
+	#define Distance2(a,b) Vectormath::Aos::distSqr(Point3(a),Point3(b))
+	#define Transpose Vectormath::Aos::transpose
+	#define Dot Vectormath::Aos::dot
+	#define Cross Vectormath::Aos::cross
+	#define Perspective Vectormath::Aos::Matrix4::perspective
+	#define Inverse Vectormath::Aos::inverse
+	#define Lookat Vectormath::Aos::Matrix4::lookAt
+	//#define .getXYZ() .getXYZ()
+	//#define isnan isNaN
+	//#define rand rand_int32_TT800	
+
+#endif
+
+#ifndef M_PI
+	#define M_PI 3.14159265358979323846
 #endif
 
 void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle);
@@ -74,7 +100,9 @@ Quaternion Normalize(Quaternion q);
 Vector3 GetForwardVector(Quaternion q);
 Vector3 GetUpVector(Quaternion q);
 Vector3 GetRightVector(Quaternion q);
-	
+
+Vector3 V4toV3(Vector4 v);
+
 float Clamp(const float a, const float max);
 
 

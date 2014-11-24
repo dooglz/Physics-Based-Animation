@@ -5,6 +5,7 @@
 
 namespace Engine{
 	Entity::Entity(){
+		 _visible = true;
 		_scale = Vector3(1.0f);
 		_position = Vector3(0.0f);
 		_rotation = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
