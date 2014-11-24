@@ -26,7 +26,7 @@ namespace Engine{
 			static void CheckSDL();
 
 			static SDL_Window* GetWindow(){ return _window; };
-			static void SaveFile(const std::string& name);
+			void SaveFile(const std::string& name);
 		};
 	}
 }

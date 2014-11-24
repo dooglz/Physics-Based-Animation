@@ -18,10 +18,10 @@ namespace Engine{
 
 	void CmPhysics::Update(double delta)
 	{
-		if (_po->getPosition() != Ent->getPosition()){
+		if (!IsIdentical(_po->getPosition(), Ent->getPosition())){
 			Ent->setPosition(_po->getPosition());
 		}	
-		if (_po->getRotation() != Ent->getRotation()){
+		if  (!IsIdentical(_po->getRotation(),Ent->getRotation())){
 			Ent->setRotation(_po->getRotation());
 		}
 	}

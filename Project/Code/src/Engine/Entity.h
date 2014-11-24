@@ -40,7 +40,7 @@ namespace Engine{
 
 		void AddComponent(CComponent* const c);
 		void RemoveComponent(CComponent* const c);
-		std::vector<CComponent*const> GetComponents(std::string const& name) const;
+		std::vector<CComponent*> GetComponents(std::string const& name) const;
 
 		template <typename T> 
 		T*const getComponent()

@@ -2,12 +2,18 @@
 #include "engine.h"
 #include "physics_Interface.h"
 #include "Renderer.h"
+#include "platform.h"
+#include "Event_Manager.h"
 #include "MeshLoader.h"
 #include "Scene.h"
 
-#include "SDL_platform.h"
-#include "SDL_EventManager.h"
-#include "SDL_MeshLoader.h"
+#if defined _PC_
+	#include "SDL_platform.h"
+	#include "SDL_EventManager.h"
+	#include "SDL_MeshLoader.h"
+#elif defined _PS3_
+
+#endif
 
 #if defined BULLET
 //#include "BulletSolver.h"
@@ -28,19 +34,35 @@ namespace Engine{
 
 	void Engine::Init()
 	{
-		Platform = new SDL::SDL_Platform();
+		#if defined _PC_
+			Platform = new SDL::SDL_Platform();
+		#elif defined _PS3_
+
+		#endif
+
 		Platform->Init();
 
-		EventManager = new SDL::CSDL_EventManager();
+		#if defined _PC_
+			EventManager = new SDL::CSDL_EventManager();
+		#elif defined _PS3_
+
+		#endif
+		
 		EventManager->init();
+
 		#if defined BULLET
 			//PhysicsSolver = new CBulletSolver();
 		#else
 			PhysicsSolver = new CCustomSover();
 		#endif
+
 		PhysicsSolver->Init();
 
-		MeshLoader = new SDL::CSDL_Meshloader();
+		#if defined _PC_
+			MeshLoader = new SDL::CSDL_Meshloader();
+		#elif defined _PS3_
+
+		#endif
 
 		ActiveScene = new Scene();
 
@@ -86,7 +108,7 @@ namespace Engine{
 
 	void Engine::SaveFile(const std::string& name)
 	{
-		SDL::SDL_Platform::SaveFile(name);
+		Platform->SaveFile(name);
 	}
 
 }

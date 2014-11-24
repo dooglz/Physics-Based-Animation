@@ -128,6 +128,11 @@
 		return Vector3(v);
 	}
 
+	Vector4 Column(const Matrix4& m, const int a)
+	{
+		return glm::column(m, a);
+	}
+
 #elif defined(_PS3_)
 
 	void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle)
@@ -279,7 +284,7 @@
 	}
 
 	bool isZero(const Vector3 v3){
-		return(abs(v3.getX()) == 0 && abs(v3.getY()) == 0 && abs(v3.getZ) == 0);
+		return(abs(v3.getX()) == 0 && abs(v3.getY()) == 0 && abs(v3.getZ()) == 0);
 	}
 
 	Matrix4 Translation(const Vector3 translationVector)
@@ -294,6 +299,11 @@
 
 	Vector3 V4toV3(Vector4 v){
 		return v.getXYZ();
+	}
+
+	Vector4 Column(const Matrix4& m, const int a)
+	{
+		return m.getCol(a);
 	}
 
 #endif
@@ -325,4 +335,14 @@ float Clamp(const float a, const float max)
 		return max;
 	}
 	return a;
+}
+
+bool IsIdentical(const Vector3& a, const Vector3& b)
+{
+	return ((a.getX() == b.getX()) && (a.getY() == b.getY()) && (a.getZ() == b.getZ()));
+}
+
+bool IsIdentical(const Quaternion& a, const Quaternion& b)
+{
+	return ((a.getX() == b.getX()) && (a.getY() == b.getY()) && (a.getZ() == b.getZ()) && (a.getW() == b.getW()));
 }

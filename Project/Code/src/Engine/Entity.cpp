@@ -1,5 +1,6 @@
 #include "Entity.h"
 #include <string>
+#include <algorithm> 
 #include "Maths.h"
 #include "Component.h"
 
@@ -13,7 +14,7 @@ namespace Engine{
 	}
 
 	Entity::~Entity(){
-		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			delete (*it);
 		}
 	}
@@ -24,14 +25,14 @@ namespace Engine{
 
 	void Entity::setScale(const Vector3& v3)
 	{
-		if (v3 == _scale){ return; }
+		if (IsIdentical(v3,_scale)){ return; }
 		_changed = true;
 		_scale = v3;
 	}
 
 	void Entity::setPosition(const Vector3& v3)
 	{
-		if (v3 == _position){ return; }
+		if (IsIdentical(v3,_position)){ return; }
 		_changed = true;
 		_position = v3;
 	}
@@ -43,7 +44,7 @@ namespace Engine{
 
 	void Entity::setRotation(const Quaternion& q)
 	{
-		if (q == _rotation){ return; }
+		if (IsIdentical(q,_rotation)){ return; }
 		_changed = true;
 		_rotation = q;
 	}
@@ -83,13 +84,13 @@ namespace Engine{
 
 
 	void Entity::Update(const double delta){
-		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Update(delta);
 		}
 	};
 
 	void Entity::Render(){
-		for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
+		for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 			(*it)->Render();
 		}
 	};
@@ -102,18 +103,18 @@ namespace Engine{
 
 	void Entity::RemoveComponent(CComponent* const c)
 	{
-		std::vector<CComponent*const>::iterator position = std::find(_components.begin(), _components.end(), c);
+		std::vector<CComponent*>::iterator position = std::find(_components.begin(), _components.end(), c);
 		if (position != _components.end()) {
 			_components.erase(position);
 		}
 	}
 
-	std::vector<CComponent*const> Entity::GetComponents(std::string const& name) const
+	std::vector<CComponent*> Entity::GetComponents(std::string const& name) const
 	{
-		std::vector<CComponent*const> c;
+		std::vector<CComponent*> c;
 		if (_components.size() < 1){ return c; }
-		std::vector<CComponent*const>::iterator it;
-		for (std::vector<CComponent*const>::const_iterator it = _components.begin(); it != _components.end(); ++it) {
+		std::vector<CComponent*>::iterator it;
+		for (std::vector<CComponent*>::const_iterator it = _components.begin(); it != _components.end(); ++it) {
 			if ((*it)->GetToken() == name){
 				c.push_back((*it));
 			}

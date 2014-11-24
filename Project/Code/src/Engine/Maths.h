@@ -45,7 +45,7 @@ struct stVertex
 #elif defined(_PS3_)
 	#include <vectormath/cpp/vectormath_aos.h>
 	#include <stdlib.h>
-	//using namespace Vectormath::Aos;
+
 	#define Matrix4 Vectormath::Aos::Matrix4
 	#define Matrix3 Vectormath::Aos::Matrix3
 	#define Vector3 Vectormath::Aos::Vector3
@@ -53,13 +53,14 @@ struct stVertex
 	#define Point3 Vectormath::Aos::Point3
 	#define Quaternion Vectormath::Aos::Quat
 	//
+	#define Perspective Matrix4::perspective
 	#define Length Vectormath::Aos::length
 	#define Distance Vectormath::Aos::distance
 	#define Distance2(a,b) Vectormath::Aos::distSqr(Point3(a),Point3(b))
 	#define Transpose Vectormath::Aos::transpose
 	#define Dot Vectormath::Aos::dot
 	#define Cross Vectormath::Aos::cross
-	#define Perspective Vectormath::Aos::Matrix4::perspective
+
 	#define Inverse Vectormath::Aos::inverse
 	#define Lookat Vectormath::Aos::Matrix4::lookAt
 	//#define .getXYZ() .getXYZ()
@@ -104,7 +105,10 @@ Vector3 GetRightVector(Quaternion q);
 Vector3 V4toV3(Vector4 v);
 
 float Clamp(const float a, const float max);
+bool IsIdentical(const Vector3& a, const Vector3& b);
+bool IsIdentical(const Quaternion& a, const Quaternion& b);
 
+Vector4 Column(const Matrix4& m, const int a);
 
 inline int randomColor()
 {

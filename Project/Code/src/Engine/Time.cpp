@@ -3,8 +3,9 @@
 
 #if defined(_WINDOWS_)
 	#include "sdl/SDL.h"
+#elif defined(_PS3_)
+	#include <sys/sys_time.h>
 #endif
-
 namespace Engine{
 	//Returns time in Microseconds.
 	double Time::getTime()

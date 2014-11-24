@@ -20,6 +20,7 @@ namespace Engine{
 		virtual void Init() = 0;
 		virtual void createwindow() = 0;
 		virtual void Shutdown() = 0;
+		virtual void SaveFile(const std::string& name) = 0;
 		static unsigned short GetSreenWidth(){ return _screenWidth; }
 		static unsigned short GetSreenHeight(){ return  _screenHeight; }
 	};
