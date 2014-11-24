@@ -43,11 +43,10 @@ namespace Physics{
 		}
 
 
-
 		// Add Gravity
 		if (usesGravity){
 			AddForce(_position, Vector3(0, -9.8f * (1.0f / _invMass), 0));
-			//AddRotationImpulse(Vector3(0, 0, 0.01f));
+			//AddRotationImpulse(Vector3(0, 0.01f, 0));
 		//	AddForce(_position+Vector3(1.0f,0,0), Vector3(0, 0.01f, 0));
 		}
 

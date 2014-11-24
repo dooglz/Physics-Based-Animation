@@ -17,27 +17,39 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Physics", "Physics\Physics.
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug Bullet|PS3 = Debug Bullet|PS3
 		Debug Bullet|Win32 = Debug Bullet|Win32
+		Debug|PS3 = Debug|PS3
 		Debug|Win32 = Debug|Win32
+		Release|PS3 = Release|PS3
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug Bullet|PS3.ActiveCfg = Debug Bullet|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug Bullet|Win32.ActiveCfg = Debug Bullet|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug Bullet|Win32.Build.0 = Debug Bullet|Win32
+		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug|PS3.ActiveCfg = Debug|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug|Win32.ActiveCfg = Debug|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Debug|Win32.Build.0 = Debug|Win32
+		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Release|PS3.ActiveCfg = Release|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Release|Win32.ActiveCfg = Release|Win32
 		{AA650A1C-49F3-4163-8FBC-FCD941CB8D0B}.Release|Win32.Build.0 = Release|Win32
+		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug Bullet|PS3.ActiveCfg = Debug Bullet|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug Bullet|Win32.ActiveCfg = Debug Bullet|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug Bullet|Win32.Build.0 = Debug Bullet|Win32
+		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug|PS3.ActiveCfg = Debug|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug|Win32.ActiveCfg = Debug|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Debug|Win32.Build.0 = Debug|Win32
+		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Release|PS3.ActiveCfg = Release|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Release|Win32.ActiveCfg = Release|Win32
 		{1E765FBC-8B12-461A-B9D4-47C6C871C967}.Release|Win32.Build.0 = Release|Win32
+		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug Bullet|PS3.ActiveCfg = Debug Bullet|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug Bullet|Win32.ActiveCfg = Debug Bullet|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug Bullet|Win32.Build.0 = Debug Bullet|Win32
+		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug|PS3.ActiveCfg = Debug|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug|Win32.ActiveCfg = Debug|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Debug|Win32.Build.0 = Debug|Win32
+		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Release|PS3.ActiveCfg = Release|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Release|Win32.ActiveCfg = Release|Win32
 		{A8A7849B-2E24-4235-AB6C-2A41294907CC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection

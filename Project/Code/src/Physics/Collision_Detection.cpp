@@ -295,9 +295,11 @@ namespace Physics{
 				// bias impulse proportional to penetration distance
 				jn = jn + (c->penetration*1.5f);
 				
-				objectA->AddImpulse(c->normal * jn * invMass0);
+				Vector3 imp = c->normal * jn * invMass0;
 				Vector3 r = Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
-				Vector3 r2 = Vector3(r.y,r.x,r.z);
+			//	Vector3 r2 = Vector3(r.y,r.x,r.z);
+
+				objectA->AddImpulse(imp);
 				objectA->AddRotationImpulse(r);
 
 				objectB->AddImpulse(-1.0f* c->normal * jn * invMass1);

@@ -7,7 +7,7 @@
 Game* GAME;
 extern int culledObjects;
 extern int renderedObjects;
-bool demoMode = true;
+bool demoMode = false;
 
 int main(int argc, char** argv)
 {
