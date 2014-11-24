@@ -53,7 +53,7 @@ void Game::Init(){
 	ent4->SetName("Cool sphere");
 	ent4->setPosition(Vector3(7, 5, 3));
 	ent4->AddComponent(new Engine::CmMeshRenderer());
-	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+	ent4->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere8.obj");
 	ent4->getComponent<Engine::CmMeshRenderer>()->culled = true;
 	ent4->AddComponent(new Engine::CmPhysics_Sphere(10, ent4->getPosition(), ent1->getRotation(), ent4->getScale().x));
 	ent4->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
@@ -68,7 +68,7 @@ void Game::Init(){
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
 	float aa = 0;
-	unsigned int a = 00;
+	unsigned int a = 300;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
@@ -76,7 +76,7 @@ void Game::Init(){
 		e->SetName("Cool spher");
 		e->setPosition(Vector3((20.0f*sin(aa)), 25.0f + (20.0f*sin(0.5f*i)), (-20.0f*cos(aa))));
 		e->AddComponent(new Engine::CmMeshRenderer());
-		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere.obj");
+		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphere8.obj");
 		e->getComponent<Engine::CmMeshRenderer>()->culled = true;
 		e->AddComponent(new Engine::CmPhysics_Sphere(20, e->getPosition(), e->getRotation(), 1.0f));
 		e->getComponent<Engine::CmPhysics_Sphere>()->SetUsesGravity(true);
@@ -85,8 +85,8 @@ void Game::Init(){
 	
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
-	ent3->setPosition(Vector3(0, 2.5, 0));
-	//ent3->setPosition(Vector3(-60, 20, -60));
+	//ent3->setPosition(Vector3(0, 2.5, 0));
+	ent3->setPosition(Vector3(-60, 20, -60));
 	ent3->setRotation(Vector3(0.00f,179.85f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
