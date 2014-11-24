@@ -6,7 +6,7 @@ namespace Physics{
 
 	CPhysicsObject::CPhysicsObject(const float mass, const Vector3& position, const  Quaternion& rotation)
 	{
-		printf("Hello, I'm a new physics object, m:%f, pos:(%f,%f%,%f)\n", mass, position.x, position.y, position.z);
+		printf("Hello, I'm a new physics object, m:%f, pos:(%f,%f%,%f)\n", mass, position.getX(), position.getY(), position.getZ());
 		System->_scene.push_back(this);
 		_position = position;
 		_orientation = rotation;
@@ -27,19 +27,19 @@ namespace Physics{
 		}
 
 		//keep everything contained
-		if (_position.x * _position.x > 3600.0f){
-			AddImpulse(Vector3(-1.9f*_linVelocity.x, 0, 0));
+		if (_position.getX() * _position.getX() > 3600.0f){
+			AddImpulse(Vector3(-1.9f*_linVelocity.getX(), 0, 0));
 		}
-		if (_position.z * _position.z > 3600.0f){
-			AddImpulse(Vector3(0,0,-1.9f*_linVelocity.z));
+		if (_position.getZ() * _position.getZ() > 3600.0f){
+			AddImpulse(Vector3(0,0,-1.9f*_linVelocity.getZ()));
 		}
-		if (_position.y * _position.y > 3600.0f){
-			AddImpulse(Vector3(0,-1.9f*_linVelocity.y,0));
+		if (_position.getY() * _position.getY() > 3600.0f){
+			AddImpulse(Vector3(0,-1.9f*_linVelocity.getY(),0));
 		}
 		
-		if (_position.x * _position.x < 28.0f && _position.z * _position.z < 28.0f &&  _position.y < 8.0f)
+		if (_position.getX() * _position.getX() < 28.0f && _position.getZ() * _position.getZ() < 28.0f &&  _position.getY() < 8.0f)
 		{
-			AddImpulse(Vector3(0.015f*_linVelocity.x, 0.05f, 0.0015f*_linVelocity.z));
+			AddImpulse(Vector3(0.015f*_linVelocity.getX(), 0.05f, 0.0015f*_linVelocity.getZ()));
 		}
 
 
@@ -56,8 +56,8 @@ namespace Physics{
 		_forces = Vector3(0, 0, 0);
 
 		// Update Angular
-		_angVelocity += Vector3(((_worldInvInertia * Vector4(_torques,0)) * dtf));
-		Quaternion Qvel = (Quaternion(0, _angVelocity.x, _angVelocity.y, _angVelocity.z) * 0.5f) * _orientation;
+		_angVelocity += V4toV3(((_worldInvInertia * Vector4(_torques,0)) * dtf));
+		Quaternion Qvel = (Quaternion(0, _angVelocity.getX(), _angVelocity.getY(), _angVelocity.getZ()) * 0.5f) * _orientation;
 		_orientation += Qvel * dtf;
 
 		_orientation = Normalize(_orientation);
@@ -110,13 +110,13 @@ namespace Physics{
 
 	void CPhysicsObject::AddImpulse(const Vector3& v)
 	{
-		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
+		ASSERT(!isnan(v.getX()) && !isnan(v.getY()) && !isnan(v.getZ()));
 		_linVelocity += v;
 	}
 
 	void CPhysicsObject::AddRotationImpulse(const Vector3& v)
 	{
-		ASSERT(!isnan(v.x) && !isnan(v.y) && !isnan(v.z));
+		ASSERT(!isnan(v.getX()) && !isnan(v.getY()) && !isnan(v.getZ()));
 		_angVelocity += v;
 	}
 

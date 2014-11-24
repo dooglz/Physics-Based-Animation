@@ -29,6 +29,7 @@ namespace Physics{
 		// Custom optimisation paramaters
 		Matrix4		_matWorld;
 		Matrix4		_worldInvInertia;
+		~CPhysicsObject();
 
 	public:
 		void UpdateMatrix();

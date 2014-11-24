@@ -8,8 +8,10 @@ namespace Physics{
 			Vector3 _size;
 			Matrix4 CalculateInverseInertiaTensor();
 			std::vector<Vector3> getDebugLines();
+			
 		public:
 			CCube_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float lw, const float lh, const float ld);
+			~CCube_Object(){}
 			Vector3 GetSize() const { return _size; }
 	};
 
@@ -21,6 +23,7 @@ namespace Physics{
 		std::vector<Vector3> getDebugLines();
 	public:
 		CPlane_Object(const Vector3& position, const Vector3& normal);
+		~CPlane_Object(){}
 		Vector3 GetNormal()const { return _normal; }
 	};
 
@@ -30,8 +33,10 @@ namespace Physics{
 			Matrix4 CalculateInverseInertiaTensor();
 			std::vector<Vector3> getDebugLines();
 			float _radius;
+			
 		public:
 			CSphere_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float radius);
+			~CSphere_Object(){}
 			float GetRadius()const { return _radius; }
 	};
 }

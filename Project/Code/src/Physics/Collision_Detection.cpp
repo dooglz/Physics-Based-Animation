@@ -106,15 +106,15 @@ namespace Physics{
 
 		//Vector3 realativePosition = a->getPosition() - b->getPosition();
 		v4 = inv * v4;
-		Vector3 realativePosition = Vector3(v4);
+		Vector3 realativePosition = V4toV3(v4);
 
 		Vector3 closestPoint(
-			Clamp(realativePosition.x, (1.0f*b->GetSize().x)),
-			Clamp(realativePosition.y, (1.0f*b->GetSize().y)),
-			Clamp(realativePosition.z, (1.0f*b->GetSize().z))
+			Clamp(realativePosition.getX(), (1.0f*b->GetSize().getX())),
+			Clamp(realativePosition.getY(), (1.0f*b->GetSize().getY())),
+			Clamp(realativePosition.getZ(), (1.0f*b->GetSize().getZ()))
 		);
 
-		Vector3 closestPointWorld = Vector3(trn * rot * Vector4(closestPoint, 1));
+		Vector3 closestPointWorld = V4toV3(trn * rot * Vector4(closestPoint, 1));
 
 		// Check we're in contact
 		float distance = Length(closestPoint - realativePosition);
@@ -138,7 +138,7 @@ namespace Physics{
 	bool CCollisionDetection::SpherePlane(CSphere_Object* const a,CPlane_Object* const b, const bool resolve)
 	{
 		//assumme all plane are flat for now
-		const float distance = -1.0f*b->GetPosition().y;
+		const float distance = -1.0f*b->GetPosition().getY();
 
 		//assume perfect sphere
 		const float radius = a->GetRadius();
@@ -181,14 +181,14 @@ namespace Physics{
 	
 		//local coords on cube
 		Vector4 points[8] = { 
-			Vector4(a->GetSize().x,	a->GetSize().y,		a->GetSize().z,	1.0f),
-			Vector4(-a->GetSize().x, a->GetSize().y, a->GetSize().z, 1.0f),
-			Vector4(a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
-			Vector4(-a->GetSize().x, -a->GetSize().y, a->GetSize().z, 1.0f),
-			Vector4(a->GetSize().x, a->GetSize().y, -a->GetSize().z, 1.0f),
-			Vector4(-a->GetSize().x, a->GetSize().y, -a->GetSize().z, 1.0f),
-			Vector4(a->GetSize().x, -a->GetSize().y, -a->GetSize().z, 1.0f),
-			Vector4(-a->GetSize().x, -a->GetSize().y, -a->GetSize().z, 1.0f)
+			Vector4(a->GetSize().getX(),	a->GetSize().getY(),		a->GetSize().getZ(),	1.0f),
+			Vector4(-a->GetSize().getX(), a->GetSize().getY(), a->GetSize().getZ(), 1.0f),
+			Vector4(a->GetSize().getX(), -a->GetSize().getY(), a->GetSize().getZ(), 1.0f),
+			Vector4(-a->GetSize().getX(), -a->GetSize().getY(), a->GetSize().getZ(), 1.0f),
+			Vector4(a->GetSize().getX(), a->GetSize().getY(), -a->GetSize().getZ(), 1.0f),
+			Vector4(-a->GetSize().getX(), a->GetSize().getY(), -a->GetSize().getZ(), 1.0f),
+			Vector4(a->GetSize().getX(), -a->GetSize().getY(), -a->GetSize().getZ(), 1.0f),
+			Vector4(-a->GetSize().getX(), -a->GetSize().getY(), -a->GetSize().getZ(), 1.0f)
 		};
 
 		//transfrom to global
@@ -208,7 +208,7 @@ namespace Physics{
 			Vector3 p = b->GetPosition();
 			Vector3 n = b->GetNormal();
 
-			Vector3 t = (Vector3)points[i];
+			Vector3 t = V4toV3(points[i]);
 
 			distances[i] = Dot(p, n) - Dot(t, n);
 
@@ -285,8 +285,8 @@ namespace Physics{
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +
 					Dot(c->normal,
-					Cross(Vector3((InvInertia0 * Vector4(Cross(r0, c->normal), 0))), r0) +
-					Cross(Vector3((InvInertia1 * Vector4(Cross(r1, c->normal), 0))), r1)));
+					Cross(V4toV3((InvInertia0 * Vector4(Cross(r0, c->normal), 0))), r0) +
+					Cross(V4toV3((InvInertia1 * Vector4(Cross(r1, c->normal), 0))), r1)));
 				ASSERT(normDiv > 0.0f);
 				
 				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
@@ -296,14 +296,14 @@ namespace Physics{
 				jn = jn + (c->penetration*1.5f);
 				
 				Vector3 imp = c->normal * jn * invMass0;
-				Vector3 r = Vector3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
-			//	Vector3 r2 = Vector3(r.y,r.x,r.z);
+				Vector3 r = V4toV3(InvInertia0 * Vector4(Cross(r0, c->normal * jn), 0));
+			//	Vector3 r2 = Vector3(r.getY(),r.getX(),r.getZ());
 
 				objectA->AddImpulse(imp);
 				objectA->AddRotationImpulse(r);
 
 				objectB->AddImpulse(-1.0f* c->normal * jn * invMass1);
-				objectB->AddRotationImpulse(-1.0f* Vector3(InvInertia1 * Vector4(Cross(r1, c->normal * jn), 0)));
+				objectB->AddRotationImpulse(-1.0f* V4toV3(InvInertia1 * Vector4(Cross(r1, c->normal * jn), 0)));
 			}
 			
 			// TANGENT Impulse Code
@@ -315,11 +315,11 @@ namespace Physics{
 				tangent = dv - (Dot(dv, c->normal) * c->normal);
 
 				tangent = Normalize(tangent);
-				ASSERT(!isnan(tangent.x) && !isnan(tangent.y) && !isnan(tangent.z));
+				ASSERT(!isnan(tangent.getX()) && !isnan(tangent.getY()) && !isnan(tangent.getZ()));
 
 				const float tangDiv = invMass0 + invMass1 + 
-					Dot(tangent, Cross(Vector3((Vector4(Cross(r0, tangent), 0) * InvInertia0)), r0) + 
-					Cross(Vector3((Vector4(Cross(r1, tangent), 0) * InvInertia1)), r1));
+					Dot(tangent, Cross(V4toV3(InvInertia0 * Vector4(Cross(r0, tangent), 0)), r0) +
+					Cross(V4toV3(InvInertia1 * Vector4(Cross(r1, tangent), 0)), r1));
 			
 				const float jt = -1 * Dot(dv, tangent) / tangDiv;
 				// Clamp min/max tangental component
@@ -329,15 +329,15 @@ namespace Physics{
 				if (invMass0 != 0)
 				{
 					Vector3 impulse = invMass0 * tangent * jt;
-					ASSERT(!isnan(impulse.x) && !isnan(impulse.y) && !isnan(impulse.z));
-					Vector3 rotImpulse = Vector3(InvInertia0 * Vector4(Cross(r0, tangent * jt), 0));
+					ASSERT(!isnan(impulse.getX()) && !isnan(impulse.getY()) && !isnan(impulse.getZ()));
+					Vector3 rotImpulse = V4toV3(InvInertia0 * Vector4(Cross(r0, tangent * jt), 0));
 					objectA->AddImpulse(impulse);
 					objectA->AddRotationImpulse(rotImpulse);
 				}
 				if (invMass1 != 1)
 				{
 					Vector3 impulse = invMass1 * tangent * jt;
-					Vector3 rotImpulse = Vector3(Vector4(Cross(r1, tangent * jt), 0) *  InvInertia1);
+					Vector3 rotImpulse = V4toV3(InvInertia1 * Vector4(Cross(r1, tangent * jt), 0));
 					objectB->AddImpulse(-1.0f * impulse);
 					objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}

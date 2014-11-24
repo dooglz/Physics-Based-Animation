@@ -9,9 +9,9 @@ namespace Physics{
 			return Matrix4(0.0f);
 		}
 
-		float x2 = 4.0f*(_size.x*_size.x);
-		float y2 = 4.0f*(_size.y*_size.y);
-		float z2 = 4.0f*(_size.z*_size.z);
+		float x2 = 4.0f*(_size.getX()*_size.getX());
+		float y2 = 4.0f*(_size.getY()*_size.getY());
+		float z2 = 4.0f*(_size.getZ()*_size.getZ());
 
 		float ix = (y2 + z2) / (_invMass * 12.0f);
 		float iy = (x2 + z2) / (_invMass * 12.0f);
@@ -75,12 +75,12 @@ namespace Physics{
 	std::vector<Vector3> CCube_Object::getDebugLines()
 	{
 		std::vector<Vector3> aa(4);
-		aa.push_back(_position + Vector3(_size.x, _size.y, _size.z));
-		aa.push_back(_position + Vector3(-_size.x, -_size.y, -_size.z));
-		aa.push_back(_position + Vector3(-_size.x, _size.y,-_size.z));
-		aa.push_back(_position + Vector3(_size.x, -_size.y, _size.z));
-		aa.push_back(_position + Vector3(_size.x, _size.y, -_size.z));
-		aa.push_back(_position + Vector3(-_size.x, -_size.y, _size.z));
+		aa.push_back(_position + Vector3(_size.getX(), _size.getY(), _size.getZ()));
+		aa.push_back(_position + Vector3(-_size.getX(), -_size.getY(), -_size.getZ()));
+		aa.push_back(_position + Vector3(-_size.getX(), _size.getY(),-_size.getZ()));
+		aa.push_back(_position + Vector3(_size.getX(), -_size.getY(), _size.getZ()));
+		aa.push_back(_position + Vector3(_size.getX(), _size.getY(), -_size.getZ()));
+		aa.push_back(_position + Vector3(-_size.getX(), -_size.getY(), _size.getZ()));
 		return aa;
 	}
 	std::vector<Vector3> CSphere_Object::getDebugLines()
