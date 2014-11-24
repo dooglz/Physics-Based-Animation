@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <typeinfo>
 #include "Maths.h"
 #include "Component.h"
 namespace Engine{
@@ -45,8 +46,8 @@ namespace Engine{
 		template <typename T> 
 		T*const getComponent()
 		{
-			std::vector<CComponent*const>::iterator it;
-			for (std::vector<CComponent*const>::iterator it = _components.begin(); it != _components.end(); ++it) {
+			std::vector<CComponent*>::iterator it;
+			for (std::vector<CComponent*>::iterator it = _components.begin(); it != _components.end(); ++it) {
 				//printf("Checking %s against %s \n", typeid(**it).name(), typeid(T).name());
 				if (&typeid(**it) == &typeid(T)){
 					return static_cast<T*>(*it);

@@ -89,19 +89,19 @@ void CmFpsMotor::Update(double delta)
 	//wasd
 	rot = Vector3(0);
 	if (Engine::Input::getMapData("D") > 128){
-		Vector3 right = Vector3(glm::column(Ent->getTranform(), 0));
+		Vector3 right = V4toV3(Column(Ent->getTranform(), 0));
 		rot += right;
 	}
 	if (Engine::Input::getMapData("A") > 128){
-		Vector3 right = Vector3(glm::column(Ent->getTranform(), 0));
+		Vector3 right = V4toV3(Column(Ent->getTranform(), 0));
 		rot += -1.0f*right;
 	}
 	if (Engine::Input::getMapData("S") > 128){
-		Vector3 forward = Vector3(glm::column(Ent->getTranform(), 2));
+		Vector3 forward = V4toV3(Column(Ent->getTranform(), 2));
 		rot += forward;
 	}
 	if (Engine::Input::getMapData("W") > 128){
-		Vector3 forward = Vector3(glm::column(Ent->getTranform(), 2));
+		Vector3 forward = V4toV3(Column(Ent->getTranform(), 2));
 		rot += -1.0f*forward;
 	}
 	Ent->setPosition(Ent->getPosition() + rot*20.0f*(float)delta);

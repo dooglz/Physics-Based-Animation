@@ -85,7 +85,7 @@ int main(int argc, char** argv)
 			
 			printf(buffer, "output_%d.bmp", loops);
 			std::string ss = std::string(buffer);
-			ss = "output_" + std::to_string(loops)+ ".bmp";
+//			ss = "output_" + std::to_string(loops)+ ".bmp";
 			Engine::Engine::SaveFile(ss);
 		}
 	}

@@ -42,6 +42,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>SNC</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <ExceptionsAndRtti>NoExceptsWithRtti</ExceptionsAndRtti>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Bullet|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>

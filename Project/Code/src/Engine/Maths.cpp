@@ -207,14 +207,14 @@
 			v.setX(2 * atan2(q1.getX(), q1.getW()));
 			v.setY(M_PI / 2);
 			v.setZ(0);
-			return;
+			return v;
 		}
 		else if (test < -0.499) 
 		{ // singularity at south pole
 			v.setX(-2 * atan2(q1.getX(), q1.getW()));
 			v.setY(-M_PI / 2);
 			v.setZ(0);
-			return;
+			return v;
 		}
 		float sqx = q1.getX()*q1.getX();
 		float sqy = q1.getY()*q1.getY();

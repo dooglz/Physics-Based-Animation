@@ -40,7 +40,7 @@ namespace Engine{
 
 		#endif
 
-		Platform->Init();
+	//	Platform->Init();
 
 		#if defined _PC_
 			EventManager = new SDL::CSDL_EventManager();
@@ -48,7 +48,7 @@ namespace Engine{
 
 		#endif
 		
-		EventManager->init();
+	//	EventManager->init();
 
 		#if defined BULLET
 			//PhysicsSolver = new CBulletSolver();
@@ -56,7 +56,7 @@ namespace Engine{
 			PhysicsSolver = new CCustomSover();
 		#endif
 
-		PhysicsSolver->Init();
+	//	PhysicsSolver->Init();
 
 		#if defined _PC_
 			MeshLoader = new SDL::CSDL_Meshloader();
@@ -64,7 +64,7 @@ namespace Engine{
 
 		#endif
 
-		ActiveScene = new Scene();
+	//	ActiveScene = new Scene();
 
 		_running = true;
 	}

@@ -42,6 +42,7 @@
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>SNC</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
+    <ExceptionsAndRtti>NoExceptsWithRtti</ExceptionsAndRtti>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug Bullet|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -131,7 +132,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>Engine.lib;Physics.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Engine.a;Physics.a;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(SolutionDir)\..\lib\$(Platform)\$(Configuration)\;$(SolutionDir)\..\lib\$(Platform)\</AdditionalLibraryDirectories>
     </Link>
   </ItemDefinitionGroup>

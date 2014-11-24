@@ -3,7 +3,7 @@
 class Game{
 
 protected:
-	bool _running = true;
+	bool _running;
 	void registerInputs();
 public:
 	Game();
