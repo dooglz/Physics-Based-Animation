@@ -35,7 +35,7 @@
     <Filter Include="Source Files\PS3">
       <UniqueIdentifier>{f33ae369-f71f-419a-bc16-fe57dbb48f65}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Shaders">
+    <Filter Include="Source Files\Components\Shaders">
       <UniqueIdentifier>{8f4e3458-444f-4b72-b75d-77f1fda7c793}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -252,10 +252,10 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\shaders\fs_basic.cg">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Components\Shaders</Filter>
     </CustomBuild>
     <CustomBuild Include="..\shaders\vs_basic.cg">
-      <Filter>Source Files\Shaders</Filter>
+      <Filter>Source Files\Components\Shaders</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
