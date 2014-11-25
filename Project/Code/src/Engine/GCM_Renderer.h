@@ -16,8 +16,12 @@ namespace Engine{
 		protected:
 			static void loadShaders();
 			//static std::vector<Vector3 const> linebuffer;
-			void ProcessLines();
+			void ProcessLines(){};
 		private:
+
+			uint32_t screenHeight;
+			uint32_t screenWidth;
+			bool _swapFlag;
 
 			//! The array of render surfaces.
 			static CellGcmSurface _surfaces[_numberOfSurfaces];
@@ -44,7 +48,7 @@ namespace Engine{
 			void PostRender();
 			void clearSurface();
 
-			static void sysutil_callback(uint64_t status, uint64_t param, void *userdata);
+			//static void sysutil_callback(uint64_t status, uint64_t param, void *userdata);
 
 			void assignShader(Mesh* m, std::string name);
 
@@ -59,8 +63,6 @@ namespace Engine{
 
 			void loadDefaultShaders();
 
-			void setupFrame();
-
 			//! Switch which buffer is active(being rendered on) and currentyl displayed
 			void swapBuffers();
 
@@ -70,7 +72,7 @@ namespace Engine{
 			//! Initialises viewport (coordinate scaling)
 			void SetViewport();
 
-			void shutdown();
+			void Shutdown();
 
 			//TODO: put these in a struct or something
 			uint32_t color_pitch;

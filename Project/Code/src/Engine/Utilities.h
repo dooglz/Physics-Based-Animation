@@ -34,8 +34,8 @@
 #elif defined(_PS3_)
 	#include <stdio.h>
 	#include <stdlib.h>	
-	//#define HALT { __asm__ volatile( "trap" ); }
-	#define HALT { exit (1); }
+	#define HALT { __asm__ volatile( "trap" ); }
+	//s#define HALT { exit (1); }
 #elif defined(_XBOX360_)
 	//#define HALT  __debugbreak
 	#define HALT __asm {int 3}

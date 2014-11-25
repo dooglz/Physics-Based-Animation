@@ -231,5 +231,8 @@
     <ClCompile Include="GCM_Renderer.cpp">
       <Filter>Source Files\PS3</Filter>
     </ClCompile>
+    <ClCompile Include="PS3_EventManager.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

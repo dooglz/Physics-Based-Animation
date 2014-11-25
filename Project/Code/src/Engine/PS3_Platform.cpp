@@ -11,18 +11,20 @@ namespace Engine{
 
 		void PS3_Platform::Init()
 		{
-			Renderer = new GCM::CGCM_Renderer();
+			_renderer = new GCM::CGCM_Renderer();
+			Renderer = _renderer;
 		}
 
 		void PS3_Platform::createwindow()
 		{
-
+			_renderer->InitDisplay();
 		}
 
 		void PS3_Platform::Shutdown()
 		{
-
+			_renderer->Shutdown();
+			delete _renderer;
+			Renderer = NULL;
 		}
-
 	}
 }
