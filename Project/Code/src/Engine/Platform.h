@@ -1,4 +1,5 @@
 #pragma once
+#include <String>
 // BaseClass for platform specific code
 namespace Engine{
 	class CPlatform

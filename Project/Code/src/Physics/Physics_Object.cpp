@@ -6,7 +6,7 @@ namespace Physics{
 
 	CPhysicsObject::CPhysicsObject(const float mass, const Vector3& position, const  Quaternion& rotation)
 	{
-		printf("Hello, I'm a new physics object, m:%f, pos:(%f,%f%,%f)\n", mass, position.getX(), position.getY(), position.getZ());
+		printf("Hello, I'm a new physics object, m:%f, pos:(%f,%f,%f)\n", mass, position.getX(), position.getY(), position.getZ());
 		System->_scene.push_back(this);
 		_position = position;
 		_orientation = rotation;

@@ -8,6 +8,8 @@ namespace Engine{
 	private:
 
 	protected:
+		//! Number of surfaces/buffers to init.
+		const static int _numberOfSurfaces = 2;	//in this case just 2, Front and back buffers.
 		Matrix4 _viewMat;
 		Matrix4 _projectionMat;
 		Matrix4 _viewprojectionMat;

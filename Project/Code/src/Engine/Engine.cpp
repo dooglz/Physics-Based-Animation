@@ -12,7 +12,9 @@
 	#include "SDL_EventManager.h"
 	#include "SDL_MeshLoader.h"
 #elif defined _PS3_
-
+	#include "PS3_platform.h"
+	#include "PS3_EventManager.h"
+	#include "GCM_MeshLoader.h"
 #endif
 
 #if defined BULLET
@@ -37,18 +39,18 @@ namespace Engine{
 		#if defined _PC_
 			Platform = new SDL::SDL_Platform();
 		#elif defined _PS3_
-
+			Platform = new PS3::PS3_Platform();
 		#endif
 
-	//	Platform->Init();
+		Platform->Init();
 
 		#if defined _PC_
 			EventManager = new SDL::CSDL_EventManager();
 		#elif defined _PS3_
-
+			EventManager = new PS3::CPS3EventManager();
 		#endif
 		
-	//	EventManager->init();
+		EventManager->init();
 
 		#if defined BULLET
 			//PhysicsSolver = new CBulletSolver();
@@ -56,15 +58,15 @@ namespace Engine{
 			PhysicsSolver = new CCustomSover();
 		#endif
 
-	//	PhysicsSolver->Init();
+		PhysicsSolver->Init();
 
 		#if defined _PC_
 			MeshLoader = new SDL::CSDL_Meshloader();
 		#elif defined _PS3_
-
+			MeshLoader = new GCM::CGCM_Meshloader();
 		#endif
 
-	//	ActiveScene = new Scene();
+		ActiveScene = new Scene();
 
 		_running = true;
 	}

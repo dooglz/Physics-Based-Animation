@@ -34,8 +34,9 @@ namespace Engine{
 		//TODO: Have an actual meshloader platform
 		_mesh = MeshLoader->getMesh(meshname);
 		MeshLoader->loadOnGPU(_mesh);
-		//_mesh->program = OGL::COGL_Renderer::GetDefaultShaderProgram();
-
+		#if defined _PC_
+			_mesh->program = OGL::COGL_Renderer::GetDefaultShaderProgram();
+		#endif
 	}
 
 	void CmMeshRenderer::Render()

@@ -48,6 +48,7 @@ struct stVertex
 
 	#define Matrix4 Vectormath::Aos::Matrix4
 	#define Matrix3 Vectormath::Aos::Matrix3
+	#define Vector2 Vectormath::Aos::Vector2
 	#define Vector3 Vectormath::Aos::Vector3
 	#define Vector4 Vectormath::Aos::Vector4
 	#define Point3 Vectormath::Aos::Point3

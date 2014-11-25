@@ -29,6 +29,12 @@
       <UniqueIdentifier>{4680039c-6b79-4ae1-9134-7f84faeaf54e}</UniqueIdentifier>
       <Extensions>Ent_</Extensions>
     </Filter>
+    <Filter Include="Header Files\PS3">
+      <UniqueIdentifier>{ef7c18f3-cbb1-445a-97b8-6e40b4a876d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\PS3">
+      <UniqueIdentifier>{f33ae369-f71f-419a-bc16-fe57dbb48f65}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.h">
@@ -115,6 +121,30 @@
     <ClInclude Include="Physics_Interface.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GCM_Shader.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="GCM_FragmentShader.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="GCM_VertexShader.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="GCM_MemoryUtils.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="GCM_Renderer.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3_Platform.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="PS3_EventManager.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
+    <ClInclude Include="GCM_MeshLoader.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
@@ -188,6 +218,18 @@
     </ClCompile>
     <ClCompile Include="Physics_Interface.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GCM_Shader.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="GCM_MemoryUtils.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3_Platform.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="GCM_Renderer.cpp">
+      <Filter>Source Files\PS3</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -80,7 +80,6 @@ namespace Engine{
 			//Initialize SDL
 			SDL_SetAssertionHandler(CustomAssertionHandler, NULL);
 			ASSERT((SDL_Init(SDL_INIT_VIDEO) >= 0));
-
 		
 		}
 		void SDL_Platform::Init()
