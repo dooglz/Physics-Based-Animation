@@ -318,26 +318,21 @@ namespace Engine{
 
 		void CGCM_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
 		{
-			Mesh* m = msh;
-			Matrix4 m4 = mvp;
-			if (!msh){
-				printf("Whoaaaa\n");
-			}
-			printf("Whoaaaa11111\n");
-			if (!msh->loadedLocal){
-				printf("Whoaaaa22222\n");
-			}
-			printf("Whoaaaa33333\n");
+			Matrix4 m4 = _viewprojectionMat*mvp;
 
 			//printf("Everythign is broken %i!\n", msh->numVerts);
 			ASSERT(msh);
 			ASSERT(msh->loadedLocal);
+
 			//set active shader
 			//SetCurrentShader(*msh->vertShader, *msh->fragShader);
 			SetCurrentShader(*defaultVert, *defaultFrag);
 
+		//	ASSERT(msh->vertShader->VERTEX_POSITION_INDEX);
+		//	ASSERT(msh->vertexBufferOffset);
+
 			//give vertex data to the shader
-			cell::Gcm::cellGcmSetVertexDataArray(msh->vertShader->VERTEX_POSITION_INDEX,	//index
+			cell::Gcm::cellGcmSetVertexDataArray(defaultVert->VERTEX_POSITION_INDEX,	//index
 				0, //Frequency
 				sizeof(stVertex), //stride
 				3, //size
@@ -345,7 +340,7 @@ namespace Engine{
 				CELL_GCM_LOCATION_LOCAL, //location
 				msh->vertexBufferOffset);	//offset
 
-			cell::Gcm::cellGcmSetVertexDataArray(msh->vertShader->VERTEX_COLOUR_INDEX,
+			cell::Gcm::cellGcmSetVertexDataArray(defaultVert->VERTEX_COLOUR_INDEX,
 				0,
 				sizeof(stVertex),
 				4,
@@ -353,7 +348,7 @@ namespace Engine{
 				CELL_GCM_LOCATION_LOCAL,
 				msh->vertexBufferOffset + sizeof(float)* 3);
 
-			msh->vertShader->SetParameterM("modelViewProj", mvp);
+			defaultVert->SetParameterM("modelViewProj", m4);
 
 			//not sure wether to call this?
 			//FS->UpdateShaderVariables();
