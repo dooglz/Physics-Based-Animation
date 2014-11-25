@@ -35,6 +35,9 @@
     <Filter Include="Source Files\PS3">
       <UniqueIdentifier>{f33ae369-f71f-419a-bc16-fe57dbb48f65}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Shaders">
+      <UniqueIdentifier>{8f4e3458-444f-4b72-b75d-77f1fda7c793}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="engine.h">
@@ -234,5 +237,25 @@
     <ClCompile Include="PS3_EventManager.cpp">
       <Filter>Source Files\PS3</Filter>
     </ClCompile>
+    <ClCompile Include="GCM_FragmentShader.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="GCM_VertexShader.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GCM_Meshloader.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\shaders\fs_basic.cg">
+      <Filter>Source Files\Shaders</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\shaders\vs_basic.cg">
+      <Filter>Source Files\Shaders</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

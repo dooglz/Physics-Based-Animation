@@ -326,7 +326,13 @@
     <ClCompile Include="Engine.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="FileIO.cpp" />
+    <ClCompile Include="GCM_FragmentShader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="GCM_MemoryUtils.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="GCM_Meshloader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="GCM_Renderer.cpp">
@@ -335,8 +341,12 @@
     <ClCompile Include="GCM_Shader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="GCM_VertexShader.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Maths.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshLoader.cpp" />
     <ClCompile Include="OGL_FragmentShader.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">true</ExcludedFromBuild>
@@ -359,7 +369,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Physics_Interface.cpp" />
-    <ClCompile Include="PS3_EventManager.cpp" />
+    <ClCompile Include="PS3_EventManager.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="PS3_Platform.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -378,6 +390,20 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Time.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="..\shaders\fs_basic.cg">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">$(SCE_PS3_ROOT)\host-win32\Cg\bin\sce-cgc -quiet -profile sce_fp_rsx -o "$(OutDir)/%(Filename).fpo" "%(FullPath)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">$(OutDir)/%(Filename).fpo;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
+    <CustomBuild Include="..\shaders\vs_basic.cg">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">$(SCE_PS3_ROOT)\host-win32\Cg\bin\sce-cgc -quiet -profile sce_vp_rsx -o "$(OutDir)/%(Filename).vpo" "%(FullPath)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">$(OutDir)/%(Filename).vpo;%(Outputs)</Outputs>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

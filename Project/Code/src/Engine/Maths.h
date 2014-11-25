@@ -6,6 +6,14 @@ struct stVertex
 	float x, y, z;
 	unsigned int rgba;
 };
+struct stvec3
+{
+	float x, y, z;
+};
+struct stvec2 
+{
+	float x, y;
+};
 
 #if defined(_PC_)
 	#define _USE_MATH_DEFINES

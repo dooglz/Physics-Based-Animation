@@ -1,5 +1,6 @@
 #include "GCM_Renderer.h"
 #include "GCM_MemoryUtils.h"
+#include "Mesh.h"
 #include <iostream> //for memset
 
 
@@ -33,16 +34,16 @@ namespace Engine{
 
 			//InitDisplay();
 			//InitSurfaces();
-			//loadDefaultShaders();
 		};
 
 		CGCM_Renderer::~CGCM_Renderer(){};
 
-		void CGCM_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp){}
 		void CGCM_Renderer::DrawLine(const Vector3& p1, const Vector3& p2){}
+
 		void CGCM_Renderer::DrawCross(const Vector3& p1, const float size){}
+
 		void CGCM_Renderer::PrepFrame(){
-			printf("Frame prep \n");
+	//		printf("Frame prep \n");
 
 			cellGcmSetColorMask(CELL_GCM_COLOR_MASK_R |
 				CELL_GCM_COLOR_MASK_G |
@@ -73,13 +74,14 @@ namespace Engine{
 
 		}
 		void CGCM_Renderer::PostRender(){
-			printf("Post render \n");
+	//		printf("Post render \n");
 			ProcessLines();
 			swapBuffers();
 		}
+
 		static float count = 0;
 		void CGCM_Renderer::clearSurface(){
-			printf("clear surface \n");
+//			printf("clear surface \n");
 			//cellGcmSetClearColor((64 << 0) | (64 << 8) | (64 << 16) | (255 << 24));
 			//cellGcmSetClearSurface(CELL_GCM_CLEAR_Z | CELL_GCM_CLEAR_S | CELL_GCM_CLEAR_R | CELL_GCM_CLEAR_G | CELL_GCM_CLEAR_B | CELL_GCM_CLEAR_A);
 		
@@ -247,13 +249,34 @@ namespace Engine{
 			cellGcmSetSurface(&_surfaces[0]);
 			//Used to keep track of the surface currently being rendered to.
 			_swapFlag = false;
+			loadDefaultShaders();
 		}
 
-		void CGCM_Renderer::loadDefaultShaders(){}
+		void CGCM_Renderer::loadDefaultShaders()
+		{
+			puts("Making Default Shaders\n");
+
+			defaultFrag = new GCM_FragmentShader();
+			//FS->loadCharArrayShader(fs_basic);
+			defaultFrag->LoadBinaryShader("/fs_basic.fpo");
+			defaultFrag->initProgram(true);
+
+			defaultVert = new GCM_VertexShader();
+			//VS->loadCharArrayShader(vs_basic);
+			defaultVert->LoadBinaryShader("/vs_basic.vpo");
+			defaultVert->initProgram(false);
+
+			puts("Shaders parsed\n");
+
+			defaultVert->SetDefaultAttributes();
+
+			// Set current shader
+			SetCurrentShader(*defaultVert, *defaultFrag);
+		}
 
 		//! Switch which buffer is active(being rendered on) and currentyl displayed
 		void CGCM_Renderer::swapBuffers(){
-			printf("Swap \n"); 
+	//		printf("Swap \n"); 
 			//non-zero indicates hardware is still  processing the last flip
 			while (cellGcmGetFlipStatus() != 0)
 			{
@@ -279,12 +302,91 @@ namespace Engine{
 		}
 
 		//! Set the active vertex and fragment shader
-		void CGCM_Renderer::SetCurrentShader(GCM_VertexShader & vert, GCM_FragmentShader & frag){}
+		void CGCM_Renderer::SetCurrentShader(GCM_VertexShader & vert, GCM_FragmentShader & frag)
+		{
+			_currentFrag = &frag;
+			_currentVert = &vert;
+
+			cellGcmSetFragmentProgram(_currentFrag->program, _currentFrag->offset);
+			cellGcmSetVertexProgram(_currentVert->program, _currentVert->ucode);
+		}
 
 		//! Initialises viewport (coordinate scaling)
 		void CGCM_Renderer::SetViewport(){}
 
 		void CGCM_Renderer::Shutdown(){}
+
+		void CGCM_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
+		{
+			Mesh* m = msh;
+			Matrix4 m4 = mvp;
+			if (!msh){
+				printf("Whoaaaa\n");
+			}
+			printf("Whoaaaa11111\n");
+			if (!msh->loadedLocal){
+				printf("Whoaaaa22222\n");
+			}
+			printf("Whoaaaa33333\n");
+
+			//printf("Everythign is broken %i!\n", msh->numVerts);
+			ASSERT(msh);
+			ASSERT(msh->loadedLocal);
+			//set active shader
+			//SetCurrentShader(*msh->vertShader, *msh->fragShader);
+			SetCurrentShader(*defaultVert, *defaultFrag);
+
+			//give vertex data to the shader
+			cell::Gcm::cellGcmSetVertexDataArray(msh->vertShader->VERTEX_POSITION_INDEX,	//index
+				0, //Frequency
+				sizeof(stVertex), //stride
+				3, //size
+				CELL_GCM_VERTEX_F, //type
+				CELL_GCM_LOCATION_LOCAL, //location
+				msh->vertexBufferOffset);	//offset
+
+			cell::Gcm::cellGcmSetVertexDataArray(msh->vertShader->VERTEX_COLOUR_INDEX,
+				0,
+				sizeof(stVertex),
+				4,
+				CELL_GCM_VERTEX_UB,
+				CELL_GCM_LOCATION_LOCAL,
+				msh->vertexBufferOffset + sizeof(float)* 3);
+
+			msh->vertShader->SetParameterM("modelViewProj", mvp);
+
+			//not sure wether to call this?
+			//FS->UpdateShaderVariables();
+
+			//draw arrays
+			if (msh->strip){
+
+			}
+			else{
+
+			}
+			if (msh->line == true){
+				if (msh->strip == true){
+					cell::Gcm::cellGcmSetDrawArrays(CELL_GCM_PRIMITIVE_LINE_STRIP, 0, msh->numVerts);
+				}
+				else{
+					cell::Gcm::cellGcmSetDrawArrays(CELL_GCM_PRIMITIVE_LINES, 0, msh->numVerts);
+				}
+			}
+			else{
+				if (msh->fan == true){
+					cell::Gcm::cellGcmSetDrawArrays(CELL_GCM_PRIMITIVE_TRIANGLE_FAN, 0, msh->numVerts);
+				}
+				else if (msh->strip == true){
+					cell::Gcm::cellGcmSetDrawArrays(CELL_GCM_PRIMITIVE_TRIANGLE_STRIP, 0, msh->numVerts);
+				}
+				else{
+					cell::Gcm::cellGcmSetDrawArrays(CELL_GCM_PRIMITIVE_TRIANGLES, 0, msh->numVerts);
+				}
+			}
+
+		
+		}
 
 	
 	}
