@@ -388,8 +388,9 @@ Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVe
 
 Vector3 GetForwardVector(Quaternion q)
 {
+
 	return Vector3(2.0f * (q.getX() * q.getZ() + q.getW() * q.getY()),
-		2.0f * (q.getY() * q.getX() - q.getW() * q.getX()),
+		2.0f * (q.getY() * q.getZ() - q.getW() * q.getX()),
 		1.0f - 2.0f * (q.getX() * q.getX() + q.getY() * q.getY()));
 }
 

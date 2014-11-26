@@ -60,34 +60,10 @@ void CmFpsMotor::registerInputs()
 }
 
 
-
-
-
 void CmFpsMotor::Update(double delta)
 {
+	//ijkl RCS
 	Vector3 rot = Vector3(0);
-	if (Engine::Input::getMapData("down") > 128){
-		rot += Vector3(1.0f, 0, 0);
-		verticalAngle -= 0.01f;
-	}
-	if (Engine::Input::getMapData("up") > 128){
-		rot += Vector3(-1.0f, 0, 0);
-		verticalAngle += 0.01f;
-	}
-	Ent->setRotation( Normalize(Ent->getRotation() * AngleAxisToQuat(rot, delta*20.01f)));
-	rot = Vector3(0);
-	if (Engine::Input::getMapData("left") > 128){
-		horizontalAngle += 0.01f;
-		rot += Vector3(0, 1.0f, 0);
-	}
-	if (Engine::Input::getMapData("right") > 128){
-		rot += Vector3(0, -1.0f, 0);
-		horizontalAngle -= 0.01f;
-	}	
-	Ent->setRotation(Normalize(Ent->getRotation() * AngleAxisToQuat(rot, delta*20.01f)));
-
-	//ijkl
-	rot = Vector3(0);
 	if (Engine::Input::getMapData("J") > 128){
 		rot += Vector3(-1.0f, 0, 0);
 	}
@@ -102,16 +78,43 @@ void CmFpsMotor::Update(double delta)
 	}
 	Ent->setPosition(Ent->getPosition() + rot*1.0f);
 
+	float speed =200.0f * delta;
+	float rotSpeed = 0.5f *speed;
+	//pitch
 
+	if (Engine::Input::getMapData("down") > 128){
+		Ent->setRotation(AngleAxisToQuat(Vector3(1, 0, 0)*Inverse(Ent->getRotation()), -rotSpeed) * Ent->getRotation());
+		verticalAngle -= 0.01f;
+	}
+	if (Engine::Input::getMapData("up") > 128){
+		Ent->setRotation(AngleAxisToQuat(Vector3(1, 0, 0)*Inverse(Ent->getRotation()), rotSpeed) * Ent->getRotation());
+		verticalAngle += 0.01f;
+	}
+
+	//yaw
+	if (Engine::Input::getMapData("left") > 128){
+		Ent->setRotation(AngleAxisToQuat(Vector3(0, 1, 0), rotSpeed) * Ent->getRotation());
+		horizontalAngle += 0.01f;
+	}
+	if (Engine::Input::getMapData("right") > 128){
+		Ent->setRotation(AngleAxisToQuat(Vector3(0, 1, 0), -rotSpeed) * Ent->getRotation());
+		horizontalAngle -= 0.01f;
+	}	
+	Ent->setRotation(Normalize(Ent->getRotation()));
+	Quaternion inverse = Inverse(Ent->getRotation());
+
+	Vector3 right = GetRightVector(Ent->getRotation());
+	Vector3 direction  = GetForwardVector(Ent->getRotation());
+#if defined _PS3_
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	Vector3 direction = Vector3(
+	direction = Vector3(
 		cos(verticalAngle) * sin(horizontalAngle),
 		sin(verticalAngle),
 		cos(verticalAngle) * cos(horizontalAngle)
 		);
 
 	// Right vector
-	Vector3 right = Vector3(
+	right = Vector3(
 		sin(horizontalAngle - 3.14f / 2.0f),
 		0,
 		cos(horizontalAngle - 3.14f / 2.0f)
@@ -120,32 +123,35 @@ void CmFpsMotor::Update(double delta)
 	// Up vector
 	Vector3 up = Cross(right, direction);
 
+#endif
 
 	//wasd
 	rot = Vector3(0);
 	if (Engine::Input::getMapData("D") > 128){
 		cameraPos += (1.0f)* right;
-		Vector3 right = V4toV3(Column(Ent->getTranform(), 0));
-		rot += right;
-
+		//rot.setX(-speed);
+		rot += (1.0f)* right;
+		//rot = GetForwardVector(Ent->getRotation());
 	}
 	if (Engine::Input::getMapData("A") > 128){
 		cameraPos += (-1.0f)* right;
-		Vector3 right = V4toV3(Column(Ent->getTranform(), 0));
-		rot += -1.0f*right;
-
+		rot += (-1.0f)* right;
+		rot.setX(rot.getX() + speed);
 	}
 	if (Engine::Input::getMapData("S") > 128){
 		cameraPos += (-1.0f)*direction;
-		Vector3 forward = V4toV3(Column(Ent->getTranform(), 2));
-		rot += forward;
+		rot += (1.0f)*direction;
+		rot.setZ(-speed);
 	}
 	if (Engine::Input::getMapData("W") > 128){
 		cameraPos += (1.0f)*direction;
-		Vector3 forward = V4toV3(Column(Ent->getTranform(), 2));
-		rot += -1.0f*forward;
+		rot += (-1.0f)*direction;
+		rot.setZ(rot.getZ() + speed);
 	}
-	Ent->setPosition(Ent->getPosition() + rot*1.0f);
+	Ent->setPosition(Ent->getPosition() + rot);
+
+#if defined _PS3_
 	oviewMatrix = lookat(cameraPos, cameraPos + direction, up);
+#endif
 
 }

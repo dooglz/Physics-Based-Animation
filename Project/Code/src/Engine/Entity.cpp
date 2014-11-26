@@ -75,7 +75,8 @@ namespace Engine{
 		Matrix4 rot = QuatToMatrix(_rotation);
 		Matrix4 trn = Translation(_position);
 		//_transform =  (scl * rot * trn);
-		_transform = (trn * rot * scl);
+		//_transform = (trn * rot * scl);
+		_transform = (trn * scl * rot);
 		//_transform = (trn * scl);
 		_changed = false;
 		/*

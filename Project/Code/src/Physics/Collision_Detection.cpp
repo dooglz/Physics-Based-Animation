@@ -280,16 +280,16 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 0.0f;
+				const float e = 1.0f;
 		
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +
 					Dot(c->normal,
 					Cross(V4toV3((InvInertia0 * Vector4(Cross(r0, c->normal), 0))), r0) +
 					Cross(V4toV3((InvInertia1 * Vector4(Cross(r1, c->normal), 0))), r1)));
-				//ASSERT(normDiv > 0.0f);
+				ASSERT(normDiv > 0.0f);
 				if (normDiv <= 0.0f){
-					return;
+			//		return;
 				}
 				
 				float jn = -1 * (1 + e)* Dot(dv, c->normal) / normDiv;
