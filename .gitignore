@@ -172,3 +172,5 @@ Project/Code/lib/PS3/Debug/Physics.a
 Project/Code/lib/PS3/Debug/Engine.a
 *.vpo
 *.fpo
+Project/Code/lib/Win32/Release/Engine.lib
+Project/Code/lib/Win32/Release/Physics.lib

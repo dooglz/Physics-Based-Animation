@@ -71,7 +71,7 @@ void Game::Init(){
 	
 	
 	float aa = 0;
-	unsigned int a = 50;
+	unsigned int a = 2000;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
