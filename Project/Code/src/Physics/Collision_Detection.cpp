@@ -1,10 +1,11 @@
 #include "Collision_Detection.h"
 #include "../Engine/Renderer.h"
 #include "../Engine/Utilities.h"
+#include "SpacePartition.h"
 
 namespace Physics{
 	std::vector<CCollisionDetection::Collision*> CCollisionDetection::_collisions;
-	
+
 	void CCollisionDetection::Scan(const std::vector<CPhysicsObject*>& scene)
 	{
 		//foreach object
@@ -12,55 +13,63 @@ namespace Physics{
 		{
 			CPhysicsObject* objA = scene[i];
 
-			for (unsigned int j = i + 1; j < scene.size(); j++)
+			std::vector<CPhysicsObject*>** neighbours = CSpacePartition::getSurroundingSpaces(objA->GetPosition());
+			//for (unsigned int j = i + 1; j < scene.size(); j++)
+			for (unsigned int q = 0; q < 9; q++)
 			{
-				CPhysicsObject* objB = scene[j];
-				//BROADPHASE
 
-				//get the types
-				if (objA->type == CPhysicsObject::SPHERE)
+				std::vector<CPhysicsObject*> n2 = (*neighbours[q]);
+
+				for (unsigned int j = 0; j < n2.size(); j++)
 				{
-					if (objB->type == CPhysicsObject::SPHERE)
+					CPhysicsObject* objB = n2[j];
+					//BROADPHASE
+
+					//get the types
+					if (objA->type == CPhysicsObject::SPHERE)
 					{
-						SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB),true);
+						if (objB->type == CPhysicsObject::SPHERE)
+						{
+							SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB), true);
+						}
+						else if (objB->type == CPhysicsObject::CUBEOID)
+						{
+							SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB), true);
+						}
+						else if (objB->type == CPhysicsObject::PLANE)
+						{
+							SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+						}
 					}
-					else if (objB->type == CPhysicsObject::CUBEOID)
+					else if (objA->type == CPhysicsObject::CUBEOID)
 					{
-						SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB), true);
+						if (objB->type == CPhysicsObject::SPHERE)
+						{
+							SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA), true);
+						}
+						else if (objB->type == CPhysicsObject::CUBEOID)
+						{
+							CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB), true);
+						}
+						else if (objB->type == CPhysicsObject::PLANE)
+						{
+							CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+						}
 					}
-					else if (objB->type == CPhysicsObject::PLANE)
+					else if (objA->type == CPhysicsObject::PLANE)
 					{
-						SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
-					}
-				}
-				else if(objA->type == CPhysicsObject::CUBEOID)
-				{
-					if (objB->type == CPhysicsObject::SPHERE)
-					{
-						SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA), true);
-					}
-					else if (objB->type == CPhysicsObject::CUBEOID)
-					{
-						CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB), true);
-					}
-					else if (objB->type == CPhysicsObject::PLANE)
-					{
-						CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
-					}
-				}
-				else if (objA->type == CPhysicsObject::PLANE)
-				{
-					if (objB->type == CPhysicsObject::SPHERE)
-					{
-						SpherePlane(static_cast<CSphere_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
-					}
-					else if (objB->type == CPhysicsObject::CUBEOID)
-					{
-						CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
-					}
-					else if (objB->type == CPhysicsObject::PLANE)
-					{
-						PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+						if (objB->type == CPhysicsObject::SPHERE)
+						{
+							SpherePlane(static_cast<CSphere_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
+						}
+						else if (objB->type == CPhysicsObject::CUBEOID)
+						{
+							CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
+						}
+						else if (objB->type == CPhysicsObject::PLANE)
+						{
+							PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+						}
 					}
 				}
 			}
@@ -280,7 +289,9 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~
 				const float e = 1.0f;
+				//~~~~~~~~~~~~~~~~~~~~~~~~~~~
 		
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +

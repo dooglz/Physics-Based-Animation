@@ -203,6 +203,7 @@
     <ClInclude Include="Physics_objects_shapes.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">false</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="SpacePartition.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Collision_Detection.cpp">
@@ -215,6 +216,7 @@
     <ClCompile Include="Physics_Objects_shapes.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|PS3'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="SpacePartition.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

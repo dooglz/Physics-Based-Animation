@@ -1,6 +1,7 @@
 #include "Physics_Object.h"
 #include "Physics.h"
 #include "../Engine/Utilities.h"
+#include "SpacePartition.h"
 
 namespace Physics{
 
@@ -16,6 +17,7 @@ namespace Physics{
 		_forces = Vector3(0, 0, 0);
 		//SetMass(mass);
 		//_torques += Vector3(25.1f, 10.0f, 50.0f);
+		CSpacePartition::Register(this);
 	}
 
 	void CPhysicsObject::Integrate(const double dt, const double timestep)
@@ -64,8 +66,8 @@ namespace Physics{
 		_torques = Vector3(0, 0, 0);
 
 		//damping
-		_angVelocity *= 0.999f;
-		_linVelocity *= 0.999f;
+	//	_angVelocity *= 0.999f;
+	//	_linVelocity *= 0.999f;
 
 		UpdateMatrix();
 	}

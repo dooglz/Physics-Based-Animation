@@ -1,5 +1,6 @@
 #include "Physics.h"
 #include "Physics_Object.h"
+#include "SpacePartition.h"
 
 #include "Collision_Detection.h"
 
@@ -14,6 +15,7 @@ namespace Physics{
 
 	void PhysicsSytem::Tick(const double t, const  double timeStep)
 	{
+		CSpacePartition::Update();
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
 			(*it)->Integrate(t,timeStep);
