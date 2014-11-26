@@ -40,7 +40,7 @@ void Game::Init(){
 	_running = true;
 	Engine::Engine::Init();
 	Engine::Engine::createwindow();
-
+	
 	ent1 = new Engine::Entity();
 	ent1->SetName("Cool cube");
 	ent1->setPosition(Vector3(7, 4, 7));
@@ -68,6 +68,8 @@ void Game::Init(){
 	ent2->getComponent<Engine::CmMeshRenderer>()->setMesh("models/plane.obj");
 	ent2->AddComponent(new Engine::CmPhysics_Plane(Vector3(0, 0, 0), Vector3(0, 1, 0)));
 	Engine::ActiveScene->AddEntity(ent2);
+	
+	
 	float aa = 0;
 	unsigned int a = 50;
 	for (unsigned int i = 0; i < a; i++)
@@ -87,14 +89,16 @@ void Game::Init(){
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
 	//ent3->setPosition(Vector3(0, 2.5, 0));
-	ent3->setPosition(Vector3(-60, 20, -60));
-	ent3->setRotation(Vector3(0.00f,179.85f, 0));
+	//ent3->setPosition(Vector3(-60, 20, -60));
+	ent3->setPosition(Vector3(-30, 2.5, 0));
+	//ent3->setRotation(Vector3(0.00f,179.85f, 0));
 	//ent3->setRotation(Vector3(0.0f, 0.0f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());
 	//Todo: do this automagically
 	ent3->getComponent<Engine::CmCamera>()->Activate();
 	Engine::ActiveScene->AddEntity(ent3);
+	
 
 	registerInputs();
 }

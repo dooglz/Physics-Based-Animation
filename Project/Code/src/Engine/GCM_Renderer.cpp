@@ -318,8 +318,26 @@ namespace Engine{
 
 		void CGCM_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
 		{
-			Matrix4 m4 = _viewprojectionMat*mvp;
 
+			Matrix4 m4 = _viewprojectionMat* mvp;
+
+			/*printf("----0--\n");
+			print(mvp);
+			printf("--\n");
+			print(_viewprojectionMat);
+			printf("--\n");
+			print(m4);
+			printf("----I--\n");
+			*/
+
+			//print(m4);
+			//printf("----0--\n");
+			//m4.setCol(0, -1.0f*m4.getCol(0));
+			//m4.setCol(1, -1.0f*m4.getCol(1));
+			//print(m4);
+			//printf("----I--\n");
+
+			//m4 = Transpose(m4);
 			//printf("Everythign is broken %i!\n", msh->numVerts);
 			ASSERT(msh);
 			ASSERT(msh->loadedLocal);

@@ -7,8 +7,8 @@
 namespace Engine{
 	Entity::Entity(){
 		 _visible = true;
-		_scale = Vector3(1.0f);
-		_position = Vector3(0.0f);
+		 _scale = Vector3(1.0f, 1.0f, 1.0f);
+		 _position = Vector3(0.0f, 0.0f, 0.0f);
 		_rotation = Quaternion::identity();
 		CalculateTransform();
 	}
@@ -76,6 +76,7 @@ namespace Engine{
 		Matrix4 trn = Translation(_position);
 		//_transform =  (scl * rot * trn);
 		_transform = (trn * rot * scl);
+		//_transform = (trn * scl);
 		_changed = false;
 		/*
 		printf("---------------------------\n");

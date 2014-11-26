@@ -280,7 +280,7 @@ namespace Physics{
 			// NORMAL Impulse
 			{
 				// Coefficient of Restitution
-				const float e = 1.0f;
+				const float e = 0.0f;
 		
 				const float normDiv =	 //Vector3::Dot(normal, normal) * => should equal 1
 					((invMass0 + invMass1) +

@@ -36,6 +36,7 @@ namespace Engine{
 		void COGL_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
 		{
 
+			Matrix4 m4 = _viewprojectionMat * mvp;
 
 			ASSERT(msh->program != NULL);
 			glUseProgram(msh->program->getID());
@@ -92,7 +93,7 @@ namespace Engine{
 			glViewport(0, 0, SDL::SDL_Platform::GetSreenWidth(), SDL::SDL_Platform::GetSreenHeight());
 
 			// Cull triangles which normal is not towards the camera
-			glEnable(GL_CULL_FACE);
+		//	glEnable(GL_CULL_FACE);
 			//glViewport(0,0,1920,1080);
 
 			SDL::SDL_Platform::CheckGL();

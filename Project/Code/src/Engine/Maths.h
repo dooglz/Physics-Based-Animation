@@ -126,6 +126,8 @@ void print(const Matrix3& v);
 
 void print(const Matrix4& v);
 
+Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVector);
+
 inline int randomColor()
 {
 	int x = rand() & 0xff;

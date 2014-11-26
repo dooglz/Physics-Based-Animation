@@ -161,6 +161,12 @@ Vector4 Column(const Matrix4& m, const int a)
 	return glm::column(m, a);
 }
 
+
+Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVector)
+{
+	return Matrix4(1.0f);
+}
+
 #elif defined(_PS3_)
 
 void print(Vector3 v){
@@ -366,6 +372,16 @@ Vector3 V4toV3(Vector4 v){
 Vector4 Column(const Matrix4& m, const int a)
 {
 	return m.getCol(a);
+}
+
+
+Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVector)
+{
+	return Matrix4::lookAt(
+		Point3(eyePos.getX(), eyePos.getY(), eyePos.getZ()),
+		Point3(targetPos.getX(), targetPos.getY(), targetPos.getZ()),
+		UpVector
+		);
 }
 
 #endif

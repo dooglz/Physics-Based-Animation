@@ -3,6 +3,8 @@
 #include "Renderer.h"
 #include "Cm_Camera.h"
 
+extern Matrix4 oviewMatrix;
+
 namespace Engine{
 	Scene* ActiveScene = NULL;
 
@@ -30,7 +32,14 @@ namespace Engine{
 			printf("No active Camera in Scene!\n");
 			Renderer->SetViewMatrix(Matrix4(1.0f));
 		}else{
-			Renderer->SetViewMatrix(Inverse(_activeCamera->GetParent()->getTranform()));
+		#if defined(_PC_)
+			viewMat = _activeCamera->GetParent()->getTranform();
+			viewMat = Inverse(viewMat);
+		#elif defined(_PS3_)
+			//viewMat = lookat(_activeCamera->GetParent()->getPosition(), Vector3(0, 0, 0), Vector3(0, 1.0f, 0));
+			viewMat = oviewMatrix;
+		#endif
+			Renderer->SetViewMatrix(viewMat);
 		}
 
 		for (std::vector<Entity*>::iterator it = _ents.begin(); it != _ents.end(); ++it) {
