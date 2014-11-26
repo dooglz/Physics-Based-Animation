@@ -63,7 +63,7 @@ namespace Physics{
 		SetMass(mass);
 	}
 
-	CPlane_Object::CPlane_Object(const Vector3& position, const Vector3& normal) : CPhysicsObject(0.0f, position, Quaternion(0,0,0,1.0f))
+	CPlane_Object::CPlane_Object(const Vector3& position, const Vector3& normal) : CPhysicsObject(0.0f, position, Quaternion::identity())
 	{
 		type = PLANE;
 		_normal = normal;
