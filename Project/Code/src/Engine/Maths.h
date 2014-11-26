@@ -31,6 +31,7 @@ struct stvec2
 	#define Vector4 glm::vec4
 	#define Vector3 glm::vec3
 	#define Vector2 glm::vec2
+	#define identity tquat
 	#define Quaternion glm::quat
 	#define Length glm::length
 	#define Distance glm::distance

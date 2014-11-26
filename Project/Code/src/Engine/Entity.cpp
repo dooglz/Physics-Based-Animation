@@ -9,7 +9,7 @@ namespace Engine{
 		 _visible = true;
 		_scale = Vector3(1.0f);
 		_position = Vector3(0.0f);
-		_rotation = Quaternion(0.0f, 0.0f, 0.0f, 1.0f);
+		_rotation = Quaternion::identity();
 		CalculateTransform();
 	}
 
@@ -77,6 +77,22 @@ namespace Engine{
 		//_transform =  (scl * rot * trn);
 		_transform = (trn * rot * scl);
 		_changed = false;
+		/*
+		printf("---------------------------\n");
+		printf("--scale\n");
+		print(_scale);
+		print(scl);
+		printf("--rot\n");
+		print(_rotation);
+		print(rot);
+		printf("--pos\n");
+		print(_position);
+		print(trn);
+		printf("--full transfrom\n");
+		print(_transform);
+		printf("---------------------------\n");
+		*/
+		
 	}
 
 	bool Entity::isVisible(){ return _visible; }
