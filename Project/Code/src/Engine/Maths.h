@@ -118,6 +118,12 @@ bool IsIdentical(const Vector3& a, const Vector3& b);
 bool IsIdentical(const Quaternion& a, const Quaternion& b);
 
 Vector4 Column(const Matrix4& m, const int a);
+void print(Vector3 v);
+void print(const Vector4& v);
+void print(const Quaternion& v);
+void print(const Matrix3& v);
+
+void print(const Matrix4& v);
 
 inline int randomColor()
 {

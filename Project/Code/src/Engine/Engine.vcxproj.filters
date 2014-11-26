@@ -148,12 +148,12 @@
     <ClInclude Include="GCM_MeshLoader.h">
       <Filter>Header Files\PS3</Filter>
     </ClInclude>
+    <ClInclude Include="PS3_Input_handler.h">
+      <Filter>Header Files\PS3</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Engine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Time.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
@@ -247,6 +247,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="GCM_Meshloader.cpp">
+      <Filter>Source Files\PS3</Filter>
+    </ClCompile>
+    <ClCompile Include="PS3_Input_handler.cpp">
       <Filter>Source Files\PS3</Filter>
     </ClCompile>
   </ItemGroup>

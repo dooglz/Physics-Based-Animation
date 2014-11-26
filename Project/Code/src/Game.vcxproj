@@ -195,6 +195,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cm_FpsMotor.cpp" />
+    <ClCompile Include="Engine\Time.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
