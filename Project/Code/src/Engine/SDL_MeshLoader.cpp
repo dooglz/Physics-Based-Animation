@@ -121,14 +121,26 @@ namespace Engine{
 
 			Mesh* m = new Mesh();
 			m->numVerts = vertices.size();
-
+			randomColor();
+			randomColor();
+			unsigned int col1 = randomColor(); 
+			unsigned int col2 = randomColor();
+			bool b = false;
 			for (int i = 0; i < (m->numVerts); ++i)
 			{
+				b = !b;
 				stVertex a;
 				a.x = vertices[i].x;
 				a.y = vertices[i].y;
 				a.z = vertices[i].z;
-				a.rgba = randomColor();
+				if (b){
+					a.rgba = col1;
+				}
+				else
+				{
+					a.rgba = col2;
+				}
+
 				m->vertexData.push_back(a);
 			}
 			m->loadedMain = true;

@@ -40,7 +40,7 @@ namespace Physics{
 		
 		if (_position.getX() * _position.getX() < 28.0f && _position.getZ() * _position.getZ() < 28.0f &&  _position.getY() < 8.0f)
 		{
-			AddImpulse(Vector3(0.015f*_linVelocity.getX(), 0.05f, 0.0015f*_linVelocity.getZ()));
+			//AddImpulse(Vector3(0.015f*_linVelocity.getX(), 0.05f, 0.0015f*_linVelocity.getZ()));
 		}
 
 
