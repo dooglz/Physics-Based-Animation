@@ -125,6 +125,14 @@ namespace Physics{
 		#elif ( DIMENSTIONS == 2)
 			std::vector<CPhysicsObject*>** neigbours = new std::vector<CPhysicsObject*>*[9];
 			getSpace(Position, X, Z, X);
+
+			if (X >= LENGTH-1){ X = LENGTH - 2; }
+			if (Z >= LENGTH-1){ Z = LENGTH - 2; }
+			if (X <= 0){ X = 1; }
+			if (Z <= 0){ Z = 1; }
+
+			//printf("%i - X - %i, Z - %i\n",LENGTH, X, Z);
+
 			if (_theGrid[X][Z] == NULL){_theGrid[X][Z] = new std::vector<CPhysicsObject*>();}
 			neigbours[0] = _theGrid[X][Z];
 			if (_theGrid[X - 1][Z - 1] == NULL){ _theGrid[X - 1][Z - 1] = new std::vector<CPhysicsObject*>(); }

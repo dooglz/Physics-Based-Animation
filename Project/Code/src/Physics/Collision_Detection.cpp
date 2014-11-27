@@ -67,7 +67,6 @@ namespace Physics{
 				std::vector<CPhysicsObject*>** neighbours = CSpacePartition::getSurroundingSpaces(objA->GetPosition());
 				for (unsigned int q = 0; q < 9; q++)
 				{
-					ASSERT(neighbours[q] != nullptr);
 					const unsigned int size = (*neighbours[q]).size();
 					for (unsigned int j = 0; j < size; j++)
 					{
