@@ -65,8 +65,8 @@ namespace Physics{
 		_torques = Vector3(0, 0, 0);
 
 		//damping
-	//	_angVelocity *= 0.999f;
-	//	_linVelocity *= 0.999f;
+		_angVelocity *= 0.999f;
+		_linVelocity *= 0.999f;
 
 		UpdateMatrix();
 	}

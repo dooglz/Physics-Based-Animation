@@ -282,7 +282,10 @@ namespace Physics{
 			const Matrix4 InvInertia1 = objectB->GetInvWorldTensor();
 			
 			// Both objects are non movable
-			if ((invMass0 + invMass1) == 0.0) return;
+			if ((invMass0 + invMass1) == 0.0) {
+				delete c;
+				continue;
+			}
 			Vector3 r0 = c->point - objectA->GetPosition();
 			Vector3 r1 = c->point - objectB->GetPosition();
 			Vector3 v0 = objectA->GetLinearVeloicty() + Cross(objectA->GetAngularVeloicty(), r0);
@@ -296,6 +299,7 @@ namespace Physics{
 			float relativeMovement = -Dot(dv, c->normal);
 			if (relativeMovement < -0.01f)
 			{
+				delete c;
 				continue;
 			}
 			
@@ -369,14 +373,9 @@ namespace Physics{
 					objectB->AddRotationImpulse(-1.0f* rotImpulse);
 				}
 			}
-			#endif// TANGENT
-			
-			//extern bool cleanup;
-			//if (cleanup)
+			#endif
 			delete c;
 		}
-		//extern bool cleanup;
-		//if (cleanup)
 		_collisions.clear();
 	}
 
