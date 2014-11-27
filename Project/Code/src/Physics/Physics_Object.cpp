@@ -17,7 +17,6 @@ namespace Physics{
 		_forces = Vector3(0, 0, 0);
 		//SetMass(mass);
 		//_torques += Vector3(25.1f, 10.0f, 50.0f);
-		CSpacePartition::Register(this);
 	}
 
 	void CPhysicsObject::Integrate(const double dt, const double timestep)

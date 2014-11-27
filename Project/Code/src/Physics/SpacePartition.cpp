@@ -53,6 +53,7 @@ namespace Physics{
 		if (abs(Position.getX()) > (WORLDSIZE / 2.0f) || abs(Position.getZ()) > (WORLDSIZE / 2.0f) || (DIMENSTIONS == 3 && abs(Position.getY()) >(WORLDSIZE)))
 		{
 			//out of bounds
+			printf("OUT OF BOUNDS!");
 			ASSERT(false);
 		}
 		//not quite right, as we count from 0.
@@ -122,25 +123,25 @@ namespace Physics{
 		return neigbours;
 
 		#elif ( DIMENSTIONS == 2)
-			std::vector<CPhysicsObject*>* neigbours[9];
+			std::vector<CPhysicsObject*>** neigbours = new std::vector<CPhysicsObject*>*[9];
 			getSpace(Position, X, Z, X);
 			if (_theGrid[X][Z] == NULL){_theGrid[X][Z] = new std::vector<CPhysicsObject*>();}
 			neigbours[0] = _theGrid[X][Z];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X-1][Z-1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X - 1][Z - 1] == NULL){ _theGrid[X - 1][Z - 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[1] = _theGrid[X-1][Z-1];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X-1][Z] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X - 1][Z] == NULL){ _theGrid[X - 1][Z] = new std::vector<CPhysicsObject*>(); }
 			neigbours[2] = _theGrid[X-1][Z];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X-1][Z+1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X - 1][Z + 1] == NULL){ _theGrid[X - 1][Z + 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[3] = _theGrid[X-1][Z+1];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X][Z-1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X][Z - 1] == NULL){ _theGrid[X][Z - 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[4] = _theGrid[X][Z-1];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X][Z+1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X][Z + 1] == NULL){ _theGrid[X][Z + 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[5] = _theGrid[X][Z+1];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X+1][Z-1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X + 1][Z - 1] == NULL){ _theGrid[X + 1][Z - 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[6] = _theGrid[X+1][Z-1];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X+1][Z] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X + 1][Z] == NULL){ _theGrid[X + 1][Z] = new std::vector<CPhysicsObject*>(); }
 			neigbours[7] = _theGrid[X+1][Z];
-			if (_theGrid[X][Z] == NULL){ _theGrid[X+1][Z+1] = new std::vector<CPhysicsObject*>(); }
+			if (_theGrid[X + 1][Z + 1] == NULL){ _theGrid[X + 1][Z + 1] = new std::vector<CPhysicsObject*>(); }
 			neigbours[8] = _theGrid[X+1][Z+1];
 			return neigbours;
 		#endif	

@@ -26,6 +26,7 @@ namespace Physics{
 		static bool CuboidCuboid(CCube_Object* const A,  CCube_Object* const B, const bool resolve);
 		static bool CuboidPlane(CCube_Object* const A, CPlane_Object* const B, const bool resolve);
 		static bool PlanePlane(CPlane_Object* const A, CPlane_Object* const B, const bool resolve);
+		static void CCollisionDetection::CollisionRouter(CPhysicsObject* objA, CPhysicsObject* objB);
 	public:
 		static void Scan(const std::vector<CPhysicsObject*>& scene);
 		static void Resolve();

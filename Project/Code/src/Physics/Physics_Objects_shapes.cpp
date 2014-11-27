@@ -1,4 +1,5 @@
 #include "Physics_Objects_shapes.h"
+#include "SpacePartition.h"
 
 namespace Physics{
 
@@ -54,6 +55,8 @@ namespace Physics{
 		//_orientation = Normalize(Quaternion(2.0f,0,0,9.0f));
 		_size = Vector3(lw, lh, ld);
 		SetMass(mass);
+		partitioned = true;
+		CSpacePartition::Register(this);
 	}
 
 	CSphere_Object::CSphere_Object(const float mass, const Vector3& position, const  Quaternion& rotation, const float radius) : CPhysicsObject(mass, position, rotation)
@@ -61,6 +64,8 @@ namespace Physics{
 		type = SPHERE;
 		_radius = radius;
 		SetMass(mass);
+		partitioned = true;
+		CSpacePartition::Register(this);
 	}
 
 	CPlane_Object::CPlane_Object(const Vector3& position, const Vector3& normal) : CPhysicsObject(0.0f, position, Quaternion::identity())
@@ -68,6 +73,7 @@ namespace Physics{
 		type = PLANE;
 		_normal = normal;
 		SetMass(0);
+		partitioned = false;
 	}
 
 	//---- Debug lines

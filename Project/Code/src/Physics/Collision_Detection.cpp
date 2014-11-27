@@ -6,71 +6,85 @@
 namespace Physics{
 	std::vector<CCollisionDetection::Collision*> CCollisionDetection::_collisions;
 
+
+	void CCollisionDetection::CollisionRouter(CPhysicsObject* objA, CPhysicsObject* objB)
+	{
+		//get the types
+		if (objA->type == CPhysicsObject::SPHERE)
+		{
+			if (objB->type == CPhysicsObject::SPHERE)
+			{
+				SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB), true);
+			}
+			else if (objB->type == CPhysicsObject::CUBEOID)
+			{
+				SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB), true);
+			}
+			else if (objB->type == CPhysicsObject::PLANE)
+			{
+				SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+			}
+		}
+		else if (objA->type == CPhysicsObject::CUBEOID)
+		{
+			if (objB->type == CPhysicsObject::SPHERE)
+			{
+				SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA), true);
+			}
+			else if (objB->type == CPhysicsObject::CUBEOID)
+			{
+				CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB), true);
+			}
+			else if (objB->type == CPhysicsObject::PLANE)
+			{
+				CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+			}
+		}
+		else if (objA->type == CPhysicsObject::PLANE)
+		{
+			if (objB->type == CPhysicsObject::SPHERE)
+			{
+				SpherePlane(static_cast<CSphere_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
+			}
+			else if (objB->type == CPhysicsObject::CUBEOID)
+			{
+				CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
+			}
+			else if (objB->type == CPhysicsObject::PLANE)
+			{
+				PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
+			}
+		}
+	}
+
 	void CCollisionDetection::Scan(const std::vector<CPhysicsObject*>& scene)
 	{
 		//foreach object
 		for (unsigned int i = 0; i < scene.size(); i++)
 		{
 			CPhysicsObject* objA = scene[i];
-
-			std::vector<CPhysicsObject*>** neighbours = CSpacePartition::getSurroundingSpaces(objA->GetPosition());
-			//for (unsigned int j = i + 1; j < scene.size(); j++)
-			for (unsigned int q = 0; q < 9; q++)
-			{
-
-				std::vector<CPhysicsObject*> n2 = (*neighbours[q]);
-
-				for (unsigned int j = 0; j < n2.size(); j++)
+			if (objA->partitioned){
+				std::vector<CPhysicsObject*>** neighbours = CSpacePartition::getSurroundingSpaces(objA->GetPosition());
+				for (unsigned int q = 0; q < 9; q++)
 				{
-					CPhysicsObject* objB = n2[j];
-					//BROADPHASE
-
-					//get the types
-					if (objA->type == CPhysicsObject::SPHERE)
+					ASSERT(neighbours[q] != nullptr);
+					const unsigned int size = (*neighbours[q]).size();
+					for (unsigned int j = 0; j < size; j++)
 					{
-						if (objB->type == CPhysicsObject::SPHERE)
-						{
-							SphereSphere(static_cast<CSphere_Object*>(objA), static_cast<CSphere_Object*>(objB), true);
-						}
-						else if (objB->type == CPhysicsObject::CUBEOID)
-						{
-							SphereCuboid(static_cast<CSphere_Object*>(objA), static_cast<CCube_Object*>(objB), true);
-						}
-						else if (objB->type == CPhysicsObject::PLANE)
-						{
-							SpherePlane(static_cast<CSphere_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
-						}
+						CPhysicsObject* objB = (*neighbours[q])[j];
+						if (objB == objA){ continue; }
+						CollisionRouter(objA, objB);
 					}
-					else if (objA->type == CPhysicsObject::CUBEOID)
-					{
-						if (objB->type == CPhysicsObject::SPHERE)
-						{
-							SphereCuboid(static_cast<CSphere_Object*>(objB), static_cast<CCube_Object*>(objA), true);
-						}
-						else if (objB->type == CPhysicsObject::CUBEOID)
-						{
-							CuboidCuboid(static_cast<CCube_Object*>(objA), static_cast<CCube_Object*>(objB), true);
-						}
-						else if (objB->type == CPhysicsObject::PLANE)
-						{
-							CuboidPlane(static_cast<CCube_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
-						}
-					}
-					else if (objA->type == CPhysicsObject::PLANE)
-					{
-						if (objB->type == CPhysicsObject::SPHERE)
-						{
-							SpherePlane(static_cast<CSphere_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
-						}
-						else if (objB->type == CPhysicsObject::CUBEOID)
-						{
-							CuboidPlane(static_cast<CCube_Object*>(objB), static_cast<CPlane_Object*>(objA), true);
-						}
-						else if (objB->type == CPhysicsObject::PLANE)
-						{
-							PlanePlane(static_cast<CPlane_Object*>(objA), static_cast<CPlane_Object*>(objB), true);
-						}
-					}
+				}
+				delete neighbours;
+			}
+			else
+			{
+				for (unsigned int j = 0; j < scene.size(); j++){
+					if (i == j){ continue; }
+					CPhysicsObject* objB  = scene[j];
+					if (objB == objA){ continue; }
+					CollisionRouter(objA, objB);
 				}
 			}
 		}

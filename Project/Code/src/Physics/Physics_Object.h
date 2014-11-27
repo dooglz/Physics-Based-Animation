@@ -9,7 +9,7 @@ namespace Physics{
 		enum shapeType { CUBEOID, SPHERE, PLANE };
 		shapeType type;
 		bool usesGravity;
-
+		bool partitioned;
 	protected:
 		virtual Matrix4 CalculateInverseInertiaTensor() = 0;
 
