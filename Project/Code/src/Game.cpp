@@ -70,7 +70,7 @@ void Game::Init(){
 	Engine::ActiveScene->AddEntity(ent2);
 	
 	float aa = 0;
-	unsigned int a = 15000;
+	unsigned int a = 1500;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
