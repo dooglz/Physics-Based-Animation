@@ -78,6 +78,11 @@ The scene that is simulated is a large set of Bouncing balls, a scenario picked 
 Real-time physics on a Playstation 3 is exclusively used in video games, where speed and resource optimisations take priority over simulation accuracy. Often the physics solutions are tailor made for each visual effect, full general physics solvers are rare. Only games which rely on physics as a gameplay element devote much processor time to physics.
 PC exclusive titles tend to take a more relaxed approach to physics, due to the extra resources available. Games may use a full physics sovler just for aesthetic value with no additional gameplay mechanics. This can also be a causation of a multitude of physics libraries available for the PC platform.
 
+\figuremacroW
+{balls2}
+{Project Inspiration}
+{\protect\cite{advert}}
+{0.96}
 
 \section{Software Design}
 Methodology/Software design/logic control. You are expected to do some software
@@ -85,6 +90,7 @@ modelling of your physics-based animation choice. At a minimum you are expected 
 provide some state modelling and sequence modelling. Avoid providing simple models just
 to fill in this section, and only highlight some of the core functionality.
 
+\subsection{Project Design}
 The solution is split into three projects: Physics, Engine, and Game.
 \paragraph{Game}
 The Game project is the highest level, it has no need to understand how the Engine works, or what platform the code is running on. This is where the simulation scene is created, with all the balls initialised. This project also hosts the Main function, the program entry point; where the main game loop is created an run.
@@ -111,6 +117,7 @@ Each system of the engine has been designed with as little dependency on each ot
 {Forward decelerations are used to minimize header co-dependency throughout the project}
 {1.0}
 
+\subsection{Physics}
 \paragraph{Design of Physics Library}
 The Physics library is rather small compared to the Engine library, it makes use of the same maths library and utility classes, allowing for easy transfer of data between the systems. The physics system has a single "Scene" which hosts all the "Physics Objects" which take the form of the different rigid body shapes.
 
@@ -123,10 +130,40 @@ Collision Detection uses the attributes of each physics object to determine if a
 Once the detection process is finished, the collision resolver iterates through all of the collisions and calculates an impulse force to apply to each object to push them away from each other.
 \\
 Finally, each physics object is then "integrated", a process of applying the added forces and rotational torques to the position, velocity and acceleration of each object. Other calculations, such as updating the inertia tensor matrix are also calculated here.
+
+\paragraph{Spacial Partitioning}
+To reduce the search set when detecting collisions, spacial partitioning is used. This divides the world into a grid of equally sized virtual containers, this project only uses two dimensions, so the vertical Y dimension is ignored. Each object is placed in a container depending on its position in the world, only other objects within the same container are checked for collision. After all the objects have been integrated, the gird is scanned through and if an objects position has moved out from one container, the grid is updated to reflect this.
+\\
+The Grid is implemented as a 2D array of Vector pointers, each vector contains pointers to physics object so the memory size used is minimal. The process of determining which container an object is in is based only on it's position, so a simple divide and round maths operation can be used. Therefore the overhead in updating and managing the grid is minimal, and the performance benefits of using it are substantial.
 	
 \section{Results}
 Experimental Results/description of your physics-based simulation implementation
-including screenshots.
+including screen-shots.
+
+\figuremacroW
+{screen2}
+{Screenshot}
+{Screenshot}
+{1.0}
+
+\figuremacroW
+{screen1}
+{Screenshot}
+{Screenshot}
+{1.0}
+
+\figuremacroW
+{chart1-a}
+{Frames Per Second / Amount of Balls}
+{Upto 400 balls, spacial partitioning gives no noticeable improvement}
+{1.0}
+
+\figuremacroW
+{chart1-b}
+{Frames Per Second / Amount of Balls (1000+)}
+{After 8000, both methods become unplayable with constant physics stalls.}
+{1.0}
+
 
 \section{Evaluation}
 Evaluation - An evaluation of your implementation. Points to consider discussing in this
@@ -140,11 +177,7 @@ inspired your choice
 \section{Future Work}
 
 
-\figuremacroW
-{balls2}
-{Project Inspiration}
-{\protect\cite{advert}}
-{0.96}
+
 
 
 

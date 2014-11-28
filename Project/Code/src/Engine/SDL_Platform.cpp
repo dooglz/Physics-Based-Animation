@@ -9,8 +9,8 @@
 #include <glew/glew.h>
 #include <sdl/SDL.h>
 //#include <sdl\SDL_opengl.h>
-#define DEFAULT_HEIGHT 1080
-#define DEFAULT_WIDTH 1920
+#define DEFAULT_HEIGHT 720
+#define DEFAULT_WIDTH 1280
 
 
 void SDLVersionInfo()
@@ -124,7 +124,7 @@ namespace Engine{
 			_screenWidth = DEFAULT_WIDTH;
 			printf("Display Resolution: %i x %i\n", _screenWidth, _screenHeight);
 			//Vsync
-			ASSERT(SDL_GL_SetSwapInterval(1) >= 0);
+			ASSERT(SDL_GL_SetSwapInterval(0) >= 0);
 		}
 
 		void SDL_Platform::Shutdown()
