@@ -140,6 +140,18 @@ The Grid is implemented as a 2D array of Vector pointers, each vector contains p
 Experimental Results/description of your physics-based simulation implementation
 including screen-shots.
 
+
+\paragraph{Spacial Partitioning Results}
+The use of spacial partitioning dramatically increased the performance of the overall simulation, the results can be seen in Figure: \ref{fig:chart1-a} and Figure: \ref{fig:chart1-b}. 
+This was an initial implementation, and could be optimised further by varying the size of the sectors and having the grid divide in all 3 Dimensions.
+
+\paragraph{Simulation results}
+Profiling the application revealed that the bottlenecks in the simulation reside mostly in the collision detection phase. In the event that there are thousands of simultaneous collisions, the collision resolver code may overtake the detection code in terms of processor time. This can happen at the start of the program, ass the balls start close to each other.
+
+\paragraph{Rendering bottlenecks}
+Without physics, on the hardware used to test this project, the maximum number of static spheres that could be rendered was around 20'000. The spheres are loaded in from a model file, each has 240 polygons.
+
+
 \figuremacroW
 {screen2}
 {Screenshot}
@@ -152,13 +164,13 @@ including screen-shots.
 {Screenshot}
 {1.0}
 
-\figuremacroW
+\figuremacroF
 {chart1-a}
 {Frames Per Second / Amount of Balls}
 {Upto 400 balls, spacial partitioning gives no noticeable improvement}
 {1.0}
 
-\figuremacroW
+\figuremacroF
 {chart1-b}
 {Frames Per Second / Amount of Balls (1000+)}
 {After 8000, both methods become unplayable with constant physics stalls.}

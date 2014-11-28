@@ -70,13 +70,13 @@ void Game::Init(){
 	Engine::ActiveScene->AddEntity(ent2);
 	
 	float aa = 0;
-	unsigned int a = 1500;
+	unsigned int a = 2;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
 		Engine::Entity* e = new Engine::Entity();
 		e->SetName("Cool spher");
-		e->setPosition(Vector3(50.0f*sin(aa*3.0f), 30.0f + 25.0f*sin(aa*4.0f), -50.0f*cos(aa*3.0f)));
+		e->setPosition(Vector3(50.0f*sin(aa*5.0f), 30.0f + 25.0f*sin(aa*6.0f), -50.0f*cos(aa*5.0f)));
 		e->AddComponent(new Engine::CmMeshRenderer());
 		e->getComponent<Engine::CmMeshRenderer>()->setMesh("models/sphereI2.obj");
 		e->getComponent<Engine::CmMeshRenderer>()->culled = true;
