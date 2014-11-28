@@ -117,6 +117,12 @@ The Physics library is rather small compared to the Engine library, it makes use
 \paragraph{Physics Process}
 There are multiple physics updates or "Ticks" every frame. The time the simulation uses as the the time between ticks is constant, in this project the tickrate	is set to a 100th of a second. The amount of ticks per frame depends on how much real time has passed between frames and the tickrate.\\	
 At the start of each tick, the first process is collision detection. This checks every object against evy other object. Spacial partitioning is used to narrow this search space down to only check for collisions against objects that are near each other.
+\\
+Collision Detection uses the attributes of each physics object to determine if a collision has taken place. If it has, a collision object is created, consisting of information such as the collision normal, penetration depth and position.
+\\
+Once the detection process is finished, the collision resolver iterates through all of the collisions and calculates an impulse force to apply to each object to push them away from each other.
+\\
+Finally, each physics object is then "integrated", a process of applying the added forces and rotational torques to the position, velocity and acceleration of each object. Other calculations, such as updating the inertia tensor matrix are also calculated here.
 	
 \section{Results}
 Experimental Results/description of your physics-based simulation implementation
