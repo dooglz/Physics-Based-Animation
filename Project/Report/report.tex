@@ -151,18 +151,28 @@ Profiling the application revealed that the bottlenecks in the simulation reside
 \paragraph{Rendering bottlenecks}
 Without physics, on the hardware used to test this project, the maximum number of static spheres that could be rendered was around 20'000. The spheres are loaded in from a model file, each has 240 polygons.
 
+\paragraph{Physics stall}
+As the aim of this project was to develop a realtime physics application, with the purpose of integration into a larger game kept in mind, some methods were used to keep the framerate above 60fps. If the total time taken to process the needed amount of physics ticks execde a the total time between frames, the ticks stop being processed and the engine goes straight to rendering. This means that as the framerate lowers due to phsyics computation time, at some point the simulations starts to slow down, as less ticks are processed. This happens around the 100fps mark, the worst case scenario is that a single physics tick would take up more time than the engine can give to physics, in which case the framerate will quickly sink towards 0. This can be observed when the simualtion size exeeds 8000 on Figure: \ref{fig:chart1-b}.
+
 
 \figuremacroW
-{screen2}
-{Screenshot}
+{screenshot3}
+{Starting position of Simulation}
 {Screenshot}
 {1.0}
 
 \figuremacroW
-{screen1}
-{Screenshot}
+{screenshot4}
+{Balls after the 3 secons of simulations}
 {Screenshot}
 {1.0}
+
+\figuremacroW
+{screenshot5}
+{Close up of Balls}
+{Screenshot}
+{1.0}
+
 
 \figuremacroF
 {chart1-a}
@@ -176,8 +186,13 @@ Without physics, on the hardware used to test this project, the maximum number o
 {After 8000, both methods become unplayable with constant physics stalls.}
 {1.0}
 
-
 \section{Evaluation}
+
+\paragraph{Scope}
+The results of the project have been inconclusive in determining the performance benefits of physics optimisation accross multiple platforms. The main shortcomming has been the Playstation 3 portion of the project. Due to unforseen technical problems and the time constraints of the project, the support for the Playstion 3 could not be completed to a level which would result in useable results.
+
+
+
 Evaluation - An evaluation of your implementation. Points to consider discussing in this
 section are:
  A comparison against the original concept
@@ -190,11 +205,14 @@ inspired your choice
 
 
 
-
-
-
 \bibliographystyle{acmsiggraph}
 \bibliography{report}
 
-\end{document}
 
+\figuremacroF
+{engineclasses}
+{Engine Dependency Graph}
+{PS3 Classes are ommitted}
+{1.0}
+
+\end{document}
