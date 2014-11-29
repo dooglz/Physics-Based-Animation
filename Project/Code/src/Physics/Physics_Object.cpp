@@ -1,3 +1,4 @@
+//Teh representation class for any object in the scene.
 #include "Physics_Object.h"
 #include "Physics.h"
 #include "../Engine/Utilities.h"

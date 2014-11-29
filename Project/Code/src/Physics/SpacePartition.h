@@ -1,3 +1,4 @@
+//Creates and manages the spacial partition, also used for returning a list of near objects
 #pragma once
 #include "../Engine/Maths.h"
 #include <vector>

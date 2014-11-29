@@ -85,11 +85,6 @@ PC exclusive titles tend to take a more relaxed approach to physics, due to the 
 {0.96}
 
 \section{Software Design}
-Methodology/Software design/logic control. You are expected to do some software
-modelling of your physics-based animation choice. At a minimum you are expected to
-provide some state modelling and sequence modelling. Avoid providing simple models just
-to fill in this section, and only highlight some of the core functionality.
-
 \subsection{Project Design}
 The solution is split into three projects: Physics, Engine, and Game.
 \paragraph{Game}
@@ -137,10 +132,6 @@ To reduce the search set when detecting collisions, spacial partitioning is used
 The Grid is implemented as a 2D array of Vector pointers, each vector contains pointers to physics object so the memory size used is minimal. The process of determining which container an object is in is based only on it's position, so a simple divide and round maths operation can be used. Therefore the overhead in updating and managing the grid is minimal, and the performance benefits of using it are substantial.
 	
 \section{Results}
-Experimental Results/description of your physics-based simulation implementation
-including screen-shots.
-
-
 \paragraph{Spacial Partitioning Results}
 The use of spacial partitioning dramatically increased the performance of the overall simulation, the results can be seen in Figure: \ref{fig:chart1-a} and Figure: \ref{fig:chart1-b}. 
 This was an initial implementation, and could be optimised further by varying the size of the sectors and having the grid divide in all 3 Dimensions.
@@ -189,21 +180,17 @@ As the aim of this project was to develop a realtime physics application, with t
 \section{Evaluation}
 
 \paragraph{Scope}
-The results of the project have been inconclusive in determining the performance benefits of physics optimisation accross multiple platforms. The main shortcomming has been the Playstation 3 portion of the project. Due to unforseen technical problems and the time constraints of the project, the support for the Playstion 3 could not be completed to a level which would result in useable results.
+The results of the project have been inconclusive in determining the performance benefits of physics optimisation across multiple platforms. The main shortcoming has been the Playstation 3 portion of the project. Due to unforeseen technical problems and the time constraints of the project, the support for the Playstion 3 could not be completed to a level which would result in usable results. Issues with the rendering framework and subtle differences in the maths libraries across the two platforms caused substantially more time spent on fixing code issues than developing features.
 
+\paragraph{Playstation 3 results}
+Unfortunately, optimising the code for the strengths of the Playstation 3, such as subdividing the work to the separate SPU processors was not achieved. Rendering issues caused the final output of the project to be generally unviewable on the Console.
 
-
-Evaluation - An evaluation of your implementation. Points to consider discussing in this
-section are:
- A comparison against the original concept
- Comparison against other simulations in the genre, particularly the ones that
-inspired your choice
- A discussion on the quality of the simulation
- Possible improvements to your simulation
+\paragraph{PC results}
+The results of the simulation were more positive on the PC architecture. The simulation runs well and without any major issues, major features detailed in the original design have been omitted due to time constraints. Visually the program is basic, without any graphics embellishments to bring the output closer to the original design vision.
 
 \section{Future Work}
-
-
+The primary focus for future work would be to fix and complete the Playstation code to bring it upto par with the PC code, then other features can be worked on. Firstly, dynamic control of simulation variables at runtime, allowing the user to interact with the simulation while it running. The User should be able to adjust parameters such as the  size of the world, the attributes of the spacial partitioning, and the ability to create and remove balls at will.\\
+More complex collision shapes would be the next area of work, followed by rendering improvements.
 
 \bibliographystyle{acmsiggraph}
 \bibliography{report}

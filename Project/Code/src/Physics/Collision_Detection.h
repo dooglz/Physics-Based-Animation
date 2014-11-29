@@ -1,3 +1,7 @@
+//Collision detection Headder
+//This class is respoinsible for detecting any collsisions between obejcts in the scene and creating a collsission object for them
+//This also hosts the resolve function which takes the collsiones and resolves them to impulses.
+
 #pragma once
 #include "../Engine/Maths.h"
 #include "Physics_Objects_shapes.h"

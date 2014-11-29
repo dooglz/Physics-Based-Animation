@@ -1,3 +1,4 @@
+//Teh representation class for any object in the scene.
 #pragma once
 #include "../Engine/Maths.h"
 #include <vector>

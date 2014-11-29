@@ -1,3 +1,4 @@
+//Creates and manages the spacial partition, also used for returning a list of near objects
 #include "SpacePartition.h"
 #include "Physics_Object.h"
 #include "../Engine/Maths.h"

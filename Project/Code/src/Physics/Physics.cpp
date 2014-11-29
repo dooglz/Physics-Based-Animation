@@ -1,3 +1,5 @@
+//The main breakway point for the physics simulation
+
 #include "Physics.h"
 #include "Physics_Object.h"
 #include "SpacePartition.h"
