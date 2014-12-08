@@ -96,11 +96,15 @@ void CmFpsMotor::Update(double delta)
 
 		//pitch
 		if (Engine::Input::getMapData("down") > 128){
-			Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), vRotSpeed) * Ent->getRotation());
+
+			
+
+			Ent->setRotation(AngleAxisToQuat(Rotate(Inverse(Ent->getRotation()), FORWARD), vRotSpeed) * Ent->getRotation());
 			verticalAngle -= 0.01f;
 		}
 		if (Engine::Input::getMapData("up") > 128){
-			Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), -vRotSpeed) * Ent->getRotation());
+			// Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), -vRotSpeed) * Ent->getRotation());
+			Ent->setRotation(AngleAxisToQuat(Rotate(Inverse(Ent->getRotation()), FORWARD), -vRotSpeed) * Ent->getRotation());
 			verticalAngle += 0.01f;
 		}
 

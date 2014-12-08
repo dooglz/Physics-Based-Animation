@@ -65,7 +65,7 @@ namespace Physics{
 		#endif
 	}
 
-	std::vector<CPhysicsObject*>* CSpacePartition::getSpace(Vector3& Position)
+	std::vector<CPhysicsObject*>* CSpacePartition::getSpace(const Vector3& Position)
 	{
 		unsigned int X, Z;
 		#if ( DIMENSTIONS == 3)
@@ -82,7 +82,7 @@ namespace Physics{
 		#endif	
 	}
 
-	std::vector<CPhysicsObject*>** CSpacePartition::getSurroundingSpaces(Vector3& Position)
+	std::vector<CPhysicsObject*>** CSpacePartition::getSurroundingSpaces(const Vector3& Position)
 	{
 		unsigned int X, Z;
 

@@ -384,6 +384,12 @@ Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVe
 		);
 }
 
+
+Matrix4 Inverse(const Matrix4 m){ return  Vectormath::Aos::inverse(m); }
+Matrix3 Inverse(const Matrix3 m){ return  Vectormath::Aos::inverse(m); }
+//TODO check if this is right
+Quaternion Inverse(const Quaternion q){ return  (Vectormath::Aos::conj(q) / dot(q, q)); }
+
 #endif
 
 Vector3 GetForwardVector(Quaternion q)

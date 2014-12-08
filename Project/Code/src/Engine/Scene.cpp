@@ -26,25 +26,36 @@ namespace Engine{
 	}
 
 	void Scene::Render(){
+		static unsigned int i = 0;
 		if (_ents.size() < 1){ return; }
 		Matrix4 viewMat;
 		if (_activeCamera == NULL){
 			printf("No active Camera in Scene!\n");
 			Renderer->SetViewMatrix(Matrix4(1.0f));
 		}else{
-		#if defined(_PC_)
-			viewMat = _activeCamera->GetParent()->getTranform();
+
 			Quaternion cq = _activeCamera->GetParent()->getRotation();
 			Vector3 pos = _activeCamera->GetParent()->getPosition();
 			Vector3 up = GetUpVector(cq);
-			Vector3 forwards =GetForwardVector(cq);
+			Vector3 forwards = GetForwardVector(cq);
+			
+			//pos.setY(-pos.getY());
+			#if defined(_PC_)
+				viewMat = glm::lookAt(pos, pos + forwards, up);
+			#elif defined(_PS3_)
+				viewMat = lookat(pos, pos + forwards, up);
+			#endif
 
-			viewMat = glm::lookAt(pos, pos + forwards, up);
-			//viewMat = Inverse(viewMat);
-		#elif defined(_PS3_)
-			//viewMat = lookat(_activeCamera->GetParent()->getPosition(), Vector3(0, 0, 0), Vector3(0, 1.0f, 0));
-			viewMat = oviewMatrix;
-		#endif
+				if (i % 100 == 0)
+				{
+					printf("\n\n\n\n\n\n");
+					print(pos);
+					print(up);
+					print(forwards);
+					print(viewMat);
+				}
+				++i;
+			
 			Renderer->SetViewMatrix(viewMat);
 		}
 

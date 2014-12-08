@@ -26,6 +26,7 @@ struct stvec2
 	#include "glm/gtc/matrix_access.hpp"
 	#include "glm/gtx/norm.hpp"
 	//TODO implement generic methods to change values in vectors
+	#define Rotate(a,b) b*a
 	#define Matrix4 glm::mat4
 	#define Matrix3 glm::mat3
 	#define Vector4 glm::vec4
@@ -63,6 +64,7 @@ struct stvec2
 	#define Point3 Vectormath::Aos::Point3
 	#define Quaternion Vectormath::Aos::Quat
 	//
+	#define Rotate Vectormath::Aos::rotate
 	#define Perspective Matrix4::perspective
 	#define Length Vectormath::Aos::length
 	#define Distance Vectormath::Aos::distance
@@ -71,7 +73,12 @@ struct stvec2
 	#define Dot Vectormath::Aos::dot
 	#define Cross Vectormath::Aos::cross
 
-	#define Inverse Vectormath::Aos::inverse
+	Matrix4 Inverse(const Matrix4 m);
+	Matrix3 Inverse(const Matrix3 m);
+
+	//TODO check if this is right
+	Quaternion Inverse(const Quaternion q);
+
 	#define Lookat Vectormath::Aos::Matrix4::lookAt
 	//#define .getXYZ() .getXYZ()
 	//#define isnan isNaN

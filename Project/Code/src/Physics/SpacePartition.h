@@ -23,8 +23,8 @@ namespace Physics{
 #endif
 
 	public:
-		static std::vector<CPhysicsObject*>* getSpace(Vector3& Position);
-		static std::vector<CPhysicsObject*>** getSurroundingSpaces(Vector3& Position);
+		static std::vector<CPhysicsObject*>* getSpace(const Vector3& Position);
+		static std::vector<CPhysicsObject*>** getSurroundingSpaces(const Vector3& Position);
 		static void Register(CPhysicsObject* const obj);
 		static void Remove(const CPhysicsObject& obj);
 		static void Update();

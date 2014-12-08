@@ -12,7 +12,7 @@ namespace Engine{
 	{
 		#if defined(_PS3_)
 			//microseconds
-			return ((unsigned long)(sys_time_get_system_time()));
+		return ((double)(sys_time_get_system_time() / 100000));
 		#elif defined(_WINDOWS_)
 			return  ((double)(SDL_GetPerformanceCounter()) / ((double)SDL_GetPerformanceFrequency()));
 		#endif

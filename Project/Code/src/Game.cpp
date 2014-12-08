@@ -87,8 +87,8 @@ void Game::Init(){
 	
 	ent3 = new Engine::Entity();
 	ent3->SetName("Camera");
-	//ent3->setPosition(Vector3(0, 2.5, 0));
-	ent3->setPosition(Vector3(-70, 30, -70));
+	ent3->setPosition(Vector3(0, 5.5, 0));
+	//ent3->setPosition(Vector3(-70, 30, -70));
 	//ent3->setPosition(Vector3(-30, 2.5, 0));
 	//ent3->setRotation(Vector3(-0.20f,179.85f, 0));
 	//ent3->setRotation(Vector3(0.0f, 0.0f, 0));
