@@ -7,7 +7,7 @@
 	#include <sys/sys_time.h>
 #endif
 namespace Engine{
-	//Returns time in Microseconds.
+	//Returns time in Seconds.
 	double Time::getTime()
 	{
 		#if defined(_PS3_)

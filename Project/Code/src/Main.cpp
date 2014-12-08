@@ -23,7 +23,7 @@ int main(int argc, char** argv)
 	//Current time in Microseconds.
 	double currentTime = Engine::Time::getTime();
 	//60fps in Microseconds.
-	double tartgettime = 60;
+	double tartgettime = 1.0/60.0;
 	double accumulator = 0;
 
 	//Begin loop

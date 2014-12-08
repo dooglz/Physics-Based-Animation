@@ -34,7 +34,13 @@ namespace Engine{
 		}else{
 		#if defined(_PC_)
 			viewMat = _activeCamera->GetParent()->getTranform();
-			viewMat = Inverse(viewMat);
+			Quaternion cq = _activeCamera->GetParent()->getRotation();
+			Vector3 pos = _activeCamera->GetParent()->getPosition();
+			Vector3 up = GetUpVector(cq);
+			Vector3 forwards =GetForwardVector(cq);
+
+			viewMat = glm::lookAt(pos, pos + forwards, up);
+			//viewMat = Inverse(viewMat);
 		#elif defined(_PS3_)
 			//viewMat = lookat(_activeCamera->GetParent()->getPosition(), Vector3(0, 0, 0), Vector3(0, 1.0f, 0));
 			viewMat = oviewMatrix;

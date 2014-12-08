@@ -70,7 +70,7 @@ void Game::Init(){
 	Engine::ActiveScene->AddEntity(ent2);
 	
 	float aa = 0;
-	unsigned int a = 500;
+	unsigned int a = 0;
 	for (unsigned int i = 0; i < a; i++)
 	{
 		aa = (2.0f*(float)M_PI / ((float)a))*i;
@@ -90,7 +90,7 @@ void Game::Init(){
 	//ent3->setPosition(Vector3(0, 2.5, 0));
 	ent3->setPosition(Vector3(-70, 30, -70));
 	//ent3->setPosition(Vector3(-30, 2.5, 0));
-	ent3->setRotation(Vector3(-0.20f,179.85f, 0));
+	//ent3->setRotation(Vector3(-0.20f,179.85f, 0));
 	//ent3->setRotation(Vector3(0.0f, 0.0f, 0));
 	ent3->AddComponent(new CmFpsMotor());
 	ent3->AddComponent(new Engine::CmCamera());

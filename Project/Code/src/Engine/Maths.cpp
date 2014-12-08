@@ -388,10 +388,18 @@ Matrix4 lookat(const Vector3 eyePos, const Vector3 targetPos, const Vector3 UpVe
 
 Vector3 GetForwardVector(Quaternion q)
 {
-
+	/*
+	Matrix4 view = QuatToMatrix(q);
+	Vector3 m_xaxis = glm::vec3(view[0][0], view[1][0], view[2][0]);
+	Vector3 m_yaxis = glm::vec3(view[0][1], view[1][1], view[2][1]);
+	Vector3 m_zaxis = Vector3(view[2][0], view[2][1], view[2][2]);
+	return -m_zaxis;
+	*/
+	
 	return Vector3(2.0f * (q.getX() * q.getZ() + q.getW() * q.getY()),
 		2.0f * (q.getY() * q.getZ() - q.getW() * q.getX()),
 		1.0f - 2.0f * (q.getX() * q.getX() + q.getY() * q.getY()));
+		
 }
 
 Vector3 GetUpVector(Quaternion q)

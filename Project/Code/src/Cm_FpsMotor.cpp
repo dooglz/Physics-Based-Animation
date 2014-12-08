@@ -62,49 +62,63 @@ void CmFpsMotor::registerInputs()
 
 void CmFpsMotor::Update(double delta)
 {
-	//ijkl RCS
+
+	const float speed = 1.0f * delta;
+	const float hRotSpeed = 0.05f *speed;
+	const float vRotSpeed = 0.035f *speed;
 	Vector3 rot = Vector3(0);
-	if (Engine::Input::getMapData("J") > 128){
-		rot += Vector3(-1.0f, 0, 0);
-	}
-	if (Engine::Input::getMapData("L") > 128){
-		rot += Vector3(1.0f, 0, 0);
-	}
-	if (Engine::Input::getMapData("K") > 128){
-		rot += Vector3(0, 0, 1.0f);
-	}
-	if (Engine::Input::getMapData("I") > 128){
-		rot += Vector3(0, 0, -1.0f);
-	}
-	Ent->setPosition(Ent->getPosition() + rot*1.0f);
 
-	float speed =200.0f * delta;
-	float rotSpeed = 0.5f *speed;
-	//pitch
+	{
+		const Vector3 UP = Vector3(0, 1.0f, 0);
+		const Vector3 RIGHT = Vector3(0, 0, 1.0f);
+		const Vector3 FORWARD = Vector3(1.0f, 0, 0);
 
-	if (Engine::Input::getMapData("down") > 128){
-		Ent->setRotation(AngleAxisToQuat(Vector3(1, 0, 0)*Inverse(Ent->getRotation()), -rotSpeed) * Ent->getRotation());
-		verticalAngle -= 0.01f;
-	}
-	if (Engine::Input::getMapData("up") > 128){
-		Ent->setRotation(AngleAxisToQuat(Vector3(1, 0, 0)*Inverse(Ent->getRotation()), rotSpeed) * Ent->getRotation());
-		verticalAngle += 0.01f;
-	}
+		//ijklUO world translate RCS-like movement, 
+		if (Engine::Input::getMapData("J") > 128){
+			rot += -RIGHT;
+		}
+		if (Engine::Input::getMapData("L") > 128){
+			rot += RIGHT;
+		}
+		if (Engine::Input::getMapData("K") > 128){
+			rot += FORWARD;
+		}
+		if (Engine::Input::getMapData("I") > 128){
+			rot += -FORWARD;
+		}
+		if (Engine::Input::getMapData("U") > 128){
+			rot += UP;
+		}
+		if (Engine::Input::getMapData("O") > 128){
+			rot += -UP;
+		}
+		Ent->setPosition(Ent->getPosition() + rot*speed);
 
-	//yaw
-	if (Engine::Input::getMapData("left") > 128){
-		Ent->setRotation(AngleAxisToQuat(Vector3(0, 1, 0), rotSpeed) * Ent->getRotation());
-		horizontalAngle += 0.01f;
+		//pitch
+		if (Engine::Input::getMapData("down") > 128){
+			Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), vRotSpeed) * Ent->getRotation());
+			verticalAngle -= 0.01f;
+		}
+		if (Engine::Input::getMapData("up") > 128){
+			Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), -vRotSpeed) * Ent->getRotation());
+			verticalAngle += 0.01f;
+		}
+
+		//yaw
+		if (Engine::Input::getMapData("left") > 128){
+			Ent->setRotation(AngleAxisToQuat(UP, hRotSpeed) * Ent->getRotation());
+			horizontalAngle += 0.01f;
+		}
+		if (Engine::Input::getMapData("right") > 128){
+			Ent->setRotation(AngleAxisToQuat(UP, -hRotSpeed) * Ent->getRotation());
+			horizontalAngle -= 0.01f;
+		}	
 	}
-	if (Engine::Input::getMapData("right") > 128){
-		Ent->setRotation(AngleAxisToQuat(Vector3(0, 1, 0), -rotSpeed) * Ent->getRotation());
-		horizontalAngle -= 0.01f;
-	}	
 	Ent->setRotation(Normalize(Ent->getRotation()));
-	Quaternion inverse = Inverse(Ent->getRotation());
 
 	Vector3 right = GetRightVector(Ent->getRotation());
 	Vector3 direction  = GetForwardVector(Ent->getRotation());
+
 #if defined _PS3_
 	// Direction : Spherical coordinates to Cartesian coordinates conversion
 	direction = Vector3(
@@ -125,28 +139,23 @@ void CmFpsMotor::Update(double delta)
 
 #endif
 
-	//wasd
+	//First person fly camera movement
 	rot = Vector3(0);
 	if (Engine::Input::getMapData("D") > 128){
-		cameraPos += (1.0f)* right;
-		//rot.setX(-speed);
-		rot += (1.0f)* right;
-		//rot = GetForwardVector(Ent->getRotation());
+		//cameraPos += (speed)* right;
+		rot -= (speed)* right;
 	}
 	if (Engine::Input::getMapData("A") > 128){
-		cameraPos += (-1.0f)* right;
-		rot += (-1.0f)* right;
-		rot.setX(rot.getX() + speed);
+		//cameraPos += (speed)* right;
+		rot += (speed)* right;
 	}
 	if (Engine::Input::getMapData("S") > 128){
-		cameraPos += (-1.0f)*direction;
-		rot += (1.0f)*direction;
-		rot.setZ(-speed);
+		//cameraPos += (speed)*direction;
+		rot -= (speed)*direction;
 	}
 	if (Engine::Input::getMapData("W") > 128){
-		cameraPos += (1.0f)*direction;
-		rot += (-1.0f)*direction;
-		rot.setZ(rot.getZ() + speed);
+	//	cameraPos += (speed)*direction;
+		rot += (speed)*direction;
 	}
 	Ent->setPosition(Ent->getPosition() + rot);
 
