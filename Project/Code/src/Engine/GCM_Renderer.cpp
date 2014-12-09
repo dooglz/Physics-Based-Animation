@@ -318,6 +318,8 @@ namespace Engine{
 
 		void CGCM_Renderer::renderMesh(Mesh*const msh, const Matrix4& mvp)
 		{
+			//printf("\nPS3 Viewmat\n");
+			//print(_viewprojectionMat);
 
 			Matrix4 m4 = _viewprojectionMat* mvp;
 

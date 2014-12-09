@@ -48,11 +48,11 @@ namespace Engine{
 
 				if (i % 100 == 0)
 				{
-					printf("\n\n\n\n\n\n");
-					print(pos);
-					print(up);
-					print(forwards);
-					print(viewMat);
+					//printf("\n\n\n\n\n\n");
+					//print(pos);
+					//print(up);
+					//print(forwards);
+					//print(viewMat);
 				}
 				++i;
 			

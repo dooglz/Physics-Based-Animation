@@ -17,7 +17,7 @@ namespace Physics{
 
 	void PhysicsSytem::Tick(const double t, const  double timeStep)
 	{
-		CSpacePartition::Update();
+	//	CSpacePartition::Update();
 		//Integrate
 		for (std::vector<CPhysicsObject*>::iterator it = _scene.begin(); it != _scene.end(); ++it) {
 			(*it)->Integrate(t,timeStep);

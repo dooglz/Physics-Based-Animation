@@ -62,7 +62,6 @@ void CmFpsMotor::registerInputs()
 
 void CmFpsMotor::Update(double delta)
 {
-	printf("\n%f\n", delta);
 	const float speed = 1.0f * delta;
 	const float hRotSpeed = 0.05f *speed;
 	const float vRotSpeed = 0.035f *speed;
@@ -96,26 +95,19 @@ void CmFpsMotor::Update(double delta)
 
 		//pitch
 		if (Engine::Input::getMapData("down") > 128){
-
-			
-
 			Ent->setRotation(AngleAxisToQuat(Rotate(Inverse(Ent->getRotation()), FORWARD), vRotSpeed) * Ent->getRotation());
-			verticalAngle -= 0.01f;
 		}
 		if (Engine::Input::getMapData("up") > 128){
 			// Ent->setRotation(AngleAxisToQuat(FORWARD*Inverse(Ent->getRotation()), -vRotSpeed) * Ent->getRotation());
 			Ent->setRotation(AngleAxisToQuat(Rotate(Inverse(Ent->getRotation()), FORWARD), -vRotSpeed) * Ent->getRotation());
-			verticalAngle += 0.01f;
 		}
 
 		//yaw
 		if (Engine::Input::getMapData("left") > 128){
 			Ent->setRotation(AngleAxisToQuat(UP, hRotSpeed) * Ent->getRotation());
-			horizontalAngle += 0.01f;
 		}
 		if (Engine::Input::getMapData("right") > 128){
 			Ent->setRotation(AngleAxisToQuat(UP, -hRotSpeed) * Ent->getRotation());
-			horizontalAngle -= 0.01f;
 		}	
 	}
 	Ent->setRotation(Normalize(Ent->getRotation()));
@@ -123,48 +115,22 @@ void CmFpsMotor::Update(double delta)
 	Vector3 right = GetRightVector(Ent->getRotation());
 	Vector3 direction  = GetForwardVector(Ent->getRotation());
 
-#if defined _PS3_
-	// Direction : Spherical coordinates to Cartesian coordinates conversion
-	direction = Vector3(
-		cos(verticalAngle) * sin(horizontalAngle),
-		sin(verticalAngle),
-		cos(verticalAngle) * cos(horizontalAngle)
-		);
-
-	// Right vector
-	right = Vector3(
-		sin(horizontalAngle - 3.14f / 2.0f),
-		0,
-		cos(horizontalAngle - 3.14f / 2.0f)
-		);
-
-	// Up vector
-	Vector3 up = Cross(right, direction);
-
-#endif
-
 	//First person fly camera movement
 	rot = Vector3(0);
 	if (Engine::Input::getMapData("D") > 128){
-		//cameraPos += (speed)* right;
 		rot -= (speed)* right;
 	}
 	if (Engine::Input::getMapData("A") > 128){
-		//cameraPos += (speed)* right;
 		rot += (speed)* right;
 	}
 	if (Engine::Input::getMapData("S") > 128){
-		//cameraPos += (speed)*direction;
 		rot -= (speed)*direction;
 	}
 	if (Engine::Input::getMapData("W") > 128){
-	//	cameraPos += (speed)*direction;
 		rot += (speed)*direction;
 	}
+
 	Ent->setPosition(Ent->getPosition() + rot);
 
-#if defined _PS3_
-	oviewMatrix = lookat(cameraPos, cameraPos + direction, up);
-#endif
 
 }

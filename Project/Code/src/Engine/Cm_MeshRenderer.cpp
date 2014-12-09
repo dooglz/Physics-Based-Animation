@@ -4,6 +4,11 @@
 #include "MeshLoader.h"
 #include "Mesh.h"
 
+
+#include <iostream>
+#include <string>
+
+
 //TODO: remove this
 #include "OGL_Renderer.h"
 int culledObjects;
@@ -51,11 +56,21 @@ namespace Engine{
 			}
 		}
 		renderedObjects++;
+		//printf("Transform object ent:\n");
+		//std::cout << Ent->GetName() << std::endl;
 #if defined(_PC_)
+		
+		print(Ent->getTranform());
 		Renderer->renderMesh(_mesh, Ent->getTranform());
 #elif defined(_PS3_)
-		Matrix4 trn = Matrix4::translation(Ent->getPosition()) *  Matrix4::scale(Ent->getScale());
-		Renderer->renderMesh(_mesh, trn);
+		Matrix4 trn = Matrix4::translation(Ent->getPosition());
+		Matrix4 scl = Matrix4::scale(Ent->getScale());
+		Matrix4 rot = Matrix4::rotation(Ent->getRotation());
+		//return (scl * rot * trn);
+
+		//print(trn);
+		//Renderer->renderMesh(_mesh, trn);
+		Renderer->renderMesh(_mesh, (scl * rot * trn));
 #endif
 	}
 
