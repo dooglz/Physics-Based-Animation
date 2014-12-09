@@ -21,17 +21,17 @@ void print(const Quaternion& v){
 
 void print(const Matrix3& v){
 	printf("M3(%f,%f,%f\n%f,%f,%f\n%f,%f,%f)\n",
-		v[0, 0], v[0, 1], v[0, 2],
-		v[1, 0], v[1, 1], v[1, 2],
-		v[2, 0], v[2, 1], v[2, 2]);
+		v[0][0], v[0][1], v[0][2],
+		v[1][0], v[1][1], v[1][2],
+		v[2][0], v[2][1], v[2][2]);
 }
 
 void print(const Matrix4& v){
 	printf("M4(%f,%f,%f,%f\n%f,%f,%f,%f\n,%f,%f,%f,%f\n,%f,%f,%f,%f)\n",
-		v[0, 0], v[0, 1], v[0, 2], v[0, 3],
-		v[1, 0], v[1, 1], v[1, 2], v[1, 3],
-		v[2, 0], v[2, 1], v[2, 2], v[2, 3],
-		v[3, 0], v[3, 1], v[3, 2], v[3, 3]);
+		v[0][0], v[0][1], v[0][2], v[0][3],
+		v[1][0], v[1][1], v[1][2], v[1][3],
+		v[2][0], v[2][1], v[2][2], v[2][3],
+		v[3][0], v[3][1], v[3][2], v[3][3]);
 }
 
 void EulerToAngleAxis(const Vector3 euler, Vector3 &axis, float &angle)

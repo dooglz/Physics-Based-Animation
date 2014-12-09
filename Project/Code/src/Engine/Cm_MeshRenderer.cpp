@@ -54,7 +54,7 @@ namespace Engine{
 #if defined(_PC_)
 		Renderer->renderMesh(_mesh, Ent->getTranform());
 #elif defined(_PS3_)
-		Matrix4 trn = Matrix4::translation(-Ent->getPosition()) *  Matrix4::scale(Ent->getScale());
+		Matrix4 trn = Matrix4::translation(Ent->getPosition()) *  Matrix4::scale(Ent->getScale());
 		Renderer->renderMesh(_mesh, trn);
 #endif
 	}

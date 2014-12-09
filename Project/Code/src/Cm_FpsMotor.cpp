@@ -62,7 +62,7 @@ void CmFpsMotor::registerInputs()
 
 void CmFpsMotor::Update(double delta)
 {
-
+	printf("\n%f\n", delta);
 	const float speed = 1.0f * delta;
 	const float hRotSpeed = 0.05f *speed;
 	const float vRotSpeed = 0.035f *speed;

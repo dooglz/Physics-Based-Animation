@@ -11,8 +11,8 @@ namespace Engine{
 	double Time::getTime()
 	{
 		#if defined(_PS3_)
-			//microseconds
-		return ((double)(sys_time_get_system_time() / 100000));
+			//microseconds							
+		return (((double)(sys_time_get_system_time())) * 0.000001);
 		#elif defined(_WINDOWS_)
 			return  ((double)(SDL_GetPerformanceCounter()) / ((double)SDL_GetPerformanceFrequency()));
 		#endif
