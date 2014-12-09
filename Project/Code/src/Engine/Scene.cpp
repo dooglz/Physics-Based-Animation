@@ -36,23 +36,45 @@ namespace Engine{
 
 			Quaternion cq = _activeCamera->GetParent()->getRotation();
 			Vector3 pos = _activeCamera->GetParent()->getPosition();
-			Vector3 up = GetUpVector(cq);
-			Vector3 forwards = GetForwardVector(cq);
-			
+
+			Vector3 up = Normalize(GetUpVector(cq));
+			Vector3 forwards = Normalize(GetForwardVector(cq));
+			Vector3 right = Normalize(GetRightVector(cq));
+
 			//pos.setY(-pos.getY());
 			#if defined(_PC_)
 				viewMat = glm::lookAt(pos, pos + forwards, up);
 			#elif defined(_PS3_)
-				viewMat = lookat(pos, pos + forwards, up);
+				//pos.setY(-pos.getY());
+				float px = pos.getX();
+				float py = pos.getY();
+				float pz = pos.getZ();
+				//
+				float fx = forwards.getX();
+				float fy = forwards.getY();
+				float fz = forwards.getZ();
+				//
+				float ux = up.getX();
+				float uy = up.getY();
+				float uz = up.getZ();
+				//
+				pos = Vector3(px,py,pz);
+				forwards = Vector3(fx, fy, fz);
+				up = Vector3(ux, uy, uz);
+
+				//pos = (-30.0f, 10.0f, -30.0f);
+				viewMat = lookat(Vector3(-100.0f, 60.0f, -100.0f),	Vector3(0.0f, 0.0f, 0.0f), Vector3(0.0f, 1.0f, 0.0f));
+				//up = Cross(right, forwards);
+				//viewMat = lookat(pos, pos + forwards, up);
 			#endif
 
 				if (i % 100 == 0)
 				{
-					//printf("\n\n\n\n\n\n");
-					//print(pos);
-					//print(up);
-					//print(forwards);
-					//print(viewMat);
+					printf("\n\n\n\n\n\n");
+					print(pos);
+					print(up);
+					print(forwards);
+					print(viewMat);
 				}
 				++i;
 			

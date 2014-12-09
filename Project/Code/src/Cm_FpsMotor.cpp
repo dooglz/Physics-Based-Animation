@@ -112,8 +112,8 @@ void CmFpsMotor::Update(double delta)
 	}
 	Ent->setRotation(Normalize(Ent->getRotation()));
 
-	Vector3 right = GetRightVector(Ent->getRotation());
-	Vector3 direction  = GetForwardVector(Ent->getRotation());
+	Vector3 right = Normalize(GetRightVector(Ent->getRotation()));
+	Vector3 direction  = Normalize(GetForwardVector(Ent->getRotation()));
 
 	//First person fly camera movement
 	rot = Vector3(0);

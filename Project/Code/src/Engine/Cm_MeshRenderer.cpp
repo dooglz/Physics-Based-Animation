@@ -60,7 +60,7 @@ namespace Engine{
 		//std::cout << Ent->GetName() << std::endl;
 #if defined(_PC_)
 		
-		print(Ent->getTranform());
+		//print(Ent->getTranform());
 		Renderer->renderMesh(_mesh, Ent->getTranform());
 #elif defined(_PS3_)
 		Matrix4 trn = Matrix4::translation(Ent->getPosition());
@@ -70,7 +70,9 @@ namespace Engine{
 
 		//print(trn);
 		//Renderer->renderMesh(_mesh, trn);
-		Renderer->renderMesh(_mesh, (scl * rot * trn));
+		//Renderer->renderMesh(_mesh, (scl * rot * trn));
+		Renderer->renderMesh(_mesh, (trn * scl * rot));
+		//Renderer->renderMesh(_mesh, (scl * trn));
 #endif
 	}
 
