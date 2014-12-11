@@ -3,29 +3,27 @@
 #include "Maths.h"
 #include <vector>
 
-namespace Engine{
-	namespace OGL{
-		class OGL_ShaderProgram;
-		class COGL_Renderer : public CRenderer
-		{
-		private:
+namespace Engine {
+namespace OGL {
+class OGL_ShaderProgram;
+class COGL_Renderer : public CRenderer {
+ private:
+ protected:
+  static OGL::OGL_ShaderProgram* _defaultProgram;
+  static void loadShaders();
+  static std::vector<const Vector3> linebuffer;
+  void ProcessLines();
 
-		protected:
-			static OGL::OGL_ShaderProgram* _defaultProgram;
-			static void loadShaders();
-			static std::vector<const Vector3> linebuffer;
-			void ProcessLines();
-		public:
-			COGL_Renderer();
-			void renderMesh(Mesh*const msh, const Matrix4& mvp);
-			void DrawLine(const Vector3& p1, const Vector3& p2);
-			void DrawCross(const Vector3& p1, const float size);
-			void PrepFrame();
-			void PostRender();
-			void clearSurface();
-			//
-			static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
-		};
-
-	}
+ public:
+  COGL_Renderer();
+  void renderMesh(Mesh* const msh, const Matrix4& mvp);
+  void DrawLine(const Vector3& p1, const Vector3& p2);
+  void DrawCross(const Vector3& p1, const float size);
+  void PrepFrame();
+  void PostRender();
+  void clearSurface();
+  //
+  static OGL::OGL_ShaderProgram* GetDefaultShaderProgram();
+};
+}
 }

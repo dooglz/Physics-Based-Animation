@@ -1,11 +1,11 @@
 #pragma once
 #include "Engine/Component.h"
 
-class CmFpsMotor: public Engine::CComponent{
+class CmFpsMotor : public Engine::CComponent {
+ protected:
+  void registerInputs();
 
-protected:
-	void registerInputs();
-public:
-	void Update(double delta);
-	CmFpsMotor();
+ public:
+  void Update(double delta);
+  CmFpsMotor();
 };

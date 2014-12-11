@@ -1,28 +1,21 @@
 #include "Cm_Camera.h"
 #include "Scene.h"
 
-namespace Engine{
+namespace Engine {
 
-	CmCamera::CmCamera() : CComponent("Camera"){
+CmCamera::CmCamera() : CComponent("Camera") {}
 
-	}
+CmCamera::~CmCamera() {}
 
-	CmCamera::~CmCamera()
-	{
+void CmCamera::Activate() {
+  _active = true;
+  ActiveScene->SetActiveCamera(this);
+}
 
-	}
+void CmCamera::Deactivate() {
+  _active = false;
+  ActiveScene->SetActiveCamera(NULL);
+}
 
-	void CmCamera::Activate(){
-		_active = true;
-		ActiveScene->SetActiveCamera(this);
-	}
-
-	void CmCamera::Deactivate(){
-		_active = false;
-		ActiveScene->SetActiveCamera(NULL);
-	}
-
-	bool CmCamera::IsActive(){
-		return _active;
-	}
+bool CmCamera::IsActive() { return _active; }
 }

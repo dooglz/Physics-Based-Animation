@@ -2,53 +2,54 @@
 #include <string>
 #include "Maths.h"
 
-namespace Engine{
-	namespace OGL{
-		class OGL_Shader{
+namespace Engine {
+namespace OGL {
+class OGL_Shader {
+ protected:
+  //! A table of paramaters/uniforms within the shader for quick lookups.
+  // std :: map <std :: string , CGparameter > _uniforms;
+  unsigned int _shaderID;
+  unsigned int _shaderType;  // GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
 
-		protected:
+ public:
+  //! Loads a compiled shader from a file and stores it into Program in an
+  //unitialised state
+  void LoadBinaryShader(std::string name);
 
-			//! A table of paramaters/uniforms within the shader for quick lookups.
-			//std :: map <std :: string , CGparameter > _uniforms;
-			unsigned int _shaderID;
-			unsigned int _shaderType; //GL_VERTEX_SHADER or GL_FRAGMENT_SHADER.
+  void LoadSourceShader(std::string name);
 
-		public:
+  //! Parses a shader stored in a char array and stores it into Program in an
+  //unitialised state
+  void loadCharArrayShader(const unsigned char* shaderCode);
 
-			//! Loads a compiled shader from a file and stores it into Program in an unitialised state
-			void LoadBinaryShader(std::string name);
+  //! Initializes the shader program.
+  void initProgram(bool storeOnRSX);
 
-			void LoadSourceShader(std::string name);
+  //! Get a shader parameter by name
+  // CGparameter GetParameter(std::string name);
 
-			//! Parses a shader stored in a char array and stores it into Program in an unitialised state
-			void loadCharArrayShader(const unsigned char * shaderCode);
+  //! Set a named paramter value
+  // virtual void  SetParameter (CGparameter param, float * data ) = 0;
 
-			//! Initializes the shader program.
-			void initProgram(bool storeOnRSX);
+  //! Set a named paramter value
+  void SetParameter(std::string name, float* data);
 
-			//! Get a shader parameter by name
-			//CGparameter GetParameter(std::string name);
+  //! Transposes a matrix into a 2d float[] and stores into a named paramter
+  //value
+  void SetParameterM(std::string name, Matrix4& totranpose);
 
-			//! Set a named paramter value
-			//virtual void  SetParameter (CGparameter param, float * data ) = 0;
+  //! Transposes a matrix into a 2d float[] and stores into a named paramter
+  //value
+  // void SetParameterM (CGparameter param, Vectormath::Aos::Matrix4 &
+  // totranpose );
 
-			//! Set a named paramter value
-			void SetParameter(std::string name, float * data);
+  //! The shader program, residing in main memory
+  // CGprogram program;
 
-			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			void SetParameterM(std::string name, Matrix4 & totranpose);
+  //! The shader program code
+  // void* ucode{};
 
-			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			//void SetParameterM (CGparameter param, Vectormath::Aos::Matrix4 & totranpose );
-
-			//! The shader program, residing in main memory
-			//CGprogram program;
-
-			//! The shader program code
-			//void* ucode{};
-
-			unsigned int getID(){ return _shaderID; };
-		};
-
-	}
+  unsigned int getID() { return _shaderID; };
+};
+}
 }

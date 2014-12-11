@@ -3,66 +3,61 @@
 #include "Renderer.h"
 #include "Physics_Interface.h"
 
-namespace Engine{
-	CmPhysics::CmPhysics(std::string s) : Engine::CComponent(s)
-	{
-		//_showdebug = true;
-	}
+namespace Engine {
+CmPhysics::CmPhysics(std::string s) : Engine::CComponent(s) {
+  //_showdebug = true;
+}
 
-	CmPhysics::~CmPhysics(){}
+CmPhysics::~CmPhysics() {}
 
-	float CmPhysics::GetMass(){ return _po->GetMass(); }
-	void CmPhysics::SetMass(float m){ _po->SetMass(m); }
-	bool CmPhysics::UsesGravity(){ return  _po->UsesGravity(); }
-	void CmPhysics::SetUsesGravity(bool b){ _po->SetUsesGravity(b); }
+float CmPhysics::GetMass() { return _po->GetMass(); }
+void CmPhysics::SetMass(float m) { _po->SetMass(m); }
+bool CmPhysics::UsesGravity() { return _po->UsesGravity(); }
+void CmPhysics::SetUsesGravity(bool b) { _po->SetUsesGravity(b); }
 
-	void CmPhysics::Update(double delta)
-	{
-		if (!IsIdentical(_po->getPosition(), Ent->getPosition())){
-			Ent->setPosition(_po->getPosition());
-		}	
-		if  (!IsIdentical(_po->getRotation(),Ent->getRotation())){
-			Ent->setRotation(_po->getRotation());
-		}
-	}
-	void CmPhysics::Render()
-	{
-		if (_showdebug)
-		{
-			//Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
-			std::vector<Vector3> arr = _po->getDebugLines();
-			for (unsigned int i = 0; i < arr.size();)
-			{
-				Vector3 a = arr[i];
-				Vector3 b = arr[i + 1];
-				Renderer->DrawLine(arr[i], arr[i+1]);
-				i += 2;
-			}
-		}
-	}
-	//--
+void CmPhysics::Update(double delta) {
+  if (!IsIdentical(_po->getPosition(), Ent->getPosition())) {
+    Ent->setPosition(_po->getPosition());
+  }
+  if (!IsIdentical(_po->getRotation(), Ent->getRotation())) {
+    Ent->setRotation(_po->getRotation());
+  }
+}
+void CmPhysics::Render() {
+  if (_showdebug) {
+    // Renderer->DrawLine(Vector3(0.0f), Ent->getPosition());
+    std::vector<Vector3> arr = _po->getDebugLines();
+    for (unsigned int i = 0; i < arr.size();) {
+      Vector3 a = arr[i];
+      Vector3 b = arr[i + 1];
+      Renderer->DrawLine(arr[i], arr[i + 1]);
+      i += 2;
+    }
+  }
+}
+//--
 
-	CmPhysics_Cuboid::CmPhysics_Cuboid(float mass, Vector3 position, Quaternion rotation, float lw, float lh, float ld) :CmPhysics("Physics Cuboid")
-	{
-		_po = PhysicsSolver->CreateCubeObject(mass, position, rotation, lw, lh, ld);
-	}
+CmPhysics_Cuboid::CmPhysics_Cuboid(float mass, Vector3 position,
+                                   Quaternion rotation, float lw, float lh,
+                                   float ld)
+    : CmPhysics("Physics Cuboid") {
+  _po = PhysicsSolver->CreateCubeObject(mass, position, rotation, lw, lh, ld);
+}
 
-	CmPhysics_Cuboid::~CmPhysics_Cuboid()
-	{}
+CmPhysics_Cuboid::~CmPhysics_Cuboid() {}
 
-	CmPhysics_Sphere::CmPhysics_Sphere(float mass, Vector3 position, Quaternion rotation, float radius) :CmPhysics("Physics Sphere")
-	{
-		_po = PhysicsSolver->CreateSphereObject(mass, position, rotation, radius);
-	}
+CmPhysics_Sphere::CmPhysics_Sphere(float mass, Vector3 position,
+                                   Quaternion rotation, float radius)
+    : CmPhysics("Physics Sphere") {
+  _po = PhysicsSolver->CreateSphereObject(mass, position, rotation, radius);
+}
 
-	CmPhysics_Sphere::~CmPhysics_Sphere()
-	{}
-	
-	CmPhysics_Plane::CmPhysics_Plane(Vector3 position,Vector3 normal) :CmPhysics("Physics Plane")
-	{
-		_po = PhysicsSolver->CreatePlaneObject(position, normal);
-	}
+CmPhysics_Sphere::~CmPhysics_Sphere() {}
 
-	CmPhysics_Plane::~CmPhysics_Plane()
-	{}
+CmPhysics_Plane::CmPhysics_Plane(Vector3 position, Vector3 normal)
+    : CmPhysics("Physics Plane") {
+  _po = PhysicsSolver->CreatePlaneObject(position, normal);
+}
+
+CmPhysics_Plane::~CmPhysics_Plane() {}
 }

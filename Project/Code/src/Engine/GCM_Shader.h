@@ -1,56 +1,57 @@
 #pragma once
 #include "Maths.h"
 #include <map>
-#include <cell/gcm.h>	//for CGprogram
+#include <cell/gcm.h>  //for CGprogram
 
 /*! \brief PS3 shader class
 * \ingroup PS3_Engine
 */
-namespace Engine{
-	namespace GCM{
-		class GCM_Shader{
+namespace Engine {
+namespace GCM {
+class GCM_Shader {
+ private:
+  //! A table of paramaters/uniforms within the shader for quick lookups.
+  std::map<std::string, CGparameter> _uniforms;
 
-		private:
+ public:
+  //! Loads a compiled shader from a file and stores it into Program in an
+  //unitialised state
+  void LoadBinaryShader(std::string name);
 
-			//! A table of paramaters/uniforms within the shader for quick lookups.
-			std::map <std::string, CGparameter > _uniforms;
+  //! Parses a shader stored in a char array and stores it into Program in an
+  //unitialised state
+  void loadCharArrayShader(const unsigned char* shaderCode);
 
-		public:
+  //! Initializes the shader program.
+  void initProgram(bool storeOnRSX);
 
-			//! Loads a compiled shader from a file and stores it into Program in an unitialised state
-			void LoadBinaryShader(std::string name);
+  //! Get a shader parameter by name
+  CGparameter GetParameter(std::string name);
 
-			//! Parses a shader stored in a char array and stores it into Program in an unitialised state
-			void loadCharArrayShader(const unsigned char * shaderCode);
+  //! Set a named paramter value
+  virtual void SetParameter(CGparameter param, float* data) = 0;
 
-			//! Initializes the shader program.
-			void initProgram(bool storeOnRSX);
+  //! Set a named paramter value
+  void SetParameter(std::string name, float* data);
 
-			//! Get a shader parameter by name
-			CGparameter GetParameter(std::string name);
+  //! Transposes a matrix into a 2d float[] and stores into a named paramter
+  //value
+  void SetParameterM(std::string name, const Matrix4& totranpose);
 
-			//! Set a named paramter value
-			virtual void  SetParameter(CGparameter param, float * data) = 0;
+  //! Transposes a matrix into a 2d float[] and stores into a named paramter
+  //value
+  void SetParameterM(CGparameter param, const Matrix4& totranpose);
 
-			//! Set a named paramter value
-			void SetParameter(std::string name, float * data);
+  //! The shader program, residing in main memory
+  CGprogram program;
 
-			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			void SetParameterM(std::string name, const Matrix4 & totranpose);
+  //! The shader program code
+  void* ucode;
 
-			//! Transposes a matrix into a 2d float[] and stores into a named paramter value 
-			void SetParameterM(CGparameter param, const Matrix4 & totranpose);
+  //! The memory address offset of the program
+  std::uint32_t offset;
 
-			//! The shader program, residing in main memory
-			CGprogram program;
-
-			//! The shader program code
-			void* ucode;
-
-			//! The memory address offset of the program
-			std::uint32_t offset;
-
-			virtual ~GCM_Shader(){};
-		};
-	}
+  virtual ~GCM_Shader(){};
+};
+}
 }

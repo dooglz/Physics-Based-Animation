@@ -9,20 +9,20 @@ class btDiscreteDynamicsWorld;
 
 //#include "btBulletDynamicsCommon.h"
 //#include "BulletCollision\Gimpact\btGImpactCollisionAlgorithm.h"
-namespace Engine{
+namespace Engine {
 
-	class CBulletSolver : public CPhysicsSolver{
+class CBulletSolver : public CPhysicsSolver {
+ protected:
+  btBroadphaseInterface* broadphase;
+  btDefaultCollisionConfiguration* collisionConfiguration;
+  btCollisionDispatcher* dispatcher;
+  btSequentialImpulseConstraintSolver* solver;
+  btDiscreteDynamicsWorld* dynamicsWorld;
 
-	protected:
-		btBroadphaseInterface* broadphase;
-		btDefaultCollisionConfiguration* collisionConfiguration;
-		btCollisionDispatcher* dispatcher;
-		btSequentialImpulseConstraintSolver* solver;
-		btDiscreteDynamicsWorld* dynamicsWorld;
-	public:
-		void Init();
-		void Tick(unsigned long t, unsigned long  timeStep);
-		void Shutdown();
-		void createPlaneShape(Vector3 normal, float distance);
-	};
+ public:
+  void Init();
+  void Tick(unsigned long t, unsigned long timeStep);
+  void Shutdown();
+  void createPlaneShape(Vector3 normal, float distance);
+};
 }

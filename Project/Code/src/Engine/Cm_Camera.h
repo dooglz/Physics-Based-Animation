@@ -1,22 +1,22 @@
 #pragma once
 #include "Component.h"
 
-namespace Engine{
-	class Mesh;
-	class CmCamera : public CComponent{
+namespace Engine {
+class Mesh;
+class CmCamera : public CComponent {
+ protected:
+  Mesh* _mesh;
+  bool _active;
 
-	protected:
-		Mesh* _mesh;
-		bool _active;
-	public:
-		CmCamera();
-		~CmCamera();
+ public:
+  CmCamera();
+  ~CmCamera();
 
-		void Activate();
-		void Deactivate();
-		bool IsActive();
+  void Activate();
+  void Deactivate();
+  bool IsActive();
 
-		//void Render();
-		//void Update(double delta);
-	};
+  // void Render();
+  // void Update(double delta);
+};
 }
